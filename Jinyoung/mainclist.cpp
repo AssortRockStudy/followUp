@@ -67,6 +67,31 @@ int main() {
 	//////////////////////230821 0417수정///////////////////////////
 
 
+	//deepcopy 테스트
+	CList c1;
+	for (int i = 0; i < 3; ++i)
+	{
+		c1.pushback(i + 1);
+	}
+
+	
+	CList c2;
+	c2.CopyDeep(c1);
+
+	//복사생성자 테스트
+	CList c3 = c1;
+
+	//이동생성자 테스트
+	CList c4 = std::move(c1);
+
+	//대입연산자 테스트
+	CList c5;
+	c5 = c2;
+
+	//이동 대입 연산자 테스트
+	CList c6;
+	c6 = std::move(c3);
+
 
 	return 0;
 }

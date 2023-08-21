@@ -1,4 +1,8 @@
 #pragma once
+#include <assert.h>
+#include <iostream>;
+
+using namespace std;
 
 
 
@@ -31,6 +35,88 @@ public:
 	void pushfront(int _data);
 	iterator begin() { return iterator(this, pHead); }
 	iterator end() { return iterator(this, nullptr); }
+
+	//얕은 복사
+	void CopyShallow(CList& _other) {
+		pHead = _other.pHead;
+		pTail = _other.pTail;
+		iCount = _other.iCount;
+	}
+
+	//깊은복사
+	void CopyDeep(CList& _other) {
+		pHead = nullptr;
+		pTail = nullptr;
+		iCount = 0;
+
+		iterator it = _other.begin();
+
+		for (;  _other.end()!= it ; ++it)
+		{
+			this->pushback(*it);
+		}
+	}
+
+	//복사생성자
+	CList(CList& _other)
+		:pHead(nullptr), pTail(nullptr), iCount(0) {
+		
+		iterator it = _other.begin();
+
+		for (; _other.end() != it; ++it)
+		{
+			this->pushback(*it);
+		}
+
+		cout << "복사생성자 호출" << endl;
+	}
+
+	//이동생성자
+	CList(CList&& _other)
+		:pHead(_other.pHead), pTail(_other.pTail), iCount(_other.iCount) {
+				
+
+		_other.iCount = 0;
+		_other.pHead = nullptr;
+		_other.pTail = nullptr;
+
+		cout << "이동생성자 호출" << endl;
+	}
+
+	//대입 연산자
+	CList& operator = (CList& _other) {
+		pHead = nullptr;
+		pTail = nullptr;
+		iCount = 0;
+
+		iterator it = _other.begin();
+
+		for (; _other.end() != it; ++it)
+		{
+			this->pushback(*it);
+		}
+		cout << "대입 연산자 호출" << endl;
+		return *this;
+	}
+
+
+	//이동 대입연산자
+	CList& operator = (CList&& _other) {
+		pHead = _other.pHead;
+		pTail = _other.pTail;
+		iCount = _other.iCount;
+
+
+		_other.pHead=nullptr;
+		_other.pTail= nullptr;
+		_other.iCount= 0;
+		cout << "이동 대입연산자 호출" << endl;
+
+		return *this;
+	}
+
+
+
 
 	//////////////////////230821 0417수정///////////////////////////
 	iterator erase(iterator& it) {
@@ -88,7 +174,10 @@ public:
 
 
 		iterator& operator ++() {
-			pTarget = pTarget->pNext;
+			if (pTarget) {
+				pTarget = pTarget->pNext;
+			}
+			else { assert(nullptr); }
 			return *this;
 		}
 
