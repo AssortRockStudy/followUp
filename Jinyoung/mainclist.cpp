@@ -93,5 +93,14 @@ int main() {
 	c6 = std::move(c3);
 
 
+	//swap Å×½ºÆ®
+	CList c7;
+	for (int i = 0; i < 3; ++i)
+	{
+		c7.pushfront(i + 1);
+	}
+
+	c6.swap(std::move(c7));
+
 	return 0;
 }

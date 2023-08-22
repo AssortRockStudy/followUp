@@ -36,6 +36,8 @@ public:
 	iterator begin() { return iterator(this, pHead); }
 	iterator end() { return iterator(this, nullptr); }
 
+
+
 	//얕은 복사
 	void CopyShallow(CList& _other) {
 		pHead = _other.pHead;
@@ -115,6 +117,14 @@ public:
 		return *this;
 	}
 
+
+	//swap 구현
+	void swap(CList&& _other) {
+		CList tmpcl = std::move(*this);
+		*this = _other;
+		_other = std::move(tmpcl);
+		cout << "swap 호출" << endl;
+	}
 
 
 
