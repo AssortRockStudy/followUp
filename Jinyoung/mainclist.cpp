@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "CList.h"
+#include "TCList.h"
 
 using std::cout;
 using std::cin;
@@ -101,6 +102,15 @@ int main() {
 	}
 
 	c6.swap(std::move(c7));
+
+
+	TCList<CList> tcl1;
+
+	tcl1.pushback(c1);
+	tcl1.pushback(c2);
+	tcl1.pushback(c3);
+
+
 
 	return 0;
 }
