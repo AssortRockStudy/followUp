@@ -6,7 +6,7 @@
 // 5. 복사, 이동 연산자 구현
 #include <stdlib.h>
 #include <stdio.h>
-#include "CList.h"
+#include "TemplateCList.h"
 
 using std::cout;
 using std::endl;
@@ -80,15 +80,6 @@ public:
 
 };
 
-
-void swap(CList& a, CList& b) {
-	CList temp = std::move(a); // 이동 생성자 출력
-	a = std::move(b); // 이동 연산자 출력
-	b = std::move(temp); // 이동 연산자 출력
-}
-
-
-
 void CopyShallow(arr& a, arr& b) {
 	a = std::move(b);
 }
@@ -98,14 +89,14 @@ void CopyDeep(arr& a, arr& b) {
 }
 
 int main() {
-	CList a;
+	TemplateCList<int> a;
 	a.pushFront(5);
 	a.pushFront(8);
 	a.pushFront(2);
 	a.pushFront(9);
 	a.pushFront(40);
 	a.pushFront(30);
-	CList::iterator iter = a.begin();
+	TemplateCList<int>::iterator iter = a.begin();
 	for (iter = a.begin(); iter != a.end(); ++iter) {
 		cout << *iter << endl;
 	}
@@ -119,9 +110,8 @@ int main() {
 	cout << *iter << endl; // 40 >> 확인
 	cout << *(--iter) << endl; // 30 >> 확인
 
-	CList b;
+	TemplateCList<int> b;
 	b.pushFront(100);
-	swap(a, b); // 이동 생성자 > 이동 연산자 > 이동 연산자 출력
 	cout << "Array 1" << endl;
 	for (iter = a.begin(); iter != a.end(); ++iter) {
 		cout << *iter << endl;
@@ -130,7 +120,7 @@ int main() {
 	for (iter = b.begin(); iter != b.end(); ++iter) {
 		cout << *iter << endl;
 	}
-	CList c = a; // 깊은 복사 출력(복사 생성자)
+	TemplateCList<int> c = a; // 깊은 복사 출력(복사 생성자)
 	c = b; // 깊은 복사 출력(복사 연산자)
 
 	arr i(5);
