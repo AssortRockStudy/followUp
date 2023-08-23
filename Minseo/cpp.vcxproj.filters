@@ -17,4 +17,14 @@
       <UniqueIdentifier>{7e04cdf0-7e74-49ca-892a-24b6d864681a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TLh.h">
+      <Filter>TemplateList</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TL_Main.cpp">
+      <Filter>TemplateList</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
