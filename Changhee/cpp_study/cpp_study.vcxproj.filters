@@ -7,6 +7,9 @@
     <Filter Include="20230821">
       <UniqueIdentifier>{bbf52ad6-ab3c-4b75-92ab-9c67e718314f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="20230822">
+      <UniqueIdentifier>{8e0d1e2f-023d-41a5-a0c2-20cbc53dea3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="myList.cpp">
@@ -15,11 +18,17 @@
     <ClCompile Include="1.cpp">
       <Filter>20230821</Filter>
     </ClCompile>
+    <ClCompile Include="2-4.cpp">
+      <Filter>20230821</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="myList.h">
       <Filter>20230818</Filter>
+    </ClInclude>
+    <ClInclude Include="CList.h">
+      <Filter>20230822</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
