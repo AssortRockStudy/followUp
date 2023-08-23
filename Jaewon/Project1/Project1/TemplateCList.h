@@ -44,6 +44,9 @@ public:
 	~TemplateCList(){}
 
 public:
+	// 첫 입력이면 head로 설정
+	// 아니면 tail의 next에 설정 후
+	// tail에 연결
 	void pushBack(const T& data) {
 		Node<T>* newNode = new Node<T>(d, nullptr, tail);
 		if (nullptr == head)
@@ -53,6 +56,9 @@ public:
 		tail = newNode;
 		++dCnt;
 	}
+	// 첫 입력이면 tail로 설정
+	// 아니면 head의 prev에 설정 후
+	// head에 연결
 	void pushFront(const T& data) {
 		Node<T>* newNode = new Node<T>(d, nullptr, tail);
 		if (nullptr == tail)
@@ -73,6 +79,14 @@ public:
 		return iterator(this, nullptr);
 	}
 
+	// 1. 삭제할 노드가 첫번째 노드면 
+	// head를 target의 next로 설정
+	// 아니면 target의 prev의 next를 next로 설정
+	// 2. 삭제할 노드가 마지막 노드면
+	// tail을 target의 tail로 설정
+	// 아니면 target의 next의 prev를 target의 prev로 설정
+	// 3. delete 후 카운트 down
+	// 4. target의 next를 가진 iterator return
 	iterator erase(const iterator& it)
 	{
 		Node<T>* p = it.target->prev;
@@ -98,12 +112,16 @@ public:
 		Node<T>* target;
 	
 	public:
+		// host와 target이 같으면 true
 		bool operator ==(const iterator& oth){
 			if (host == oth.host && target == oth.target)
 				return true;
 			return false;
 		}
+		// ==와 반대결과 리턴
 		bool operator !=(const iterator& oth){ return !(*this == oth);}
+		// end() 상태면 에러
+		// 아니면 next로
 		iterator& operator ++(){
 			if (nullptr == target)
 				assert(nullptr);
@@ -117,7 +135,8 @@ public:
 			++(*this);
 			return copyiter;
 		}
-
+		// prev가 nullptr 상태면 에러
+		// 아니면 prev로
 		iterator& operator --(){
 			if (nullptr == target)
 				assert(nullptr);
@@ -131,6 +150,8 @@ public:
 			--(*this);
 			return copyiter;
 		}
+		// target이 nullptr면 에러
+		// 아니면 가지고 있는 값 리턴
 		T& operator*(){
 			if (nullptr == target)
 				assert(nullptr);
