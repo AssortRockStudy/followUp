@@ -6,11 +6,11 @@
 
 ## 구현 순서
 
-1. list, node template class
-2. 멤버 변수
-3. list의 기본 생성자
-4. push_back
-5. push_front
+1. list, node template class(O)
+2. 멤버 변수(O)
+3. list의 기본 생성자(O)
+4. push_back(O)
+5. push_front(O)
 6. list의 소멸자
 
 ---
