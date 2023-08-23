@@ -15,11 +15,10 @@
 
 ---
 
-7. iterator
+7. iterator(O)
 8. iterator 함수와 리스트 함수
-	begin, end, erase
+	begin(O), end(O), erase
 	size
-	erase 함수 수정하는데 함수 안 쪽에서 사용할 수 있는 멤버가 없다고 해서 인자만 슬쩍 봤습니다 ^^7
 9. iterator 연산자 오버로딩, 리스트 연산자 오버로딩
 
 ---
