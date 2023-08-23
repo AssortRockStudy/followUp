@@ -11,8 +11,18 @@
 3. list의 기본 생성자(O)
 4. push_back(O)
 5. push_front(O)
-6. list의 소멸자
+6. list의 소멸자(O)
 
 ---
 
-일단 여기까지 만들고 다음을 생각해보자.
+7. iterator
+8. iterator 함수와 리스트 함수
+	begin, end, erase
+	size
+9. iterator 연산자 오버로딩, 리스트 연산자 오버로딩
+
+---
+
+10. 생성자 오버로딩 (복사 생성자, 이동복사생성자, 복사연산자, 이동복사연산자)
+11. swap 함수 (이동복사생성자 이용해서)
+12. insert 함수
