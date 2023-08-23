@@ -18,13 +18,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TLh.h">
+    <ClInclude Include="TList.h">
       <Filter>TemplateList</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TL_Main.cpp">
+    <ClCompile Include="TList_Main.cpp">
       <Filter>TemplateList</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TList_PseudoCode.txt">
+      <Filter>TemplateList</Filter>
+    </Text>
   </ItemGroup>
 </Project>

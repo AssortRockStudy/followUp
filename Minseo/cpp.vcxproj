@@ -127,10 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="TLh.h" />
+    <ClInclude Include="TList.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TL_Main.cpp" />
+    <ClCompile Include="TList_Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TList_PseudoCode.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
