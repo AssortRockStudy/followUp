@@ -7,6 +7,9 @@
     <Filter Include="ClassList">
       <UniqueIdentifier>{added84d-2573-45c6-96ff-23fecb6afc66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BST">
+      <UniqueIdentifier>{e6b6b610-35c4-4e60-952f-56dfb313d18f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_templateList.cpp">
@@ -18,6 +21,9 @@
     <ClCompile Include="myList.cpp">
       <Filter>ClassList</Filter>
     </ClCompile>
+    <ClCompile Include="main_BST.cpp">
+      <Filter>BST</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="templateList.h">
@@ -26,5 +32,11 @@
     <ClInclude Include="myList.h">
       <Filter>ClassList</Filter>
     </ClInclude>
+    <ClInclude Include="bst.h">
+      <Filter>BST</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
   </ItemGroup>
 </Project>
