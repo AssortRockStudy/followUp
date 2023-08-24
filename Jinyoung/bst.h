@@ -52,18 +52,22 @@ class CBST
 private:
 	BSTNode<T1, T2>* m_Root;
 	int m_Count;
-
+	void DeletNode(BSTNode<T1, T2>* pbst);
 
 public:
 	CBST()
 		:m_Root(nullptr),m_Count(0){}
 
+	void clear();
+	void clear_r();
+	
 
 	CBST(const Pair<T1, T2>& _data)
 		:m_Root(nullptr), m_Count(0)
 	{
 		pushdata(_data);
 	}
+
 
 	void pushdata(const Pair<T1, T2>& _data)
 	{
@@ -132,3 +136,67 @@ public:
 
 };
 
+
+template <typename T1, typename T2>
+void CBST<T1, T2>::clear()
+{
+	//재귀함수 버전
+	//DeletNode(m_Root);
+	//m_Count =0;
+
+	//반복문버전
+	//모든 노드를
+	TCList<BSTNode<T1, T2>* > temp;
+
+	if (m_Root) {
+		temp.push_back(m_Root);
+	}
+
+
+	while (0 != temp.size())
+	{
+		BSTNode<T1, T2>* pNode = temp.front();
+		temp.pop_front();
+
+		if (pNode->Ptr[LCHILD])
+		{
+			temp.pushback(pNode->Ptr[LCHILD]);
+		}
+		if (pNode->Ptr[RCHILD])
+		{
+			temp.pushback(pNode->Ptr[RCHILD]);
+		}
+
+		delete pNode;
+	}
+
+	m_Count = 0;
+	m_Root = nullptr;
+
+}
+
+
+template <typename T1, typename T2>
+void CBST<T1, T2>::clear_r() 
+{
+	//재귀함수 버전
+	DeletNode(m_Root);
+	m_Count =0;
+	m_Root = nullptr;
+}
+
+
+template <typename T1, typename T2>
+void CBST<T1, T2>::DeletNode(BSTNode<T1, T2>* pbst) {
+
+	if (pbst->Ptr[LCHILD]) {
+		DeletNode(pbst->Ptr[LCHILD]);
+	}
+	BSTNode<T1, T2>* rptr = pbst->Ptr[RCHILD];
+	delete pbst;
+
+	if (rptr) {
+		DeletNode(rptr);
+	}
+
+}

@@ -4,6 +4,9 @@
 #include "CList.h"
 #include "TCList.h"
 #include "bst.h"
+#include <crtdbg.h>
+
+
 
 using std::cout;
 using std::cin;
@@ -41,10 +44,13 @@ using std::endl;
 
 int main() {
 
+
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetBreakAlloc(50);
 	CList cl;
 
 	
-
+	/*
 	for (int i = 0; i < 3; ++i)
 	{
 		cl.pushback(i+1);
@@ -111,7 +117,7 @@ int main() {
 	tcl1.pushback(c2);
 	tcl1.pushback(c3);
 
-
+	*/
 	Pair<int, float> p1(1, 1.1f);
 	Pair<int, float> p2(2, 2.2f);
 	Pair<int, float> p3(3, 3.3f);
@@ -121,6 +127,8 @@ int main() {
 	cb1.pushdata(p1);
 
 	cb1.pushdata(p2);
+
+	cb1.clear_r();
 
 	return 0;
 }

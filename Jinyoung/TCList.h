@@ -129,7 +129,29 @@ public:
 		cout << "swap 호출" << endl;
 	}
 
+	T& front() { return pHead->iData; };
+	T& back() { return pTail->iData; };
 
+
+	void pop_fornt()
+	{
+		assert(pHead);
+		ttNode<T>* pNext = pHead->pNext;
+		delete pHead;
+		pHead = pNext;
+		pHead->pPrev = nullptr;
+		--iCount;
+	}
+
+	void pop_back()
+	{
+		assert(pTail);
+		ttNode<T>* pPrev = pTail->pPrev;
+		delete pTail;
+		pTail = pPrev;
+		pTail->pNext = nullptr;
+		--iCount;
+	}
 
 	//////////////////////230821 0417수정///////////////////////////
 	iterator erase(iterator& it) {
