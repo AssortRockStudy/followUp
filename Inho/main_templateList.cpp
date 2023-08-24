@@ -1,6 +1,7 @@
 #include <crtdbg.h>
 
 #include "templateList.h"
+
 int main() {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     //_CrtSetBreakAlloc(163);
@@ -21,11 +22,12 @@ int main() {
             it++;
         }
     }
+
+    templateList<int>::printAll(tl);
+    cout << tl.front() << " " << tl.back() << endl;
+    tl.Pop_back();
+    tl.Pop_front();
     templateList<int>::printAll(tl);
 
-    templateList<int> ttl = tl;
-    templateList<int> mtl = std::move(tl);
-    ttl = mtl;
-    ttl = std::move(mtl);
     return 0;
 }

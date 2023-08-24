@@ -117,6 +117,14 @@ class templateList {
    public:
     void push_back(const T& _data);
     void push_front(const T& _data);
+
+    void Pop_front();
+    void Pop_back();
+
+    // front, back = 담겨있는 데이터 자체를 반환해야함. front는 헤더 데이터만
+    // 꺼내주면 되고, back은 테일만 꺼내주면 됨
+    T& front();
+    T& back();
     iterator erase(const iterator& _it);
 
    public:
@@ -218,6 +226,54 @@ inline void templateList<T>::push_front(const T& _data) {
         this->head = newNode;
     }
     curCount++;
+}
+
+template <typename T>
+inline void templateList<T>::Pop_front() {
+    // 헤더를 뽑아내야 함
+    // 널 예외처리
+    // 헤더 다음 노드 && -> 헤더 다음노드의 이전 노드는 nullptr
+    // 헤더 삭제
+    // 헤더는 헤더 다음노드
+    if (head == nullptr) {
+        return;
+    }
+
+    Node* nextNode = head->next;
+    if (nextNode) {
+        nextNode->prev = nullptr;
+        delete head;
+        head = nextNode;
+        curCount--;
+    }
+
+    return;
+}
+template <typename T>
+inline void templateList<T>::Pop_back() {
+    // pop front와 정 반대로
+    if (head == nullptr) {
+        return;
+    }
+
+    Node* prevNode = tail->prev;
+    if (prevNode) {
+        prevNode->next = nullptr;
+        delete tail;
+        tail = prevNode;
+        curCount--;
+    }
+
+    return;
+}
+
+template <typename T>
+inline T& templateList<T>::front() {
+    return head->data;
+}
+template <typename T>
+inline T& templateList<T>::back() {
+    return tail->data;
 }
 
 template <typename T>
