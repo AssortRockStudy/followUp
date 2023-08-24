@@ -41,6 +41,34 @@ class TemplateCList{
 
 public:
 	TemplateCList() {}
+	// 복사 생성자
+	// count 유지
+	// 새로운 데이터를 복사할 리스트의 cnt만큼 할당 후
+	// 값 그대로 복사
+	TemplateCList(const TemplateCList<T>& oth):dCnt(oth.dCnt), head(nullptr), tail(nullptr) {
+		if (oth.head != nullptr) {
+			Node<T>* hNode = new Node<T>();
+			Node<T>* iter = oth.head->next;
+			hNode->data = oth.head->data;
+			Node<T>* prevIter = hNode;
+			for (int i = 1; i < dCnt; ++i) {
+				Node<T>* NewNode = new Node<T>(iter->data, nullptr, prevIter);
+				prevIter->next = NewNode;
+				iter = iter->next;
+				prevIter = NewNode;
+			}
+			head = hNode;
+			tail = prevIter;
+		}
+	}
+	// 이동 생성자
+	// 원본값에서 다 가져온 후
+	// 원본 데이터 값 제거
+	TemplateCList(TemplateCList<T>&& oth):dCnt(oth.dCnt), head(oth.head), tail(oth.tail) {
+		oth.head = nullptr;
+		oth.tail = nullptr;
+		oth.dCnt = 0;
+	}
 	~TemplateCList(){}
 
 public:
@@ -48,7 +76,7 @@ public:
 	// 아니면 tail의 next에 설정 후
 	// tail에 연결
 	void pushBack(const T& data) {
-		Node<T>* newNode = new Node<T>(d, nullptr, tail);
+		Node<T>* newNode = new Node<T>(data, tail, nullptr);
 		if (nullptr == head)
 			head = newNode;
 		else
@@ -60,7 +88,7 @@ public:
 	// 아니면 head의 prev에 설정 후
 	// head에 연결
 	void pushFront(const T& data) {
-		Node<T>* newNode = new Node<T>(d, nullptr, tail);
+		Node<T>* newNode = new Node<T>(data, nullptr, head);
 		if (nullptr == tail)
 			tail = newNode;
 		else
@@ -69,6 +97,62 @@ public:
 		++dCnt;
 	}
 	int size() { return dCnt; }
+
+
+	// 대입 연산자
+	// 원래 데이터가 있었으면 할당 해제 후
+	// 복사하려는 count 만큼 데이터 할당 시키고
+	// 원본데이터 공간 할당하여 데이터 복사 반복
+	TemplateCList& operator =(const TemplateCList<T>& oth) {
+		if (nullptr == head) {
+			Node<T>* iter = head;
+			for (int i = 0; i < dCnt; ++i) {
+				Node<T>* temp = iter->next;
+				delete iter;
+				iter = temp;
+			}
+		}
+		dCnt = oth.dCnt;
+		if (oth.head != nullptr) {
+			Node<T>* hNode = new Node<T>();
+			Node<T>* iter = oth.head->next;
+			hNode->data = oth.head->data;
+			Node<T>* prevIter = hNode;
+			for (int i = 1; i < dCnt; ++i) {
+				Node<T>* NewNode = new Node<T>(iter->data, nullptr, prevIter);
+				prevIter->next = NewNode;
+				iter = iter->next;
+				prevIter = NewNode;
+			}
+			head = hNode;
+			tail = prevIter;
+		}
+		return *this;
+	}
+
+	// 이동 대입 연산자
+	// 원래 데이터가 있었으면 할당 해제 후 
+	// 주소값 옮겨준 후
+	// 원본 데이터 제거
+	TemplateCList& operator =(TemplateCList<T>&& oth) {
+		if (nullptr == head) {
+			Node<T>* iter = head;
+			for (int i = 0; i < dCnt; ++i) {
+				Node<T>* temp = iter->next();
+				delete iter;
+				iter = temp;
+			}
+		}
+		dCnt = oth.dCnt;
+		head = oth.head;
+		tail = oth.tail;
+		oth.dCnt = 0;
+		oth.head = nullptr;
+		oth.tail = nullptr;
+		
+		return this;
+	}
+
 
 	class iterator;
 	iterator begin(){
