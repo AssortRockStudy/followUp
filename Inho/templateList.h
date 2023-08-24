@@ -130,6 +130,7 @@ class templateList {
    public:
     iterator begin();
     iterator end();
+    bool empty();
 
     static void printAll(templateList& tl);
 };
@@ -269,11 +270,11 @@ inline void templateList<T>::Pop_back() {
 
 template <typename T>
 inline T& templateList<T>::front() {
-    return head->data;
+    return head->data ? head->data : nullptr;
 }
 template <typename T>
 inline T& templateList<T>::back() {
-    return tail->data;
+    return tail->data ? tail->data : nullptr;
 }
 
 template <typename T>
@@ -304,6 +305,11 @@ inline typename templateList<T>::iterator templateList<T>::begin() {
 template <typename T>
 inline typename templateList<T>::iterator templateList<T>::end() {
     return iterator(this, nullptr);
+}
+
+template <typename T>
+inline bool templateList<T>::empty() {
+    return curCount == 0 ? true : false;
 }
 
 template <typename T>

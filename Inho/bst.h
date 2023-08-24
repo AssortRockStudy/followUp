@@ -1,4 +1,5 @@
 #pragma once
+#include "templateList.h"
 
 template <typename T1, typename T2>
 class Pair {
@@ -6,6 +7,8 @@ class Pair {
     T1 first;
     T2 second;
 
+    Pair(){};
+    Pair(const Pair& _other) : first(_other.first), second(_other.second){};
     Pair(const T1& _first, const T2& _second)
         : first(_first), second(_second){};
 
@@ -34,19 +37,27 @@ class Pair {
 };
 
 template <typename T1, typename T2>
+Pair<T1, T2> Create_Pair(const T1& _first, const T2& _second) {
+    Pair<T1, T2> data;
+    data.first = _first;
+    data.second = _second;
+    return data;
+}
+
+template <typename T1, typename T2>
 class bst {
    private:
     enum { origin, left, right };
     class Node {
         friend class bst;
-        Pair<T1, T2>* pair;
+        Pair<T1, T2> pair;
         Node* direction[3];
 
        public:
         Node(){};
         Node(const Pair<T1, T2>& _pair, Node* _origin = nullptr,
              Node* _left = nullptr, Node* _right = nullptr) {
-            pair = new Pair<T1, T2>(_pair.first, _pair.second);
+            pair = _pair;
             direction[origin] = _origin;
             direction[left] = _left;
             direction[right] = _right;
@@ -62,6 +73,8 @@ class bst {
 
     void insert(const Pair<T1, T2>& _data);
     void insert(const T1& _first, const T2& _second);
+    void Clear();
+
     void printPrev();
     void printIn();
     void printPost();
@@ -75,32 +88,61 @@ inline void bst<T1, T2>::insert(const Pair<T1, T2>& _data) {
         root = newNode;
     } else {
         Node* curNode = root;
+        T1 newKey = newNode->pair.first;
 
-        Node* next = curNode;
-        T1 newKey = newNode->pair->first;
-        int direction;
-        while (next) {
-            curNode = next;
-            T1 curKey = curNode->pair->first;
+        while (curNode) {
+            T1 curKey = curNode->pair.first;
+
             if (newKey < curKey) {
-                next = curNode->direction[left];
-                direction = left;
+                if (curNode->direction[left]) {
+                    curNode = curNode->direction[left];
+                } else {
+                    curNode->direction[left] = newNode;
+                    newNode->direction[origin] = curNode;
+                    break;
+                }
             } else if (newKey > curKey) {
-                next = curNode->direction[right];
-                direction = right;
+                if (curNode->direction[right]) {
+                    curNode = curNode->direction[right];
+                } else {
+                    curNode->direction[right] = newNode;
+                    newNode->direction[origin] = curNode;
+                    break;
+                }
             } else {
-                delete newNode;
+                curNode->pair.second = newNode->pair.second;
                 return;
             }
         }
-        if (direction == left) {
-            curNode->direction[left] = newNode;
-
-        } else if (direction == right) {
-            curNode->direction[right] = newNode;
-        }
-        newNode->direction[origin] = curNode;
     }
 
     curCount++;
+}
+
+template <typename T1, typename T2>
+inline void bst<T1, T2>::insert(const T1& _first, const T2& _second) {
+    insert({_first, _second});
+}
+
+template <typename T1, typename T2>
+inline void bst<T1, T2>::Clear() {
+    Node* curNode = root;
+    if (!curNode) return;
+
+    templateList<Node*> deq;
+    deq.push_back(curNode);
+
+    while (!deq.empty()) {
+        curNode = deq.front();
+        deq.Pop_front();
+
+        if (curNode->direction[left]) {
+            deq.push_back(curNode->direction[left]);
+        }
+        if (curNode->direction[right]) {
+            deq.push_back(curNode->direction[right]);
+        }
+
+        delete curNode;
+    }
 }
