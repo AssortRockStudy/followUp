@@ -1,8 +1,8 @@
 #include "bst.h"
-
+#include <crtdbg.h>
 int main() {
     bst<int, int> tree;
-
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
     tree.insert(Create_Pair(100, 3));  //				    100
     tree.insert(Create_Pair(70, 3));  //			70				150
@@ -19,6 +19,9 @@ int main() {
     tree.insert(Create_Pair(140, 3));
     tree.insert(Create_Pair(160, 3));
     tree.insert(Create_Pair(200, 3));
+
+    tree.Clear();
+    //tree.Clear_recursive(tree.begin());
 
     return 0;
 }

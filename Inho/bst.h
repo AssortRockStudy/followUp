@@ -74,6 +74,10 @@ class bst {
     void insert(const Pair<T1, T2>& _data);
     void insert(const T1& _first, const T2& _second);
     void Clear();
+    void Clear_recursive(Node* _node);
+
+   public:
+    Node* begin() { return root; };
 
     void printPrev();
     void printIn();
@@ -144,5 +148,25 @@ inline void bst<T1, T2>::Clear() {
         }
 
         delete curNode;
+        curCount--;
     }
+}
+
+template <typename T1, typename T2>
+inline void bst<T1, T2>::Clear_recursive(Node* _node) {
+    if (_node == nullptr) {
+        return;
+    }
+    // 리프노드라면 삭제
+    // 왼쪽, 오른쪽 모두 nullptr
+    // 왼쪽부터 nullptr 아니면 재귀
+    if (_node->direction[left]) {
+        Clear_recursive(_node->direction[left]);
+    }
+    if (_node->direction[right]) {
+        Clear_recursive(_node->direction[right]);
+    }
+
+    delete _node;
+    curCount--;
 }

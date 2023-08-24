@@ -123,8 +123,8 @@ class templateList {
 
     // front, back = 담겨있는 데이터 자체를 반환해야함. front는 헤더 데이터만
     // 꺼내주면 되고, back은 테일만 꺼내주면 됨
-    T& front();
-    T& back();
+    T front();
+    T back();
     iterator erase(const iterator& _it);
 
    public:
@@ -243,10 +243,10 @@ inline void templateList<T>::Pop_front() {
     Node* nextNode = head->next;
     if (nextNode) {
         nextNode->prev = nullptr;
-        delete head;
-        head = nextNode;
-        curCount--;
     }
+    delete head;
+    head = nextNode;
+    curCount--;
 
     return;
 }
@@ -269,11 +269,11 @@ inline void templateList<T>::Pop_back() {
 }
 
 template <typename T>
-inline T& templateList<T>::front() {
+inline T templateList<T>::front() {
     return head->data ? head->data : nullptr;
 }
 template <typename T>
-inline T& templateList<T>::back() {
+inline T templateList<T>::back() {
     return tail->data ? tail->data : nullptr;
 }
 
