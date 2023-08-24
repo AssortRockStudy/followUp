@@ -10,6 +10,9 @@
     <Filter Include="20230822">
       <UniqueIdentifier>{8e0d1e2f-023d-41a5-a0c2-20cbc53dea3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="20230825">
+      <UniqueIdentifier>{35cc2401-71e2-4d91-8229-2f6b382617d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="myList.cpp">
@@ -29,6 +32,9 @@
     </ClInclude>
     <ClInclude Include="CList.h">
       <Filter>20230822</Filter>
+    </ClInclude>
+    <ClInclude Include="BST.h">
+      <Filter>20230825</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
