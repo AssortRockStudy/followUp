@@ -14,8 +14,8 @@ template<typename T>
 struct tNode
 {
 	T			data;
-	tNode<T>*	next;
-	tNode<T>*	prev;
+	tNode<T>* next;
+	tNode<T>* prev;
 
 public:
 
@@ -45,8 +45,8 @@ public:
 	class iterator;
 
 private:
-	tNode<T>*	m_pHead;
-	tNode<T>*	m_pTail;
+	tNode<T>* m_pHead;
+	tNode<T>* m_pTail;
 
 public:
 	void push_back(const T& _data)
@@ -81,6 +81,74 @@ public:
 			m_pHead = newNode;
 		}
 	}
+
+	T& front()
+	{
+		return m_pHead->data;
+	}
+
+	T& back()
+	{
+		return m_pTail->data;
+	}
+
+	void pop_front()
+	{
+		// 예외처리
+		assert(m_pHead);
+
+		// 데이터가 1개만 있는 경우
+		if (m_pHead == m_pTail)
+		{
+			delete m_pHead;
+			m_pHead = nullptr;
+			m_pTail = nullptr;
+		}
+		else
+		{
+			// delete를 위한 지역변수
+			tNode<T>* tmp = m_pHead;
+
+			// Head포인터 바꾸기
+			m_pHead = m_pHead->next;
+
+			if (m_pHead != nullptr)
+				m_pHead->prev = nullptr;
+
+			// delete
+			delete tmp;
+		}
+
+	}
+
+	void pop_back()
+	{
+		// 예외처리
+		assert(m_pTail);
+
+		// 데이터가 1개만 있는 경우
+		if (m_pHead == m_pTail)
+		{
+			delete m_pHead;
+			m_pHead = nullptr;
+			m_pTail = nullptr;
+		}
+		else
+		{
+			// delete를 위한 지역변수
+			tNode<T>* tmp = m_pTail;
+
+			// Head포인터 바꾸기
+			m_pTail = m_pTail->prev;
+
+			if (m_pTail != nullptr)
+				m_pTail->next = nullptr;
+
+			// delete
+			delete tmp;
+		}
+	}
+
 
 	iterator erase(const iterator& _where)
 	{
@@ -165,7 +233,7 @@ public:
 		assert(m_pTarget);
 
 		m_pTarget = m_pTarget->prev;
-		
+
 		return *this;
 	}
 
