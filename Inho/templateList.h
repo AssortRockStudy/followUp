@@ -49,7 +49,9 @@ class templateList {
         iterator() : owner(nullptr), node(nullptr){};
         iterator(templateList* _owner, Node* _node)
             : owner(_owner), node(_node){};
-        ~iterator(){};
+        ~iterator(){
+
+        };
 
        public:
         bool operator==(const iterator& _it) {
@@ -99,7 +101,14 @@ class templateList {
     templateList() : head(nullptr), tail(nullptr), curCount(0){};
     templateList(const templateList& _other);
     templateList(templateList&& _other) noexcept;
-    ~templateList(){};
+    ~templateList() {
+        Node* node = head;
+        for (int i = 0; i < curCount; i++) {
+            Node* next = node->next;
+            delete node;
+            node = next;
+        }
+    };
 
    public:
     templateList& operator=(const templateList& _other);

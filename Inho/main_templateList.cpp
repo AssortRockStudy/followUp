@@ -1,6 +1,9 @@
-#include "templateList.h"
+#include <crtdbg.h>
 
+#include "templateList.h"
 int main() {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    //_CrtSetBreakAlloc(163);
     templateList<int> tl;
 
     for (int i = 0; i < 5; i++) {
