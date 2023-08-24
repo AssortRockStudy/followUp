@@ -1,6 +1,11 @@
 ﻿#pragma once
 
 #include <queue>
+#include <iostream>
+#include <assert.h>
+
+using std::cout;
+using std::endl;
 
 //	1. Pair 구조체 만들기 -> make_Pair 함수 구현
 //	2. BSTnode 만들기
@@ -11,18 +16,18 @@
 
 
 template<typename T1, typename T2>
-struct Pair{
+struct Pair {
 
 
 	T1 first;
 	T2 second;
 
-	Pair(const T1& _first, const T2& _second) 
+	Pair(const T1& _first, const T2& _second)
 		: first(_first)
 		, second(_second)
 	{
 	}
-	
+
 	~Pair()
 	{
 	}
@@ -45,18 +50,18 @@ enum PTR_TYPE
 template<typename T1, typename T2>
 struct BSTNode
 {
-	Pair<T1, T2>*		data;
-	BSTNode<T1, T2>*	ptr[PTR_TYPE::END];
-	
+	Pair<T1, T2>* data;
+	BSTNode<T1, T2>* ptr[PTR_TYPE::END];
+
 	BSTNode()
 		: data(nullptr)
 		, ptr{}
 	{
 	}
 
-	BSTNode(Pair<T1,T2>* _data , BSTNode<T1, T2>* _parent = nullptr , BSTNode<T1, T2>* _lchild = nullptr, BSTNode<T1, T2>* rchild = nullptr)
+	BSTNode(Pair<T1, T2>* _data, BSTNode<T1, T2>* _parent = nullptr, BSTNode<T1, T2>* _lchild = nullptr, BSTNode<T1, T2>* rchild = nullptr)
 		: data(_data)
-		, ptr{_parent, _lchild, rchild}
+		, ptr{ _parent, _lchild, rchild }
 	{
 	}
 
@@ -70,11 +75,11 @@ struct BSTNode
 template<typename T1, typename T2>
 class BST
 {
-private:
+public:
 	BSTNode<T1, T2>* m_pRoot;
 
 public:
-	void insert(Pair<T1,T2>* _data)
+	void insert(Pair<T1, T2>* _data)
 	{
 		BSTNode<T1, T2>* newNode = new BSTNode<T1, T2>(_data);
 
@@ -118,8 +123,156 @@ public:
 		}
 	}
 
+	void preOrder(BSTNode<T1, T2>* _Node)
+	{
+		assert(_Node);
+
+		cout << _Node->data->first << endl;
+
+		if (_Node->ptr[LCHILD] != nullptr)
+			preOrder(_Node->ptr[LCHILD]);
+
+		if (_Node->ptr[RCHILD] != nullptr)
+			preOrder(_Node->ptr[RCHILD]);
+
+	}
+
+	void inOrder(BSTNode<T1, T2>* _Node)
+	{
+		assert(_Node);
+
+
+
+		if (_Node->ptr[LCHILD] != nullptr)
+			inOrder(_Node->ptr[LCHILD]);
+
+		cout << _Node->data->first << endl;
+
+		if (_Node->ptr[RCHILD] != nullptr)
+			inOrder(_Node->ptr[RCHILD]);
+	}
+
+	void postOrder(BSTNode<T1, T2>* _Node)
+	{
+		assert(_Node);
+
+		if (_Node->ptr[LCHILD] != nullptr)
+			postOrder(_Node->ptr[LCHILD]);
+
+		if (_Node->ptr[RCHILD] != nullptr)
+			postOrder(_Node->ptr[RCHILD]);
+
+		cout << _Node->data->first << endl;
+	}
+
+	void DFS(BSTNode<T1, T2>* _Node)
+	{
+		assert(_Node);
+
+		cout << _Node->data->first << endl;
+
+		if (_Node->ptr[LCHILD] != nullptr)
+			preOrder(_Node->ptr[LCHILD]);
+
+		if (_Node->ptr[RCHILD] != nullptr)
+			preOrder(_Node->ptr[RCHILD]);
+	}
+
+	void BFS(BSTNode<T1, T2>* _Node)
+	{
+		std::queue<BSTNode<T1, T2>*> q;
+		q.push(m_pRoot);
+
+		while (!q.empty())
+		{
+			BSTNode<T1, T2>* tmp = q.front();
+
+			cout << tmp->data->first << endl;
+			q.pop();
+
+			if (tmp->ptr[LCHILD])
+				q.push(tmp->ptr[LCHILD]);
+
+			if (tmp->ptr[RCHILD])
+				q.push(tmp->ptr[RCHILD]);
+
+			delete tmp;
+		}
+
+		m_pRoot = nullptr;
+	}
+
+	int get_depth()
+	{
+		int depth = -1;
+
+		std::queue < std::pair<BSTNode<T1, T2>*, int> > q;
+
+		if (m_pRoot != nullptr)
+			q.push(std::make_pair(m_pRoot, 0));
+
+		while (!q.empty())
+		{
+			BSTNode<T1, T2>* CurNode = q.front().first;
+			int CurDepth = q.front().second;
+			q.pop();
+
+			if (CurDepth > depth)
+			{
+				depth = CurDepth;
+			}
+
+			if (CurNode->ptr[LCHILD])
+			{
+				q.push(std::make_pair(CurNode->ptr[LCHILD], CurDepth + 1));
+			}
+
+			if (CurNode->ptr[RCHILD])
+			{
+				q.push(std::make_pair(CurNode->ptr[RCHILD], CurDepth + 1));
+			}
+
+		}
+
+		return depth;
+	}
+
+	BSTNode<T1,T2>* find(const T1& _key)
+	{
+		if (m_pRoot == nullptr)
+			return nullptr;
+
+		BSTNode<T1, T2>* CurNode = m_pRoot;
+
+		while (CurNode != nullptr && CurNode->data->first != _key)
+		{
+			if (CurNode->data->first < _key)
+				CurNode = CurNode->ptr[RCHILD];
+			else
+				CurNode = CurNode->ptr[LCHILD];
+		}
+
+		return CurNode;
+	}
+
+	void erase(const T1& _key)
+	{
+		//BSTNode<T1, T2>* Target = find(_key);
+
+		//// 자식이 없는 경우
+		//if (Target->ptr[RCHILD] == nullptr && Target->ptr[LCHILD] == nullptr)
+		//{
+		//	BSTNode<T1, T2>* parent = Target->ptr[PARENT];
+		//	parent->ptr
+		//}
+
+	}
+
 	void clear()
 	{
+		if (m_pRoot == nullptr)
+			return;
+
 		std::queue<BSTNode<T1, T2>*> q;
 		q.push(m_pRoot);
 
@@ -139,6 +292,8 @@ public:
 
 		m_pRoot = nullptr;
 	}
+
+
 
 
 public:
