@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <assert.h>
 
 template <typename T>
@@ -7,13 +7,13 @@ class TList;
 template <typename T>
 class TNode
 {
-public://¸â¹ö º¯¼ö
-	// µ¥ÀÌÅÍ, ÀÌÀü ³ëµå, ´ÙÀ½ ³ëµå
+public://ë©¤ë²„ ë³€ìˆ˜
+	// ë°ì´í„°, ì´ì „ ë…¸ë“œ, ë‹¤ìŒ ë…¸ë“œ
 	T			m_Data;
 	TNode<T>*	m_pPrev;
 	TNode<T>*	m_pNext;
 
-public:// »ı¼ºÀÚ, ¼Ò¸êÀÚ, ¿À¹ö·Îµù
+public:// ìƒì„±ì, ì†Œë©¸ì, ì˜¤ë²„ë¡œë”©
 	TNode()
 		: m_Data(0)
 		, m_pPrev(nullptr)
@@ -39,25 +39,25 @@ public:// »ı¼ºÀÚ, ¼Ò¸êÀÚ, ¿À¹ö·Îµù
 template <typename T>
 class TList
 {
-private://¸â¹ö º¯¼ö
-	//µé¾î°¡¾ßÇÏ´Â ¸â¹ö´Â ÀÏ´Ü...
-	// Ã¹ ³ëµå, ³¡ ³ëµå, µ¥ÀÌÅÍ °³¼ö
+private://ë©¤ë²„ ë³€ìˆ˜
+	//ë“¤ì–´ê°€ì•¼í•˜ëŠ” ë©¤ë²„ëŠ” ì¼ë‹¨...
+	// ì²« ë…¸ë“œ, ë ë…¸ë“œ, ë°ì´í„° ê°œìˆ˜
 	TNode<T>*	m_pHead;
 	TNode<T>*	m_pTail;
 	int			m_Count;
-public:// ¸â¹ö ÇÔ¼ö
-	void push_back(const T& data);// ÀÎÀÚ¸¦ const T&·Î ÇØÁÖ´Â ÀÌÀ¯´Â ¿øº»À» ¼öÁ¤ÇÒ ¿©Áö°¡ ¾ø°Ô ÇÏ¸é¼­, ½Ñ °ª¿¡ ¹Ş¾Æ¿À±â
-	void push_front(const T& data);// ÀÎÀÚ¸¦ const T&·Î ÇØÁÖ´Â ÀÌÀ¯´Â ¿øº»À» ¼öÁ¤ÇÒ ¿©Áö°¡ ¾ø°Ô ÇÏ¸é¼­, ½Ñ °ª¿¡ ¹Ş¾Æ¿À±â
+public:// ë©¤ë²„ í•¨ìˆ˜
+	void push_back(const T& data);// ì¸ìë¥¼ const T&ë¡œ í•´ì£¼ëŠ” ì´ìœ ëŠ” ì›ë³¸ì„ ìˆ˜ì •í•  ì—¬ì§€ê°€ ì—†ê²Œ í•˜ë©´ì„œ, ì‹¼ ê°’ì— ë°›ì•„ì˜¤ê¸°
+	void push_front(const T& data);// ì¸ìë¥¼ const T&ë¡œ í•´ì£¼ëŠ” ì´ìœ ëŠ” ì›ë³¸ì„ ìˆ˜ì •í•  ì—¬ì§€ê°€ ì—†ê²Œ í•˜ë©´ì„œ, ì‹¼ ê°’ì— ë°›ì•„ì˜¤ê¸°
 	int size() { return m_Count; }
-	class iterator; // Àü¹æ ¼±¾ğ
+	class iterator; // ì „ë°© ì„ ì–¸
 	void insert(const T& data, const iterator& index);
 	iterator begin()
 	{
-		return iterator(this, m_pHead);// ÇÔ¼öÀÇ ¹İÈ¯ °ªÀº ÀÚµ¿À¸·Î R-value Ã³¸®µÇ¾î ÀÌµ¿´ëÀÔ¿¬»êÀÚ°¡ È£Ãâ
+		return iterator(this, m_pHead);// í•¨ìˆ˜ì˜ ë°˜í™˜ ê°’ì€ ìë™ìœ¼ë¡œ R-value ì²˜ë¦¬ë˜ì–´ ì´ë™ëŒ€ì…ì—°ì‚°ìê°€ í˜¸ì¶œ
 	}
 	iterator end()
 	{
-		return iterator(this, nullptr); // endÀÇ °æ¿ì¸¦ nullptr·Î º¸´Â°É·Î ÇÏÀÚ
+		return iterator(this, nullptr); // endì˜ ê²½ìš°ë¥¼ nullptrë¡œ ë³´ëŠ”ê±¸ë¡œ í•˜ì
 	}
 	iterator erase(iterator& iter);
 	void swap(TList<T>& list);
@@ -66,22 +66,22 @@ public://iterator
 	class iterator
 	{
 		friend class TList<T>;
-	private://¸â¹ö º¯¼ö
-		//¸â¹ö´Â ÀÌ iterator¸¦ ¼ÒÀ¯ÇÏ´Â TList °´Ã¼¸¦ ´ã´Â ¸â¹ö ÇÏ³ª, ±×¸®°í °¡¸®Å°´Â µ¥ÀÌÅÍ(³ëµå)ÇÏ³ª°¡ ÇÊ¿äÇß¾úÀ½
+	private://ë©¤ë²„ ë³€ìˆ˜
+		//ë©¤ë²„ëŠ” ì´ iteratorë¥¼ ì†Œìœ í•˜ëŠ” TList ê°ì²´ë¥¼ ë‹´ëŠ” ë©¤ë²„ í•˜ë‚˜, ê·¸ë¦¬ê³  ê°€ë¦¬í‚¤ëŠ” ë°ì´í„°(ë…¸ë“œ)í•˜ë‚˜ê°€ í•„ìš”í–ˆì—ˆìŒ
 		TList<T>* m_pOwner;
 		TNode<T>* m_pTarget;
 
 	public://operator ++ -- == != *
 		iterator& operator++()
 		{
-			// ¿¹¿Ü Ã³¸®) ÀÌÅÍ·¹ÀÌÅÍ°¡ Àß¸ø µÈ µ¥ÀÌÅÍ¸¦ °¡¸®Å°°í ÀÖÀ» °æ¿ì, Àß¸øµÈ list°´Ã¼¸¦ °¡¸®Å°°í ÀÖÀ» °æ¿ì
+			// ì˜ˆì™¸ ì²˜ë¦¬) ì´í„°ë ˆì´í„°ê°€ ì˜ëª» ëœ ë°ì´í„°ë¥¼ ê°€ë¦¬í‚¤ê³  ìˆì„ ê²½ìš°, ì˜ëª»ëœ listê°ì²´ë¥¼ ê°€ë¦¬í‚¤ê³  ìˆì„ ê²½ìš°
 			assert(!(m_pOwner == nullptr || m_pTarget == nullptr));
 			m_pTarget = m_pTarget->m_pNext;
 			return *this;
 		}
 		iterator operator++(int)
 		{
-			// ¿¹¿Ü Ã³¸®) ÀÌÅÍ·¹ÀÌÅÍ°¡ Àß¸ø µÈ µ¥ÀÌÅÍ¸¦ °¡¸®Å°°í ÀÖÀ» °æ¿ì, Àß¸øµÈ list°´Ã¼¸¦ °¡¸®Å°°í ÀÖÀ» °æ¿ì
+			// ì˜ˆì™¸ ì²˜ë¦¬) ì´í„°ë ˆì´í„°ê°€ ì˜ëª» ëœ ë°ì´í„°ë¥¼ ê°€ë¦¬í‚¤ê³  ìˆì„ ê²½ìš°, ì˜ëª»ëœ listê°ì²´ë¥¼ ê°€ë¦¬í‚¤ê³  ìˆì„ ê²½ìš°
 			iterator Buffer(m_pOwner, m_pTarget);
 			assert(!(m_pOwner == nullptr || m_pTarget == nullptr));
 			m_pTarget = m_pTarget->m_pNext;
@@ -89,7 +89,7 @@ public://iterator
 		}
 		iterator& operator--()
 		{
-			// ¿¹¿Ü Ã³¸®) ÀÌÅÍ·¹ÀÌÅÍ°¡ Àß¸ø µÈ µ¥ÀÌÅÍ¸¦ °¡¸®Å°°í ÀÖÀ» °æ¿ì, Àß¸øµÈ list°´Ã¼¸¦ °¡¸®Å°°í ÀÖÀ» °æ¿ì
+			// ì˜ˆì™¸ ì²˜ë¦¬) ì´í„°ë ˆì´í„°ê°€ ì˜ëª» ëœ ë°ì´í„°ë¥¼ ê°€ë¦¬í‚¤ê³  ìˆì„ ê²½ìš°, ì˜ëª»ëœ listê°ì²´ë¥¼ ê°€ë¦¬í‚¤ê³  ìˆì„ ê²½ìš°
 			assert(!(m_pOwner == nullptr || m_pTarget == m_pHead));
 			if (m_pTarget == nullptr)
 			{
@@ -104,7 +104,7 @@ public://iterator
 		iterator& operator--(int)
 		{
 			iterator Buffer(m_pOwner, m_pTarget);
-			// ¿¹¿Ü Ã³¸®) ÀÌÅÍ·¹ÀÌÅÍ°¡ Àß¸ø µÈ µ¥ÀÌÅÍ¸¦ °¡¸®Å°°í ÀÖÀ» °æ¿ì, Àß¸øµÈ list°´Ã¼¸¦ °¡¸®Å°°í ÀÖÀ» °æ¿ì
+			// ì˜ˆì™¸ ì²˜ë¦¬) ì´í„°ë ˆì´í„°ê°€ ì˜ëª» ëœ ë°ì´í„°ë¥¼ ê°€ë¦¬í‚¤ê³  ìˆì„ ê²½ìš°, ì˜ëª»ëœ listê°ì²´ë¥¼ ê°€ë¦¬í‚¤ê³  ìˆì„ ê²½ìš°
 			assert(!(m_pOwner == nullptr || m_pTarget == m_pHead));
 			if (m_pTarget == nullptr)
 			{
@@ -132,7 +132,7 @@ public://iterator
 		{
 			return m_pTarget->m_Data;
 		}
-	public://»ı¼ºÀÚ, ¼Ò¸êÀÚ, ¿À¹ö·Îµù
+	public://ìƒì„±ì, ì†Œë©¸ì, ì˜¤ë²„ë¡œë”©
 		iterator()
 			:m_pOwner(nullptr)
 			,m_pTarget(nullptr)
@@ -151,10 +151,10 @@ public://iterator
 
 		}
 	};
-public:// ¿¬»êÀÚ ¿À¹ö·Îµù (=)
+public:// ì—°ì‚°ì ì˜¤ë²„ë¡œë”© (=)
 	TList<T>& operator =(TList<T>&& other);
 
-public:// »ı¼ºÀÚ, ¼Ò¸êÀÚ, ¿À¹ö·Îµù
+public:// ìƒì„±ì, ì†Œë©¸ì, ì˜¤ë²„ë¡œë”©
 	TList()
 		:m_pHead(nullptr)
 		, m_pTail(nullptr)
@@ -172,12 +172,12 @@ void TList<T>::push_back(const T& data)
 {
 	TNode<T>* NewNode = new TNode<T>(data);
 
-	// ¿¹¿Ü Ã³¸® - Ã¹ µ¥ÀÌÅÍÀÏ °æ¿ì
+	// ì˜ˆì™¸ ì²˜ë¦¬ - ì²« ë°ì´í„°ì¼ ê²½ìš°
 	if (m_Count == 0)
 	{
 		m_pHead = NewNode;
 	}
-	else // Ã¹ µ¥ÀÌÅÍ°¡ ¾Æ´Ò °æ¿ì
+	else // ì²« ë°ì´í„°ê°€ ì•„ë‹ ê²½ìš°
 	{
 		m_pTail->m_pNext = NewNode;
 		NewNode->m_pPrev = m_pTail;
@@ -194,12 +194,12 @@ void TList<T>::push_front(const T& data)
 {
 	TNode<T>* NewNode = new TNode<T>(data);
 
-	// ¿¹¿Ü Ã³¸® - Ã¹ µ¥ÀÌÅÍÀÏ °æ¿ì
+	// ì˜ˆì™¸ ì²˜ë¦¬ - ì²« ë°ì´í„°ì¼ ê²½ìš°
 	if (m_Count == 0)
 	{
 		m_pTail = NewNode;
 	}
-	else // Ã¹ µ¥ÀÌÅÍ°¡ ¾Æ´Ò °æ¿ì
+	else // ì²« ë°ì´í„°ê°€ ì•„ë‹ ê²½ìš°
 	{
 		m_pHead->m_pPrev = NewNode;
 		NewNode->m_pNext = m_pHead;
@@ -227,7 +227,7 @@ typename TList<T>::iterator TList<T>::erase(iterator& iter)
 {
 	TNode<T>* Target = iter.m_pTarget;
 	TNode<T>* nextNode = Target->m_pNext;
-	// ¿¹¿Ü Ã³¸®) °°Àº List °´Ã¼ÀÇ µ¥ÀÌÅÍÀÎ°¡?
+	// ì˜ˆì™¸ ì²˜ë¦¬) ê°™ì€ List ê°ì²´ì˜ ë°ì´í„°ì¸ê°€?
 	assert(iter.m_pOwner == this && Target != nullptr);
 	if (Target == m_pHead)
 	{
