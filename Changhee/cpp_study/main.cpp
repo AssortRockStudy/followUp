@@ -2,8 +2,6 @@
 
 #include "CList.h"
 
-#include <list>
-
 using std::cout;
 using std::endl;
 
@@ -19,16 +17,9 @@ int main()
 	test.push_front(2);
 	test.push_front(3);
 
+	CList<int>::iterator iter = test.begin();
 
-	int a = test.front();
-	int b = test.back();
-
-	test.pop_front();
-
-	test.pop_back();
-
-
-
+	CList<int>::iterator iter2 = test.erase(iter);
 
 	return 0;
 
