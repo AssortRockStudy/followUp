@@ -50,6 +50,7 @@ public:// 멤버 함수
 	void push_front(const T& data);// 인자를 const T&로 해주는 이유는 원본을 수정할 여지가 없게 하면서, 싼 값에 받아오기
 	int size() { return m_Count; }
 	class iterator; // 전방 선언
+	void insert(const T& data, const iterator& index);
 	iterator begin()
 	{
 		return iterator(this, m_pHead);// 함수의 반환 값은 자동으로 R-value 처리되어 이동대입연산자가 호출
@@ -59,6 +60,7 @@ public:// 멤버 함수
 		return iterator(this, nullptr); // end의 경우를 nullptr로 보는걸로 하자
 	}
 	iterator erase(iterator& iter);
+	void swap(TList<T>& list);
 
 public://iterator
 	class iterator
@@ -143,11 +145,14 @@ public://iterator
 		{
 
 		}
+		
 		~iterator()
 		{
 
 		}
 	};
+public:// 연산자 오버로딩 (=)
+	TList<T>& operator =(TList<T>&& other);
 
 public:// 생성자, 소멸자, 오버로딩
 	TList()
@@ -156,6 +161,7 @@ public:// 생성자, 소멸자, 오버로딩
 		, m_Count(0)
 	{
 	}
+	TList(TList<T>&& other);
 	~TList();
 
 };
@@ -204,6 +210,19 @@ void TList<T>::push_front(const T& data)
 }
 
 template<typename T>
+void TList<T>::insert(const T& data, const iterator& index)
+{
+	assert(!(index.m_pOwner == nullptr || index.m_pTarget == nullptr || index.m_pOwner != this));
+	TNode<T>* Target = index.m_pTarget;
+	TNode<T>* NewNode = new TNode<T>(data, Target, Target->m_pNext);
+	
+	if(Target->m_pNext != nullptr)
+		Target->m_pNext->m_pPrev = NewNode;
+	Target->m_pNext = NewNode;
+	++m_Count;
+}
+
+template<typename T>
 typename TList<T>::iterator TList<T>::erase(iterator& iter)
 {
 	TNode<T>* Target = iter.m_pTarget;
@@ -236,6 +255,38 @@ typename TList<T>::iterator TList<T>::erase(iterator& iter)
 
 }
 
+template<typename T>
+inline void TList<T>::swap(TList<T>& list)
+{
+	TList<T> TEMP = std::move(list);
+	list = std::move(*this);
+	*this = std::move(TEMP);
+}
+
+
+template<typename T>
+inline TList<T>::TList(TList<T>&& other)
+	:m_Count(other.m_Count)
+	, m_pHead(other.m_pHead)
+	,m_pTail(other.m_pTail)
+{
+	other.m_Count = 0;
+	other.m_pHead = nullptr;
+	other.m_pTail = nullptr;
+
+}
+
+template<typename T>
+TList<T>& TList<T>::operator =(TList<T>&& other)
+{
+	m_Count = other.m_Count;
+	m_pHead = other.m_pHead;
+	m_pTail = other.m_pTail;
+	other.m_Count = 0;
+	other.m_pHead = nullptr;
+	other.m_pTail = nullptr;
+	return *this;
+}
 
 template<typename T>
 inline TList<T>::~TList()
