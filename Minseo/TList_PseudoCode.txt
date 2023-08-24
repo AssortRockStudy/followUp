@@ -18,8 +18,9 @@
 7. iterator(O)
 8. iterator 함수와 리스트 함수
 	begin(O), end(O), erase(O)
-	size
-9. iterator 연산자 오버로딩, 리스트 연산자 오버로딩
+	size(O)
+9. iterator 연산자 오버로딩
+	++(O), --(O), ==, !=, *(O)
 
 ---
 

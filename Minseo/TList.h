@@ -48,6 +48,7 @@ private://멤버 변수
 public:// 멤버 함수
 	void push_back(const T& data);// 인자를 const T&로 해주는 이유는 원본을 수정할 여지가 없게 하면서, 싼 값에 받아오기
 	void push_front(const T& data);// 인자를 const T&로 해주는 이유는 원본을 수정할 여지가 없게 하면서, 싼 값에 받아오기
+	int size() { return m_Count; }
 	class iterator; // 전방 선언
 	iterator begin()
 	{
@@ -67,6 +68,68 @@ public://iterator
 		//멤버는 이 iterator를 소유하는 TList 객체를 담는 멤버 하나, 그리고 가리키는 데이터(노드)하나가 필요했었음
 		TList<T>* m_pOwner;
 		TNode<T>* m_pTarget;
+
+	public://operator ++ -- == != *
+		iterator& operator++()
+		{
+			// 예외 처리) 이터레이터가 잘못 된 데이터를 가리키고 있을 경우, 잘못된 list객체를 가리키고 있을 경우
+			assert(!(m_pOwner == nullptr || m_pTarget == nullptr));
+			m_pTarget = m_pTarget->m_pNext;
+			return *this;
+		}
+		iterator operator++(int)
+		{
+			// 예외 처리) 이터레이터가 잘못 된 데이터를 가리키고 있을 경우, 잘못된 list객체를 가리키고 있을 경우
+			iterator Buffer(m_pOwner, m_pTarget);
+			assert(!(m_pOwner == nullptr || m_pTarget == nullptr));
+			m_pTarget = m_pTarget->m_pNext;
+			return Buffer;
+		}
+		iterator& operator--()
+		{
+			// 예외 처리) 이터레이터가 잘못 된 데이터를 가리키고 있을 경우, 잘못된 list객체를 가리키고 있을 경우
+			assert(!(m_pOwner == nullptr || m_pTarget == m_pHead));
+			if (m_pTarget == nullptr)
+			{
+				m_pTarget = m_pTail;
+			}
+			else
+			{
+				m_pTarget = m_pTarget->m_pPrev;
+			}
+			return *this;
+		}
+		iterator& operator--(int)
+		{
+			iterator Buffer(m_pOwner, m_pTarget);
+			// 예외 처리) 이터레이터가 잘못 된 데이터를 가리키고 있을 경우, 잘못된 list객체를 가리키고 있을 경우
+			assert(!(m_pOwner == nullptr || m_pTarget == m_pHead));
+			if (m_pTarget == nullptr)
+			{
+				m_pTarget = m_pTail;
+			}
+			else
+			{
+				m_pTarget = m_pTarget->m_pPrev;
+			}
+			return Buffer;
+		}
+		bool operator ==(const iterator& _other)
+		{
+			if (_other.m_pOwner == m_pOwner && _other.m_pTarget == m_pTarget)
+			{
+				return true;
+			}
+			return false;
+		}
+		bool operator !=(const iterator& _other)
+		{
+			return !(this->operator==(_other));
+		}
+		T& operator *()
+		{
+			return m_pTarget->m_Data;
+		}
 	public://생성자, 소멸자, 오버로딩
 		iterator()
 			:m_pOwner(nullptr)
