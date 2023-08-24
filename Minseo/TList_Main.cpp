@@ -13,7 +13,8 @@ int main()
 
 	TList<int>::iterator iter = list.begin();
 
-	list.erase(iter);
+	iter = list.erase(iter);
+	iter = list.erase(iter);
 
-	return 0;
+  	return 0;
 }

@@ -143,29 +143,33 @@ void TList<T>::push_front(const T& data)
 template<typename T>
 typename TList<T>::iterator TList<T>::erase(iterator& iter)
 {
-	TNode<T>* NodeBuf = iter.m_pTarget->m_pNext;
+	TNode<T>* Target = iter.m_pTarget;
+	TNode<T>* nextNode = Target->m_pNext;
 	// 예외 처리) 같은 List 객체의 데이터인가?
-	assert(iter.m_pOwner == this && iter.m_pTarget != nullptr);
-	if (iter.m_pTarget == m_pHead)
+	assert(iter.m_pOwner == this && Target != nullptr);
+	if (Target == m_pHead)
 	{
-		iter.m_pTarget->m_pNext->m_pPrev = nullptr;
+		Target->m_pNext->m_pPrev = nullptr;
 		m_pHead = m_pHead->m_pNext;
 	}
-	else
+	else if (Target->m_pNext != nullptr)
 	{
-		iter.m_pTarget->m_pNext->m_pPrev = iter.m_pTarget->m_pPrev;
+		Target->m_pNext->m_pPrev = Target->m_pPrev;
 	}
-	if (iter.m_pTarget == m_pTail)
+	if (Target == m_pTail)
 	{
-		iter.m_pTarget->m_pPrev->m_pNext = nullptr;
+		Target->m_pPrev->m_pNext = nullptr;
 		m_pTail = m_pTail->m_pPrev;
 	}
-	else
+	else if (Target->m_pPrev != nullptr)
 	{
-		iter.m_pTarget->m_pPrev->m_pNext = iter.m_pTarget->m_pNext;
+		Target->m_pPrev->m_pNext = Target->m_pNext;
 	}
 	delete iter.m_pTarget;
-	return iterator(this, NodeBuf);
+	
+	--m_Count;
+
+	return iterator(this, nextNode);
 
 }
 
