@@ -5,7 +5,7 @@
 
 using std::cout;
 
-#define END_ITER -842150451;
+#define END_ITER -842150451
 
 template<typename T>
 struct Node
@@ -46,13 +46,13 @@ private:
 	Node<T>* m_tail;
 
 public:
-	void	push_back(T _Val);
-	void	push_front(T _Val);
+	void	push_back(const T& _Val);
+	void	push_front(const T& _Val);
 
 
 	iterator	begin();
 	iterator	end();
-	iterator	insert(const iterator& _where, T _val);
+	iterator	insert(const iterator& _where, const T& _val);
 	iterator	erase(const iterator& _where);
 
 	void	traval();
@@ -87,6 +87,7 @@ public:
 		if (m_Node->prev == nullptr)
 			assert(nullptr);
 
+		m_Node = m_Node->prev;
 		m_Node = m_Node->prev;
 
 		return m_Node->prev;
@@ -132,7 +133,7 @@ public:
 
 
 template<typename T>
-inline void myList<T>::push_back(T _Val)
+inline void myList<T>::push_back(const T& _Val)
 {
 	Node<T>* newNode = new Node<T>;
 	newNode->data = _Val;
@@ -164,7 +165,7 @@ inline void myList<T>::push_back(T _Val)
 }
 
 template<typename T>
-inline void myList<T>::push_front(T _Val)
+inline void myList<T>::push_front(const T& _Val)
 {
 	Node<T>* newNode = new Node<T>;
 	newNode->data = _Val;
@@ -203,9 +204,9 @@ inline typename myList<T>::iterator myList<T>::end()
 }
 
 template<typename T>
-inline typename myList<T>::iterator myList<T>::insert(const iterator& _where, T _val)
+inline typename myList<T>::iterator myList<T>::insert(const iterator& _where, const T& _val)
 {
-	if (this != _where.m_Owner || _where.m_Node == nullptr || _where.m_Node->data == -842150451)
+	if (this != _where.m_Owner || _where.m_Node == nullptr || _where.m_Node->data == END_ITER)
 		assert(nullptr);
 
 	Node<T>* curNode = _where.m_Node;
@@ -225,7 +226,7 @@ inline typename myList<T>::iterator myList<T>::insert(const iterator& _where, T 
 template<typename T>
 inline typename myList<T>::iterator myList<T>::erase(const iterator& _where)
 {
-	if (this != _where.m_Owner || _where.m_Node == nullptr || _where.m_Node->data == -842150451)
+	if (this != _where.m_Owner || _where.m_Node == nullptr || _where.m_Node->data == END_ITER )
 		assert(nullptr);
 
 	Node<T>* curNode = _where.m_Node;
