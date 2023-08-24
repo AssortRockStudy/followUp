@@ -131,6 +131,7 @@
     <ClCompile Include="mainclist.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bst.h" />
     <ClInclude Include="CList.h" />
     <ClInclude Include="TCList.h" />
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "CList.h"
 #include "TCList.h"
+#include "bst.h"
 
 using std::cout;
 using std::cin;
@@ -111,6 +112,15 @@ int main() {
 	tcl1.pushback(c3);
 
 
+	Pair<int, float> p1(1, 1.1f);
+	Pair<int, float> p2(2, 2.2f);
+	Pair<int, float> p3(3, 3.3f);
+	Pair<int, float> p4(4, 4.4f);
+	CBST<int, float> cb1;
+
+	cb1.pushdata(p1);
+
+	cb1.pushdata(p2);
 
 	return 0;
 }
