@@ -1,4 +1,6 @@
 #include <iostream>
+#include <crtdbg.h> // 메모리 누수를 체크하는 헤더 파일
+
 #include "TList.h"
 #include "list"
 
@@ -6,6 +8,9 @@ using namespace std;
 
 int main() 
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetBreakAlloc(18); // 18번 째 메모리 할당이 발생할 때, 바로 중단
+
 	TList<int> tlist;
 	TList<int> tlist2;
 
@@ -16,7 +21,7 @@ int main()
 	tlist.push_front(20);
 	tlist.push_front(30);
 
-	
+	//new int;
 
 	TList<int>::iterator iter = tlist.begin();
 	TList<int>::iterator iter2 = tlist.begin();
