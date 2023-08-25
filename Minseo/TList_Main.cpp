@@ -1,5 +1,5 @@
-#include <iostream>
-#include <crtdbg.h> // ¸Ş¸ğ¸® ´©¼ö¸¦ Ã¼Å©ÇÏ´Â Çì´õ ÆÄÀÏ
+ï»¿#include <iostream>
+#include <crtdbg.h> // ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ë¥¼ ì²´í¬í•˜ëŠ” í—¤ë” íŒŒì¼
 
 #include "TList.h"
 #include "list"
@@ -9,7 +9,7 @@ using namespace std;
 int main() 
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtSetBreakAlloc(18); // 18¹ø Â° ¸Ş¸ğ¸® ÇÒ´çÀÌ ¹ß»ıÇÒ ¶§, ¹Ù·Î Áß´Ü
+	_CrtSetBreakAlloc(18); // 18ë²ˆ ì§¸ ë©”ëª¨ë¦¬ í• ë‹¹ì´ ë°œìƒí•  ë•Œ, ë°”ë¡œ ì¤‘ë‹¨
 
 	TList<int> tlist;
 	TList<int> tlist2;
