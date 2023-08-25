@@ -61,6 +61,10 @@ public:// 멤버 함수
 	}
 	iterator erase(iterator& iter);
 	void swap(TList<T>& list);
+	T& front() { return m_pHead->m_Data; }
+	T& back() { return m_pTail->m_Data; }
+	void pop_front();
+	void pop_back();
 
 public://iterator
 	class iterator
@@ -261,6 +265,54 @@ inline void TList<T>::swap(TList<T>& list)
 	TList<T> TEMP = std::move(list);
 	list = std::move(*this);
 	*this = std::move(TEMP);
+}
+
+template<typename T>
+inline void TList<T>::pop_front()
+{
+	// 예외 처리) 만약 데이터가 단 한 개도 없을 경우
+	assert(m_Count > 0); // 데이터가 없을 경우
+	
+	TNode<T>* pNext = m_pHead->m_pNext;
+
+	// 다음 노드가 이전 노드를 가리킬 떄 nullptr을 가리키게 해야함
+	if (pNext != nullptr)
+	{
+		pNext->m_pPrev = nullptr;
+	}
+
+	// 첫 노드 지우기
+	delete m_pHead;
+
+	// 헤드 노드가 다음 노드(이제 첫 데이터가 될 노드)를 가리키게 해야함
+	m_pHead = pNext;
+
+	// 데이터 개수 감소
+	--m_Count;
+}
+
+template<typename T>
+inline void TList<T>::pop_back()
+{
+	// 예외 처리) 만약 데이터가 단 한 개도 없을 경우
+	assert(m_Count > 0); // 데이터가 없을 경우
+
+	TNode<T>* pPrev = m_pTail->m_pPrev;
+
+	// 다음 노드가 이전 노드를 가리킬 떄 nullptr을 가리키게 해야함
+	if (pPrev != nullptr)
+	{
+		pPrev->m_pNext = nullptr;
+	}
+
+	// 첫 노드 지우기
+	delete m_pTail;
+
+	// 헤드 노드가 다음 노드(이제 첫 데이터가 될 노드)를 가리키게 해야함
+	m_pTail = pPrev; // 만약 다음 노드가 없으면 nullptr(end iterator)를 반환하게 함
+
+	// 데이터 개수 감소
+	--m_Count;
 }
 
 

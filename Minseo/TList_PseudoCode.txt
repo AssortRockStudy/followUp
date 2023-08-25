@@ -30,5 +30,5 @@
 
 ---
 
-13. pop_front(), pop_back()
-14. front(), back()
+13. pop_front(), pop_back() (O)
+14. front(), back() (O)
