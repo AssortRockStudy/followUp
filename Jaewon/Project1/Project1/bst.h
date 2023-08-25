@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "TemplateCList.h"
 
 using std::cout;
 using std::endl;
@@ -39,9 +40,25 @@ class BST {
 	TNode<T1, T2>* root;
 	int cnt;
 
+
+private:
+	// 비우기
+	// 재귀 이용하여 왼쪽 끝 > 오른쪽 끝 순서로 노드 삭제
+	void clear(TNode<T1, T2>* n) {
+		if (n->othPtr[LCHD] != nullptr) {
+			clear(n->othPtr[LCHD]);
+		}
+		if (n->othPtr[RCHD] != nullptr) {
+			clear(n->othPtr[RCHD]);
+		}
+		delete n;
+	}
 public:
 	BST():root(nullptr), cnt(0){}
-	~BST(){}
+	~BST() { 
+		clear(root);
+		root = nullptr;
+	}
 
 public:
 
@@ -76,6 +93,7 @@ public:
 		}
 		++cnt;
 	}
+	
 
 	// 전위 순회
 	// 먼저 node의 데이터 값을 출력한 뒤
@@ -127,7 +145,28 @@ public:
 	// 출력하고
 	// 다음방향(left, right) 방향으로의 노드를 
 	// queue에 다시 집어넣는 식으로 하여 queue가 빌때까지 반복
+	void PrintLevelTree() {
+		if (nullptr != root) {
+			TemplateCList<TNode<T1, T2>*> temp;
+			temp.pushBack(root);
 
+			while(temp.size() != 0){
+				TNode<T1, T2>* lvP = temp.getFront();
+				temp.popFront();
+				cout << lvP->data.second << endl;
+
+				if (nullptr != lvP->othPtr[LCHD])
+					temp.pushBack(lvP->othPtr[LCHD]);
+				if (nullptr != lvP->othPtr[RCHD])
+					temp.pushBack(lvP->othPtr[RCHD]);
+			}
+		}
+	}
+	
+	
+	
+	
+	
 	// 멤버 변수를 외부에서 접근할 수 없으므로
 	// int 값을 주어 순회를 출력하도록 함
 	void PrintTree(int num) {
@@ -144,6 +183,10 @@ public:
 		case 3:
 			cout << "후위 순회" << endl;
 			PrintRearTree(root);
+			break;
+		case 4:
+			cout << "층별 순회" << endl;
+			PrintLevelTree();
 			break;
 		default:
 			break;

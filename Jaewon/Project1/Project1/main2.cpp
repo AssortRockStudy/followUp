@@ -1,7 +1,7 @@
 #include "bst.h"
 
 int main() {
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	Pair<int, int> insert;
 	insert.first = 30;
 	insert.second = 30;
@@ -21,6 +21,8 @@ int main() {
 	myTree.PrintTree(2);
 	cout << endl;
 	myTree.PrintTree(3);
+	cout << endl;
+	myTree.PrintTree(4);
 	insert.first = 20;
 	insert.second = 20;
 	cout << endl;

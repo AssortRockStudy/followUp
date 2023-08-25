@@ -97,6 +97,18 @@ public:
 		++dCnt;
 	}
 	int size() { return dCnt; }
+	T& getFront() { return head->data; }
+	void popFront() {
+		assert(head);
+		Node<T>* temp = head->next;
+		delete head;
+		head = temp;
+		if (nullptr != head)
+			head->prev = nullptr;
+		--dCnt;
+	}
+
+
 
 
 	// 대입 연산자
