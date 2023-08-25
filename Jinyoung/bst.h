@@ -42,6 +42,15 @@ struct BSTNode
 		BSTNode<T1, T2>* plchild = nullptr,
 		BSTNode<T1, T2>* prchild = nullptr)
 		:data(_data), Ptr{ pparent ,plchild ,prchild } {};
+
+public:
+	bool HasLChild() { return Ptr[LCHILD]; }
+	bool HasRChild() { return Ptr[RCHILD]; }
+	bool IsRoot() { return !(Ptr[PARENT]); }
+	//bool IsLChild() {return };
+
+	//bool IsRChild();
+
 };
 
 
@@ -60,6 +69,27 @@ public:
 
 	void clear();
 	void clear_r();
+
+	iterator begin() 
+	{
+		//m_Root 가 nullptr 이면 (데이터가 1개도 입력이 안된 상황) end iterator 를준다.
+		if (m_Root) { return end(); }
+		BSTNode<T1,T2>* node = m_Root;
+		while (node->Ptr[LCHILD])
+		{
+			node = node->Ptr[LCHILD];
+		}
+		return iterator(this, pNode);
+	}
+
+	iterator end()
+	{
+
+
+
+
+	}
+
 	
 
 	CBST(const Pair<T1, T2>& _data)
@@ -133,6 +163,79 @@ public:
 		}
 
 	}
+
+
+public:
+
+
+	class iterator
+	{
+	private:
+		CBST<T1, T2>* m_pOwner;
+		BSTNode<T1, T2>* m_Target;
+
+
+	public:
+		bool operater == (const iterator& _other)
+		{
+			return m_pOwner == _other.m_pOwner && m_Target == _other.m_Target;
+		}
+
+		bool operater != (const iterator & _other)
+		{
+			return !(*this) == _other;
+		}
+
+		iterator& operater ++()
+		{
+			assert(m_Target);
+
+			//중위 후속자를 찾아서 가리킨다.
+			// 
+			// 규칙
+			// 1. 오른쪽자식이 있다면, 오른쪽으로가서 왼쪽자식이 없을때 까지 왼쪽으로 내려간다
+			// 
+			// 2. 오른쪽 자식이 없다면 , 내가 부모의 왼쪽자식일때까지 올라간다.
+			//
+
+			BSTNode<T1, T2>* curnode = m_Target
+
+			if (curnode->HasRChild())
+			{
+				while (m_Target->HasLChild()) {
+					m_Target = m_Target.Ptr[PARENT];
+				}
+			}
+			else
+			{
+				while (curnode != (curnode->Ptr[PARENT]->Ptr[LCHILD]))
+				{
+					curnode = curnode->Ptr[PARENT];
+				}
+			}
+
+			return iterator(m_pOwner,curnode);
+		}
+
+
+		iterator& operater++(int)
+		{
+			iterator copyiter = *this;
+			++(*this);
+			return copyiter;
+		}
+		iterator& operater--()
+		{
+			return *this;
+		}
+		iterator& operater--(int)
+		{
+			iterator copyiter = *this;
+			--(*this);
+			return copyiter;
+		}
+		friend class CBST;
+	};
 
 };
 

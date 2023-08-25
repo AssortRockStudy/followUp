@@ -124,6 +124,10 @@ int main() {
 	Pair<int, float> p4(4, 4.4f);
 	CBST<int, float> cb1;
 
+
+	//이진 탐색 트리는 사실 Red-Black Tree 이다. 같은개념으로는 AVL 트리가있다.
+	//자가 균형 이진탐색 트리
+	//
 	cb1.pushdata(p1);
 
 	cb1.pushdata(p2);
