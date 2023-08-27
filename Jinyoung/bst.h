@@ -100,6 +100,21 @@ public:
 		return iterator(this, nullptr);
 	}
 
+	int depth()
+	{
+		int depth = 0;
+		if (nullptr == m_Root) { return depth; }
+
+		iterator iter = begin();
+
+		for (; iter != end(); ++iter)
+		{
+
+		}
+
+
+	}
+
 
 
 	CBST(const Pair<T1, T2>& _data)
@@ -198,16 +213,31 @@ public:
 			return &m_Target->data;
 		}
 		
-		
+
+
+		iterator()
+			: m_pOwner(nullptr)
+			, m_Target(nullptr)
+		{}
+
+		iterator(CBST<T1, T2>* _Owner, BSTNode<T1, T2>* _Target)
+			: m_pOwner(_Owner)
+			, m_Target(_Target)
+		{}
+
+		~iterator()
+		{}
+
 		bool operator ==(const iterator& _other)
 		{
 			return m_pOwner == _other.m_pOwner && m_Target == _other.m_Target;
 		}
 
-		bool operator !=(const iterator & _other)
+		bool operator !=(const iterator& _other)
 		{
 			return !((*this) == _other);
 		}
+
 
 		iterator& operator ++()
 		{
@@ -223,6 +253,7 @@ public:
 
 
 			BSTNode<T1, T2>* curnode = m_Target;
+
 
 			if (curnode->HasRChild())
 			{
@@ -250,20 +281,9 @@ public:
 			return *this;
 		}
 
-	public:
-		iterator()
-			: m_pOwner(nullptr)
-			, m_Target(nullptr)
-		{}
 
-		iterator(CBST<T1, T2>* _Owner, BSTNode<T1, T2>* _Target)
-			: m_pOwner(_Owner)
-			, m_Target(_Target)
-		{}
 
-		~iterator()
-		{}
-
+		
 
 		iterator& operator++(int)
 		{
@@ -273,8 +293,58 @@ public:
 		}
 
 
+		iterator& last()
+		{
+			BSTNode<T1, T2>* curnode = m_Root;
+			//R차일드혹은 L차일드가 없을경우 중지.
+			while (curnode->HasRChild)
+			{
+				curnode = curnode[RCHILD];
+			}
+			m_Target = curnode;
+			return *this;
+		}
+
 		iterator& operator--()
 		{
+			assert(m_pOwner);
+			assert(m_pOwner->m_Root);
+			//null == target 에서 호출한경우 마지막 인자를 찾아주는 함수.
+			if (!m_Target)
+			{
+				return last();
+			}
+
+			//중위 선행자를 찾아서 가리킨다.
+			// 
+			// 규칙
+			// 1. 왼쪽자식이 있다면, 왼쪽으로가서 오른쪽자식이 없을때 까지 오른쪽으로 내려간다
+			// 
+			// 2. 왼쪽 자식이 없다면 , 내가 부모의 오른쪽자식일때까지 올라간다.
+
+			BSTNode<T1, T2>* curnode = m_Target;
+
+			if (curnode->HasLChild())
+			{
+				curnode = curnode->Ptr[LCHILD];
+				while (curnode->HasRChild()) {
+					curnode = curnode->Ptr[RCHILD];
+				}
+			}
+			else
+			{
+				while (curnode->IsLChild())
+				{
+					if (curnode->IsRoot())
+					{
+						curnode = nullptr;
+						break;
+					}
+					curnode = curnode->Ptr[PARENT];
+				}
+				curnode = curnode->Ptr[PARENT];
+			}
+			m_Target = curnode;
 			return *this;
 		}
 		iterator& operator--(int)
