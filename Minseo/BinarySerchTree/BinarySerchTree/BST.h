@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <assert.h>
 
 enum NODETYPE
@@ -56,38 +56,38 @@ template<typename t1, typename t2>
 inline void BST<t1, t2>::insert(Pair<t1, t2> pair)
 {
 	BSTNode<t1, t2>* newNode = new BSTNode<t1, t2>(pair);
-	// ¸¸¾à Ã¹ µ¥ÀÌÅÍÀÏ °æ¿ì
+	// ë§Œì•½ ì²« ë°ì´í„°ì¼ ê²½ìš°
 	if (0 == m_Count)
 	{
 		m_RootNode = newNode;
 		++m_Count;
 		return;
 	}
-	// Ã¹ µ¥ÀÌÅÍ°¡ ¾Æ´Ò °æ¿ì
+	// ì²« ë°ì´í„°ê°€ ì•„ë‹ ê²½ìš°
 	BSTNode<t1, t2>* buf = m_RootNode;
 	while (true)
 	{
-		if (buf->data.first < newNode->data.first) // ¹öÆÛº¸´Ù Å¬ °æ¿ì
+		if (buf->data.first < newNode->data.first) // ë²„í¼ë³´ë‹¤ í´ ê²½ìš°
 		{
 			if (buf->ptr[RCHILD] != nullptr)
 				buf = buf->ptr[RCHILD];
-			else // ÀÚ½Å ÀÚ¸® Ã£À½
+			else // ìì‹  ìë¦¬ ì°¾ìŒ
 			{
 				buf->ptr[RCHILD] = newNode;
 				break;
 			}
 		}
-		else if (buf->data.first > newNode->data.first) // ¹öÆÛº¸´Ù ÀÛÀ» °æ¿ì
+		else if (buf->data.first > newNode->data.first) // ë²„í¼ë³´ë‹¤ ì‘ì„ ê²½ìš°
 		{
 			if (buf->ptr[LCHILD] != nullptr)
 				buf = buf->ptr[LCHILD];
-			else // ÀÚ½Å ÀÚ¸® Ã£À½
+			else // ìì‹  ìë¦¬ ì°¾ìŒ
 			{
 				buf->ptr[LCHILD] = newNode;
 				break;
 			}
 		}
-		else // Å° °ª µ¥ÀÌÅÍ°¡ °°Àº °æ¿ì... HashMapÀÇ °æ¿ì¿¡´Â µ¥ÀÌÅÍ¸¦ µ¤¾î¾º¿î´Ù°í ÇÑ´Ù. ÇØº¼±î?
+		else // í‚¤ ê°’ ë°ì´í„°ê°€ ê°™ì€ ê²½ìš°... HashMapì˜ ê²½ìš°ì—ëŠ” ë°ì´í„°ë¥¼ ë®ì–´ì”Œìš´ë‹¤ê³  í•œë‹¤. í•´ë³¼ê¹Œ?
 		{
 			buf->data.second = newNode->data.second;
 			delete newNode;
