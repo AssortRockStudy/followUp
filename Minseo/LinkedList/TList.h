@@ -87,8 +87,7 @@ public://iterator
 		{
 			// 예외 처리) 이터레이터가 잘못 된 데이터를 가리키고 있을 경우, 잘못된 list객체를 가리키고 있을 경우
 			iterator Buffer(m_pOwner, m_pTarget);
-			assert(!(m_pOwner == nullptr || m_pTarget == nullptr));
-			m_pTarget = m_pTarget->m_pNext;
+			++(*this);
 			return Buffer;
 		}
 		iterator& operator--()
@@ -109,15 +108,7 @@ public://iterator
 		{
 			iterator Buffer(m_pOwner, m_pTarget);
 			// 예외 처리) 이터레이터가 잘못 된 데이터를 가리키고 있을 경우, 잘못된 list객체를 가리키고 있을 경우
-			assert(!(m_pOwner == nullptr || m_pTarget == m_pHead));
-			if (m_pTarget == nullptr)
-			{
-				m_pTarget = m_pTail;
-			}
-			else
-			{
-				m_pTarget = m_pTarget->m_pPrev;
-			}
+			--(*this);
 			return Buffer;
 		}
 		bool operator ==(const iterator& _other)
@@ -223,6 +214,8 @@ void TList<T>::insert(const T& data, const iterator& index)
 	if(Target->m_pNext != nullptr)
 		Target->m_pNext->m_pPrev = NewNode;
 	Target->m_pNext = NewNode;
+	if (Target == m_pTail)
+		m_pTail = newNode;
 	++m_Count;
 }
 
@@ -331,6 +324,9 @@ inline TList<T>::TList(TList<T>&& other)
 template<typename T>
 TList<T>& TList<T>::operator =(TList<T>&& other)
 {
+
+	assert(!(other.m_Count < 1 || other.m_pHead == nullptr || other == this));
+	
 	m_Count = other.m_Count;
 	m_pHead = other.m_pHead;
 	m_pTail = other.m_pTail;
