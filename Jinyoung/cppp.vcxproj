@@ -128,14 +128,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="checkuserinfo.cpp" />
     <ClCompile Include="CList.cpp" />
-    <ClCompile Include="mainclist.cpp" />
+    <ClCompile Include="mainclist.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="mainmini1.cpp" />
+    <ClCompile Include="newanything.cpp" />
+    <ClCompile Include="SaveLoad.cpp" />
+    <ClCompile Include="tarray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bst.h" />
     <ClInclude Include="CList.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="struct.h" />
+    <ClInclude Include="tarray.h" />
     <ClInclude Include="TCList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
