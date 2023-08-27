@@ -42,7 +42,13 @@ using std::endl;
 
 
 int main() {
-
+	enum MY_TYPE
+	{
+		TYPE1,
+		TYPE2,
+		TYPE3,
+		NONE,
+	};
 
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(170);
@@ -119,19 +125,35 @@ int main() {
 	tcl1.pushback(c2);
 	tcl1.pushback(c4);
 
-	Pair<int, float> p1(1, 1.1f);
-	Pair<int, float> p2(2, 2.2f);
-	Pair<int, float> p3(3, 3.3f);
-	Pair<int, float> p4(4, 4.4f);
-	CBST<int, float> cb1;
+	CBST<int, MY_TYPE> cb1;
+
+	cb1.pushdata(Create_Pair(100, MY_TYPE::TYPE1)); //				    100
+	cb1.pushdata(Create_Pair(70, MY_TYPE::TYPE1));  //			70				150	
+	cb1.pushdata(Create_Pair(150, MY_TYPE::TYPE1)); //	  50		80		125		  175
+	cb1.pushdata(Create_Pair(50, MY_TYPE::TYPE1)); //	25  60	  75  90   110 140   160  200
+	cb1.pushdata(Create_Pair(80, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(25, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(60, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(75, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(90, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(125, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(175, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(110, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(140, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(160, MY_TYPE::TYPE1));
+	cb1.pushdata(Create_Pair(200, MY_TYPE::TYPE1));
+
+	CBST<int, MY_TYPE>::iterator iter = cb1.begin();
+
+	for (; iter != cb1.end(); ++iter)
+	{
+		cout << iter->first << endl;
+	}
 
 
 	//이진 탐색 트리는 사실 Red-Black Tree 이다. 같은개념으로는 AVL 트리가있다.
 	//자가 균형 이진탐색 트리
-	//
-	cb1.pushdata(p1);
 
-	cb1.pushdata(p2);
 
 	cb1.clear_r();
 

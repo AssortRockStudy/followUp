@@ -20,12 +20,11 @@ struct Pair
 	T1 first;
 	T2 second;
 
-	Pair()
-		:first(nullptr), second(nullptr) {}
-	Pair(const T1& _first,const T2& _second)
-		:first(_first), second(_second) {}
 
 };
+
+
+
 
 
 template <typename T1, typename T2>
@@ -48,8 +47,18 @@ public:
 	bool HasRChild() { return Ptr[RCHILD]; }
 	bool IsRoot() { return !(Ptr[PARENT]); }
 
-	bool IsLChild() { return this == Ptr[PARENT]->Ptr[LCHILD] ; }
-	bool IsRchild() { return this == Ptr[PARENT]->Ptr[RCHILD] ; }
+	bool IsLChild() 
+	{
+		//root일경우 Ptr[PARENT]->Ptr[LCHILD] 연산하면안됨.
+		if (this->IsRoot()) return false;
+		return this == Ptr[PARENT]->Ptr[LCHILD] ; 
+	}
+	bool IsRchild() 
+	{
+		//root일경우 Ptr[PARENT]->Ptr[LCHILD] 연산하면안됨.
+		if (this->IsRoot()) return false;
+		return this == Ptr[PARENT]->Ptr[RCHILD] ; 
+	}
 
 
 };
@@ -63,7 +72,6 @@ private:
 	BSTNode<T1, T2>* m_Root;
 	int m_Count;
 	void DeletNode(BSTNode<T1, T2>* pbst);
-	class iterator;
 
 
 public:
@@ -72,11 +80,13 @@ public:
 
 	void clear();
 	void clear_r();
+	class iterator;
 
 	iterator begin()
 	{
 		//m_Root 가 nullptr 이면 (데이터가 1개도 입력이 안된 상황) end iterator 를준다.
-		if (m_Root) { return end(); }
+		if (!m_Root) { return end(); }
+		
 		BSTNode<T1, T2>* node = m_Root;
 		while (node->Ptr[LCHILD])
 		{
@@ -87,10 +97,7 @@ public:
 
 	iterator end()
 	{
-
-
-
-
+		return iterator(this, nullptr);
 	}
 
 
@@ -181,7 +188,16 @@ public:
 
 
 	public:
+		Pair<T1, T2>& operator * ()
+		{
+			return m_Target->data;
+		}
 
+		Pair<T1, T2>* operator -> ()
+		{
+			return &m_Target->data;
+		}
+		
 		
 		bool operator ==(const iterator& _other)
 		{
@@ -190,7 +206,7 @@ public:
 
 		bool operator !=(const iterator & _other)
 		{
-			return !(*this) == _other;
+			return !((*this) == _other);
 		}
 
 		iterator& operator ++()
@@ -205,7 +221,6 @@ public:
 			// 2. 오른쪽 자식이 없다면 , 내가 부모의 왼쪽자식일때까지 올라간다.
 			//
 
-			BSTNode<T1, T2>* m_Target;
 
 			BSTNode<T1, T2>* curnode = m_Target;
 
@@ -213,20 +228,41 @@ public:
 			{
 				curnode = curnode->Ptr[RCHILD];
 				while (curnode->HasLChild()) {
-					curnode = curnode.Ptr[LCHILD];
+					curnode = curnode->Ptr[LCHILD];
 				}
 			}
 			else
 			{
-				curnode = curnode[PARENT];
-				while (curnode->IsLChild)
+				while (curnode->IsRchild())
 				{
-					curnode = curnode[PARENT];
+					if (curnode->IsRoot())
+					{
+						curnode = nullptr;
+						break;
+					}
+					curnode = curnode->Ptr[PARENT];
 				}
+				curnode = curnode->Ptr[PARENT];
 			}
 
-			return iterator(m_pOwner,curnode);
+
+			m_Target = curnode;
+			return *this;
 		}
+
+	public:
+		iterator()
+			: m_pOwner(nullptr)
+			, m_Target(nullptr)
+		{}
+
+		iterator(CBST<T1, T2>* _Owner, BSTNode<T1, T2>* _Target)
+			: m_pOwner(_Owner)
+			, m_Target(_Target)
+		{}
+
+		~iterator()
+		{}
 
 
 		iterator& operator++(int)
@@ -235,6 +271,8 @@ public:
 			++(*this);
 			return copyiter;
 		}
+
+
 		iterator& operator--()
 		{
 			return *this;
@@ -313,4 +351,15 @@ void CBST<T1, T2>::DeletNode(BSTNode<T1, T2>* pbst) {
 		DeletNode(rptr);
 	}
 
+}
+
+
+
+template<typename T1, typename T2>
+Pair<T1, T2> Create_Pair(const T1& _first, const T2& _second)
+{
+	Pair<T1, T2> data;
+	data.first = _first;
+	data.second = _second;
+	return data;
 }
