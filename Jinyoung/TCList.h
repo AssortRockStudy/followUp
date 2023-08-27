@@ -128,7 +128,7 @@ public:
 	//swap 구현
 	void swap(TCList&& _other) {
 		TCList tmpcl = std::move(*this);
-		*this = _other;
+		*this = std::move(_other);
 		_other = std::move(tmpcl);
 		cout << "swap 호출" << endl;
 	}

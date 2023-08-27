@@ -47,9 +47,10 @@ public:
 	bool HasLChild() { return Ptr[LCHILD]; }
 	bool HasRChild() { return Ptr[RCHILD]; }
 	bool IsRoot() { return !(Ptr[PARENT]); }
-	//bool IsLChild() {return };
 
-	//bool IsRChild();
+	bool IsLChild() { return this == Ptr[PARENT]->Ptr[LCHILD] ; }
+	bool IsRchild() { return this == Ptr[PARENT]->Ptr[RCHILD] ; }
+
 
 };
 
@@ -203,19 +204,23 @@ public:
 			// 2. 오른쪽 자식이 없다면 , 내가 부모의 왼쪽자식일때까지 올라간다.
 			//
 
+			BSTNode<T1, T2>* m_Target;
+
 			BSTNode<T1, T2>* curnode = m_Target;
 
 			if (curnode->HasRChild())
 			{
-				while (m_Target->HasLChild()) {
-					m_Target = m_Target.Ptr[PARENT];
+				curnode = curnode->Ptr[RCHILD];
+				while (curnode->HasLChild()) {
+					curnode = curnode.Ptr[LCHILD];
 				}
 			}
 			else
 			{
-				while (curnode != (curnode->Ptr[PARENT]->Ptr[LCHILD]))
+				curnode = curnode[PARENT];
+				while (curnode->IsLChild)
 				{
-					curnode = curnode->Ptr[PARENT];
+					curnode = curnode[PARENT];
 				}
 			}
 
