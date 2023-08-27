@@ -53,7 +53,7 @@ public:
 		if (this->IsRoot()) return false;
 		return this == Ptr[PARENT]->Ptr[LCHILD] ; 
 	}
-	bool IsRchild() 
+	bool IsRChild() 
 	{
 		//root일경우 Ptr[PARENT]->Ptr[LCHILD] 연산하면안됨.
 		if (this->IsRoot()) return false;
@@ -86,13 +86,21 @@ public:
 	{
 		//m_Root 가 nullptr 이면 (데이터가 1개도 입력이 안된 상황) end iterator 를준다.
 		if (!m_Root) { return end(); }
-		
+
 		BSTNode<T1, T2>* node = m_Root;
 		while (node->Ptr[LCHILD])
 		{
 			node = node->Ptr[LCHILD];
 		}
 		return iterator(this, node);
+	}
+
+	iterator root()
+	{
+		//m_Root 가 nullptr 이면 (데이터가 1개도 입력이 안된 상황) end iterator 를준다.
+		if (!m_Root) { return end(); }
+
+		return iterator(this, m_Root);
 	}
 
 	iterator end()
@@ -102,16 +110,42 @@ public:
 
 	int depth()
 	{
+		int tmpdepth = 0;
 		int depth = 0;
 		if (nullptr == m_Root) { return depth; }
 
-		iterator iter = begin();
+		BSTNode<T1, T2>* curnode = root().m_Target;
 
-		for (; iter != end(); ++iter)
+
+		while (curnode)
 		{
+			if (curnode->HasRChild())
+			{
+				curnode = curnode->Ptr[RCHILD];
+				++tmpdepth;
+				depth = (tmpdepth > depth) ? tmpdepth : depth;
+			}
 
+			else
+			{
+
+				while (curnode->IsRChild())
+				{
+
+					curnode = curnode->Ptr[PARENT];
+					--tmpdepth;
+					if (curnode->Ptr[PARENT]->IsRoot() && curnode->IsRChild())
+					{
+						curnode = nullptr;
+						break;
+					}
+				}
+				if (curnode) { curnode = curnode->Ptr[PARENT]->Ptr[RCHILD]; }
+
+			}
+			
 		}
-
+		return depth;
 
 	}
 
@@ -238,6 +272,47 @@ public:
 			return !((*this) == _other);
 		}
 
+		iterator& prepp()
+		{
+			assert(m_Target);
+			//전위 후속자를 찾아서 가리킨다.
+			BSTNode<T1, T2>* curnode = m_Target;
+
+
+			//규칙1. 
+			//왼쪽 자식이 있다면, 왼쪽자식을 가리킨다.
+			if (curnode->HasLChild())
+			{
+				curnode = curnode->Ptr[LCHILD];
+			}
+			//왼쪽자식이 없고,오른쪽자식이 있다면,오른쪽자식을 가리킨다.
+			else if (curnode->HasRChild())
+			{
+				curnode = curnode->Ptr[RCHILD];
+			}
+			//규칙2.
+			//오른쪽 자식이 없다면,내가 부모의 왼쪽 자식일때까지 올라간다.
+			//
+			else
+			{
+
+				while (curnode->IsRChild())
+				{
+
+					curnode = curnode->Ptr[PARENT];
+					if (curnode->Ptr[PARENT]->IsRoot() && curnode->IsRChild())
+					{
+						curnode = nullptr;
+						break;
+					}
+				}
+				if (curnode) { curnode = curnode->Ptr[PARENT]->Ptr[RCHILD]; }
+
+			}
+			m_Target = curnode;
+			return *this;
+		}
+
 
 		iterator& operator ++()
 		{
@@ -252,6 +327,7 @@ public:
 			//
 
 
+
 			BSTNode<T1, T2>* curnode = m_Target;
 
 
@@ -264,7 +340,7 @@ public:
 			}
 			else
 			{
-				while (curnode->IsRchild())
+				while (curnode->IsRChild())
 				{
 					if (curnode->IsRoot())
 					{
@@ -296,7 +372,7 @@ public:
 		iterator& last()
 		{
 			BSTNode<T1, T2>* curnode = m_Root;
-			//R차일드혹은 L차일드가 없을경우 중지.
+			//R차일드혹은 없을경우 중지.
 			while (curnode->HasRChild)
 			{
 				curnode = curnode[RCHILD];

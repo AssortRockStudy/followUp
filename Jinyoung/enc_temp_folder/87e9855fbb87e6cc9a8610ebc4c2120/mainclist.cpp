@@ -157,7 +157,7 @@ int main() {
 	//데이터 검색
 	while (iter != cb1.end())
 	{
-		if (400 == iter->first)
+		if (450 == iter->first)
 		{
 			break;
 		}
