@@ -62,24 +62,26 @@ private:
 	BSTNode<T1, T2>* m_Root;
 	int m_Count;
 	void DeletNode(BSTNode<T1, T2>* pbst);
+	class iterator;
+
 
 public:
 	CBST()
-		:m_Root(nullptr),m_Count(0){}
+		:m_Root(nullptr), m_Count(0) {}
 
 	void clear();
 	void clear_r();
 
-	iterator begin() 
+	iterator begin()
 	{
 		//m_Root 가 nullptr 이면 (데이터가 1개도 입력이 안된 상황) end iterator 를준다.
 		if (m_Root) { return end(); }
-		BSTNode<T1,T2>* node = m_Root;
+		BSTNode<T1, T2>* node = m_Root;
 		while (node->Ptr[LCHILD])
 		{
 			node = node->Ptr[LCHILD];
 		}
-		return iterator(this, pNode);
+		return iterator(this, node);
 	}
 
 	iterator end()
@@ -90,7 +92,7 @@ public:
 
 	}
 
-	
+
 
 	CBST(const Pair<T1, T2>& _data)
 		:m_Root(nullptr), m_Count(0)
@@ -104,7 +106,7 @@ public:
 		BSTNode<T1, T2>* newnode = new BSTNode< T1, T2 >(_data);
 
 		//데이터가 없을때.
-		if(0==m_Count)
+		if (0 == m_Count)
 		{
 			m_Root = newnode;
 			++m_Count;
@@ -133,24 +135,24 @@ public:
 		//이미 같은 first값이 들어있을 경우.
 		bool first_eq = false;
 
-		NODE_TYPE targetrl ;
+		NODE_TYPE targetrl;
 
 		do {
 			pnode = curnode;
 
-		//데이터가 현재노드보다 크면
+			//데이터가 현재노드보다 크면
 			if (_data.first > curnode->data.first) { targetrl = RCHILD; }
-		//작으면
-		else if(_data.first < curnode->data.first) { targetrl = LCHILD; }
-		//같으면
-		else if (_data.first == curnode->data.first) { curnode = nullptr; first_eq = true; break; }
+			//작으면
+			else if (_data.first < curnode->data.first) { targetrl = LCHILD; }
+			//같으면
+			else if (_data.first == curnode->data.first) { curnode = nullptr; first_eq = true; break; }
 
-		curnode = curnode->Ptr[targetrl];
+			curnode = curnode->Ptr[targetrl];
 
 		} while (curnode);
-		
+
 		//데이터가 같지 않은경우
-		if(!first_eq)
+		if (!first_eq)
 		{
 			pnode->Ptr[targetrl] = newnode;
 			newnode->Ptr[PARENT] = pnode;
@@ -165,6 +167,7 @@ public:
 	}
 
 
+
 public:
 
 
@@ -176,17 +179,19 @@ public:
 
 
 	public:
-		bool operater == (const iterator& _other)
+
+		
+		bool operator ==(const iterator& _other)
 		{
 			return m_pOwner == _other.m_pOwner && m_Target == _other.m_Target;
 		}
 
-		bool operater != (const iterator & _other)
+		bool operator !=(const iterator & _other)
 		{
 			return !(*this) == _other;
 		}
 
-		iterator& operater ++()
+		iterator& operator ++()
 		{
 			assert(m_Target);
 
@@ -198,7 +203,7 @@ public:
 			// 2. 오른쪽 자식이 없다면 , 내가 부모의 왼쪽자식일때까지 올라간다.
 			//
 
-			BSTNode<T1, T2>* curnode = m_Target
+			BSTNode<T1, T2>* curnode = m_Target;
 
 			if (curnode->HasRChild())
 			{
@@ -218,17 +223,17 @@ public:
 		}
 
 
-		iterator& operater++(int)
+		iterator& operator++(int)
 		{
 			iterator copyiter = *this;
 			++(*this);
 			return copyiter;
 		}
-		iterator& operater--()
+		iterator& operator--()
 		{
 			return *this;
 		}
-		iterator& operater--(int)
+		iterator& operator--(int)
 		{
 			iterator copyiter = *this;
 			--(*this);

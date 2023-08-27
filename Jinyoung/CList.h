@@ -59,6 +59,8 @@ public:
 		}
 	}
 
+	/*
+
 	//복사생성자
 	CList(CList& _other)
 		:pHead(nullptr), pTail(nullptr), iCount(0) {
@@ -72,6 +74,7 @@ public:
 
 		cout << "복사생성자 호출" << endl;
 	}
+	*/
 
 	//이동생성자
 	CList(CList&& _other)

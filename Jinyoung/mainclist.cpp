@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-#include "CList.h"
 #include "TCList.h"
 #include "bst.h"
 #include <crtdbg.h>
@@ -46,29 +45,27 @@ int main() {
 
 
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtSetBreakAlloc(50);
-	CList cl;
+	//_CrtSetBreakAlloc(170);
+	TCList<int> tcl;
 
-	
-	/*
 	for (int i = 0; i < 3; ++i)
 	{
-		cl.pushback(i+1);
+		tcl.pushback(i+1);
 	}
 
-	CList::iterator it;
+	typename TCList<int>::iterator it;
 
 	
 
-
+	
 	//////////////////////230821 0417수정///////////////////////////
 
-	for (it = cl.begin(); cl.end() != it;)
+	for (it = tcl.begin(); tcl.end() != it;)
 	{
-		it = cl.erase(it);
+		it = tcl.erase(it);
 	}
 
-	for (it = cl.begin(); cl.end() != it; ++it)
+	for (it = tcl.begin(); tcl.end() != it; ++it)
 	{
 		cout << *it << endl;
 	}
@@ -76,48 +73,52 @@ int main() {
 
 
 	//deepcopy 테스트
-	CList c1;
+	TCList<int> c1;
 	for (int i = 0; i < 3; ++i)
 	{
 		c1.pushback(i + 1);
 	}
 
 	
-	CList c2;
+	TCList<int> c2;
 	c2.CopyDeep(c1);
 
 	//복사생성자 테스트
-	CList c3 = c1;
+	TCList<int> c3 = c1;
 
 	//이동생성자 테스트
-	CList c4 = std::move(c1);
+	TCList<int> c4 = std::move(c1);
 
 	//대입연산자 테스트
-	CList c5;
+	TCList<int> c5;
 	c5 = c2;
 
 	//이동 대입 연산자 테스트
-	CList c6;
+	TCList<int> c6;
 	c6 = std::move(c3);
 
+	TCList<int> c8;
+	for (int i = 0; i < 3; ++i)
+	{
+		c8.pushback(i + 1);
+	}
 
 	//swap 테스트
-	CList c7;
+	TCList<int> c7;
 	for (int i = 0; i < 3; ++i)
 	{
 		c7.pushfront(i + 1);
 	}
 
-	c6.swap(std::move(c7));
+	c8.swap(std::move(c7));
 
 
-	TCList<CList> tcl1;
+	TCList< TCList<int>> tcl1;
 
 	tcl1.pushback(c1);
 	tcl1.pushback(c2);
-	tcl1.pushback(c3);
+	tcl1.pushback(c4);
 
-	*/
 	Pair<int, float> p1(1, 1.1f);
 	Pair<int, float> p2(2, 2.2f);
 	Pair<int, float> p3(3, 3.3f);

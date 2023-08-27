@@ -14,11 +14,13 @@ struct ttNode {
 	ttNode<T>* pNext;
 	ttNode<T>* pPrev;
 
+public:
 	ttNode<T>()
 		:iData(nullptr), pNext(nullptr), pPrev(nullptr) {}
 
-	ttNode<T>(T _data, ttNode<T>* _pNext = nullptr, ttNode<T>* _pPrev = nullptr)
-		:iData(_data), pNext(_pNext), pPrev(_pPrev) {}
+	//pushback을 const T&로하면 이쪽도 const T&로 맞춰야한다.
+	ttNode<T>(const T& _data, ttNode<T>* _pNext = nullptr, ttNode<T>* _pPrev = nullptr)
+		:iData(_data),		pNext(_pNext),		pPrev(_pPrev) {}
 };
 
 
@@ -26,7 +28,6 @@ template <typename T>
 class TCList {
 
 private:
-	class iterator;
 	ttNode<T>* pHead;
 	ttNode<T>* pTail;
 	int iCount;
@@ -34,15 +35,16 @@ private:
 
 
 public:
-	void pushback(T _data);
-	void pushfront(T _data);
+	class iterator;
+	void pushback(const T& _data);
+	void pushfront(const T& _data);
 	iterator begin() { return iterator(this, pHead); }
 	iterator end() { return iterator(this, nullptr); }
 
 
 
-	//얕은 복사
-	void CopyShallow(TCList& _other) {
+	//얕은 복사~
+	void CopyShallow(const TCList& _other) {
 		pHead = _other.pHead;
 		pTail = _other.pTail;
 		iCount = _other.iCount;
@@ -63,14 +65,15 @@ public:
 	}
 
 	//복사생성자
-	TCList(TCList& _other)
+	TCList(const TCList& _other)
 		:pHead(nullptr), pTail(nullptr), iCount(0) {
 
-		iterator it = _other.begin();
+		ttNode<T>* curnode = _other.pHead;
 
-		for (; _other.end() != it; ++it)
+		while (curnode)
 		{
-			this->pushback(*it);
+			this->pushback(curnode->iData);
+			curnode = curnode->pNext;
 		}
 
 		cout << "복사생성자 호출" << endl;
@@ -89,16 +92,17 @@ public:
 	}
 
 	//대입 연산자
-	TCList& operator = (TCList& _other) {
+	TCList& operator = (const TCList& _other) {
 		pHead = nullptr;
 		pTail = nullptr;
 		iCount = 0;
 
-		iterator it = _other.begin();
+		ttNode<T>* curnode =_other.pHead;
 
-		for (; _other.end() != it; ++it)
+		while (curnode)
 		{
-			this->pushback(*it);
+			this->pushback(curnode->iData);
+			curnode=curnode->pNext;
 		}
 		cout << "대입 연산자 호출" << endl;
 		return *this;
@@ -205,7 +209,7 @@ public:
 		}
 
 		//원본값 수정도 가능해야한다.
-		T& operator *() { return *(pTarget->iData); }
+		T& operator *() { return pTarget->iData; }
 
 
 		iterator& operator ++() {
@@ -255,7 +259,7 @@ public:
 
 
 template <typename T>
-void TCList<T>::pushfront(T _data)
+void TCList<T>::pushfront(const T& _data)
 {
 	ttNode<T>* newnode = new ttNode<T>(_data);
 
@@ -276,7 +280,7 @@ void TCList<T>::pushfront(T _data)
 
 
 template <typename T>
-void TCList<T>::pushback(T _data)
+void TCList<T>::pushback(const T& _data)
 {
 	ttNode<T>* newnode = new ttNode<T>(_data);
 
