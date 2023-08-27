@@ -1,6 +1,8 @@
 #pragma once
 #include <assert.h>
 #include <iostream>
+using std::cout;
+using std::endl;
 // CList ÅÆÇÃ¸´È­
 
 

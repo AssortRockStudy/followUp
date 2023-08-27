@@ -1,9 +1,5 @@
 #pragma once
-#include <iostream>
 #include "TemplateCList.h"
-
-using std::cout;
-using std::endl;
 
 
 enum {
@@ -16,19 +12,20 @@ template<typename T1, typename T2>
 struct Pair {
 	T1 first;
 	T2 second;
+public:
+	Pair():first(), second(){}
+	Pair(T1 t1, T2 t2):first(t1), second(t2){}
 };
 
 template<typename T1, typename T2>
 struct TNode{
 	Pair<T1, T2> data;
 	TNode<T1, T2>* othPtr[3];
+
+
 public:
-	TNode(){}
-	TNode(Pair<T1, T2> d):data(d){
-		for (int i = 0; i < 3; ++i) {
-			othPtr[i] = nullptr;
-		}
-	}
+	TNode() :data(), othPtr{} {}
+	TNode(Pair<T1, T2> d, TNode<T1, T2>* p = nullptr, TNode<T1, T2>* l = nullptr, TNode<T1, T2>* r = nullptr) :data(d), othPtr{ p, l, r } {}
 	~TNode(){}
 };
 
@@ -61,6 +58,24 @@ public:
 	}
 
 public:
+	class iterator;
+
+	// head가 nullptr일 경우(아무것도 안들어 있을 경우)
+	// end()를 가리키도록
+	// 아니라면 제일 왼쪽 노드를 가리키도록 한다.
+	iterator begin() {
+		if (nullptr == root)
+			return end();
+
+		TNode<T1, T2>* iter = root;
+		while (nullptr != iter->othPtr[LCHD])
+			iter = iter->othPtr[LCHD];
+		return iterator(this, iter);
+	}
+
+	iterator end() {
+		return iterator(this, nullptr);
+	}
 
 	// 입력
 	// 기본적으로 현재 위치해있는 데이터 값보다 작으면 left
@@ -214,4 +229,107 @@ public:
 		return -1;
 		
 	}
+
+	class iterator {
+		BST<T1, T2>* host;
+		TNode<T1, T2>* target;
+
+	public:
+		Pair<T1, T2>& operator *() {
+			return target->data;
+		}
+
+		Pair<T1, T2>* operator ->() {
+			return &target->data;
+		}
+		bool operator == (const iterator& oth) {
+			return host == oth.host && target == oth.target;
+		}
+		bool operator != (const iterator& oth) {
+			return !((*this) == oth);
+		}
+
+
+		// 중위 후속자 찾기
+		// 현재 노드가 nullptr이면 경고
+		// 1. 오른쪽 자식이 있는지 확인
+		//    > 있으면 오른쪽 자식으로 내려간 후 왼쪽 자식쪽으로 쭉 내려가기
+		// 2. 자신이 왼쪽 자식 노드인지를 확인
+		//    > 아니라면 왼쪽 자식이 될 때까지 위로 올라가기
+		iterator& operator ++() {
+			assert(target);
+			TNode<T1, T2>* successor = nullptr;
+			if (target->othPtr[RCHD] != nullptr) {
+				successor = target->othPtr[RCHD];
+				while (nullptr != successor->othPtr[LCHD])
+					successor = successor->othPtr[LCHD];
+			}
+			else {
+				successor = target;
+				while (true) {
+					if (nullptr == successor->othPtr[PARENT]) {
+						successor = nullptr;
+						break;
+					}
+					else if (successor->othPtr[PARENT]->othPtr[LCHD] == successor) {
+						successor = successor->othPtr[PARENT];
+						break;
+					}
+					successor = successor->othPtr[PARENT];
+				}
+			}
+			target = successor;
+			return *this;
+		}
+		iterator operator ++(int) {
+			iterator copyiter(*this);
+			++(*this);
+			return copyiter;
+		}
+		// ++와 반대로 생각
+		// 현재 노드가 nullptr이면 경고
+		// 1. 왼쪽 자식이 있는지 확인
+		//    > 있으면 왼쪽 자식으로 내려간 후 오른쪽 자식쪽으로 쭉 내려가기
+		// 2. 자신이 오른쪽 자식 노드인지를 확인
+		//    > 아니라면 오른쪽 자식이 될 때까지 위로 올라가기
+		iterator& operator --() {
+			assert(target);
+			TNode<T1, T2>* predecessor = nullptr;
+			if (target->othPtr[LCHD] != nullptr) {
+				predecessor = target->othPtr[LCHD];
+				while (nullptr != predecessor->othPtr[RCHD])
+					predecessor = predecessor->othPtr[RCHD];
+			}
+			else {
+				predecessor = target;
+				while (true) {
+					if (nullptr == predecessor->othPtr[PARENT]) {
+						predecessor = nullptr;
+						break;
+					}
+					else if (predecessor->othPtr[PARENT]->othPtr[RCHD] == predecessor) {
+						predecessor = predecessor->othPtr[PARENT];
+						break;
+					}
+					predecessor = predecessor->othPtr[PARENT];
+				}
+			}
+			target = predecessor;
+			return *this;
+		}
+
+		iterator operator --(int) {
+			iterator copyiter(*this);
+			--(*this);
+			return copyiter;
+		}
+	public:
+		iterator():host(nullptr), target(nullptr){}
+		iterator(BST<T1, T2>* h, TNode<T1, T2>* t) :host(h), target(t) {}
+		~iterator(){}
+		friend class BST<T1, T2>;
+
+	};
+
+
 };
