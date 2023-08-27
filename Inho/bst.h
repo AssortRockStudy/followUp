@@ -131,6 +131,7 @@ class bst {
         }
         bool operator!=(const iterator& _it) { return !((*this) == _it); }
         Pair<T1, T2> operator*() { return target->pair; }
+        Pair<T1, T2>* operator->() { return &(target->pair); }
 
         iterator& operator++() {
             // 중위 순회로
@@ -181,6 +182,7 @@ class bst {
                 target = predecessor;
                 return *this;
             }
+
             assert(predecessor);
             if (predecessor->hasLChild()) {
                 predecessor = predecessor->direction[left];

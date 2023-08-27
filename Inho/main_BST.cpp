@@ -27,11 +27,11 @@ int main() {
 
     auto iter = tree.begin();
     for (iter = tree.begin(); iter != tree.end(); ++iter) {
-        cout << (*iter).first << " ";
+        cout << iter->first << " ";
     }
     cout << endl;
     for (iter = --(tree.end()); iter != tree.begin(); --iter) {
-        cout << (*iter).first << " ";
+        cout << iter->first << " ";
     }
     cout << endl;
 
