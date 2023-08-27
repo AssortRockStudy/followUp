@@ -37,7 +37,7 @@ int main()
 	cout << *iter << endl;
 	*iter = 123;
 	cout << *iter << endl;
-	cout << tlist.front() << "  " << tlist.back() << endl;
+	cout << tlist.front() << "   " << tlist.back() << endl;
 
 	tlist2.swap(tlist);
 	tlist2.pop_back();
