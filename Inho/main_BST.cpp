@@ -1,5 +1,10 @@
 #include "bst.h"
 #include <crtdbg.h>
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
 int main() {
     bst<int, int> tree;
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -19,6 +24,17 @@ int main() {
     tree.insert(Create_Pair(140, 3));
     tree.insert(Create_Pair(160, 3));
     tree.insert(Create_Pair(200, 3));
+
+    auto iter = tree.begin();
+    for (iter = tree.begin(); iter != tree.end(); ++iter) {
+        cout << (*iter).first << " ";
+    }
+    cout << endl;
+    for (iter = --(tree.end()); iter != tree.begin(); --iter) {
+        cout << (*iter).first << " ";
+    }
+    cout << endl;
+
 
     tree.Clear();
     //tree.Clear_recursive(tree.begin());
