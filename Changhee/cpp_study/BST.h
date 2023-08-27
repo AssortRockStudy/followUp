@@ -76,9 +76,168 @@ template<typename T1, typename T2>
 class BST
 {
 public:
+	class iterator
+	{
+	private:
+		BST<T1, T2>* m_pOwner;
+		BSTNode<T1, T2>* m_pTarget;
+
+	public:
+		iterator& operator++()
+		{
+			assert(m_pTarget);
+
+			BSTNode<T1, T2>* retNode = nullptr;
+
+
+			// 오른쪽 자식이 있다면 오른쪽 자식중 제일 작은 노드 (RCHILD 1번 -> LCHILD가 nullptr 일때까지 이동)
+			// 오른쪽 자식이 없다면 부모중 자기보다 큰 노드중 가장 작은 노드( 자기보다 큰 부모노드가 나올때까지 위로), nullptr이 나올경우 마지막 노드임
+
+			if (m_pTarget->ptr[RCHILD] == nullptr)
+			{
+				retNode = m_pTarget->ptr[PARENT];
+
+				while (nullptr != retNode && m_pTarget->data->first > retNode->data->first)
+				{
+					retNode = retNode->ptr[PARENT];
+				}
+			}
+			else
+			{
+				retNode = m_pTarget->ptr[RCHILD];
+
+				while (retNode->ptr[LCHILD] != nullptr)
+				{
+					retNode = retNode->ptr[LCHILD];
+				}
+			}
+
+			m_pTarget = retNode;
+
+			return *this;
+		}
+
+		iterator& operator--()
+		{
+			BSTNode<T1, T2>* retNode = nullptr;
+
+			// nullptr가 end노드이므로 m_pTarget이 nullptr인 경우 예외처리
+			if (m_pTarget == nullptr)
+			{
+				retNode = m_pOwner->m_pRoot;
+
+				while (retNode->ptr[RCHILD] != nullptr)
+				{
+					retNode = retNode->ptr[RCHILD];
+				}
+
+				m_pTarget = retNode;
+
+				return *this;
+			}
+
+
+			// 맨 앞의 데이터에서 -- 를 하는 경우 오류
+			if ((*this) == m_pOwner->begin())
+			{
+				assert(nullptr);
+			}
+
+			// 왼쪽 자식이 있다면 왼쪽 자식중 제일 큰 노드 (LCHILD 1번 -> RCHILD가 nullptr 일때까지 이동)
+			// 왼쪽 자식이 없다면 부모중 자기보다 작은 노드중 가장 큰은 노드(자기보다 큰 부모노드가 나올때까지 위로), nullptr이 나올경우 마지막 노드임
+
+			if (m_pTarget->ptr[LCHILD] == nullptr)
+			{
+				retNode = m_pTarget->ptr[PARENT];
+
+				while (nullptr != retNode && m_pTarget->data->first < retNode->data->first)
+				{
+					retNode = retNode->ptr[PARENT];
+				}
+			}
+			else
+			{
+				retNode = m_pTarget->ptr[LCHILD];
+
+				while (retNode->ptr[RCHILD] != nullptr)
+				{
+					retNode = retNode->ptr[RCHILD];
+				}
+			}
+
+			m_pTarget = retNode;
+
+			return *this;
+		}
+
+		T1& operator*()
+		{
+			return m_pTarget->data->first;
+		}
+
+		bool operator==(const iterator& _Other)
+		{
+			if (m_pOwner == _Other.m_pOwner && m_pTarget == _Other.m_pTarget)
+				return true;
+
+			return false;
+		}
+
+		bool operator!=(const iterator& _Other)
+		{
+			return !((*this) == _Other);
+		}
+
+	public:
+		iterator()
+			: m_pOwner(nullptr)
+			, m_pTarget(nullptr)
+		{
+		}
+
+		iterator(BST<T1, T2>* _Owner, BSTNode<T1, T2>* _Target)
+			: m_pOwner(_Owner)
+			, m_pTarget(_Target)
+		{
+		}
+
+
+		~iterator()
+		{
+		}
+
+		friend class BST;
+	};
+
+
+public:
 	BSTNode<T1, T2>* m_pRoot;
 
 public:
+	iterator begin()
+	{
+		if (m_pRoot == nullptr)
+		{
+			return iterator(this, nullptr);
+		}
+
+		BSTNode<T1, T2>* CurNode = m_pRoot;
+
+		while (CurNode->ptr[LCHILD] != nullptr)
+		{
+			CurNode = CurNode->ptr[LCHILD];
+		}
+
+		return iterator(this, CurNode);
+
+	}
+
+	iterator end()
+	{
+		return iterator(this, nullptr);
+	}
+
+
 	void insert(Pair<T1, T2>* _data)
 	{
 		BSTNode<T1, T2>* newNode = new BSTNode<T1, T2>(_data);
@@ -237,7 +396,7 @@ public:
 		return depth;
 	}
 
-	BSTNode<T1,T2>* find(const T1& _key)
+	iterator find(const T1& _key)
 	{
 		if (m_pRoot == nullptr)
 			return nullptr;
@@ -252,19 +411,93 @@ public:
 				CurNode = CurNode->ptr[LCHILD];
 		}
 
-		return CurNode;
+		return iterator(this, CurNode);
 	}
 
-	void erase(const T1& _key)
+	iterator erase(const T1& _key)
 	{
-		//BSTNode<T1, T2>* Target = find(_key);
+		BSTNode<T1, T2>* Target = find(_key).m_pTarget;
 
-		//// 자식이 없는 경우
-		//if (Target->ptr[RCHILD] == nullptr && Target->ptr[LCHILD] == nullptr)
-		//{
-		//	BSTNode<T1, T2>* parent = Target->ptr[PARENT];
-		//	parent->ptr
-		//}
+		// 자식이 없는 경우
+		if (Target->ptr[RCHILD] == nullptr && Target->ptr[LCHILD] == nullptr)
+		{
+			BSTNode<T1, T2>* parent = Target->ptr[PARENT];
+
+			if (parent->ptr[RCHILD] == Target)
+				parent->ptr[RCHILD] = nullptr;
+
+			if (parent->ptr[LCHILD] == Target)
+				parent->ptr[LCHILD] = nullptr;
+
+			delete Target;
+		}
+		else if (Target->ptr[RCHILD] != nullptr && Target->ptr[LCHILD] != nullptr)
+		{
+			// 자식이 두개 있는 경우
+			
+			//iterator iter = iterator(this, Target);
+			//++iter;
+
+			//BSTNode<T1, T2>* swapNode = iter.m_pTarget;
+
+
+
+
+			
+
+
+		}
+		else
+		{
+			// 자식이 1개 있는 경우
+
+			// 오른쪽 자식만 있는 경우
+			if (Target->ptr[RCHILD] != nullptr)
+			{
+				BSTNode<T1, T2>* parent = Target->ptr[PARENT];
+
+				// 해당 노드가 부모의 오른쪽 자식이었던 경우
+				if (parent->ptr[RCHILD] == Target)
+				{
+					parent->ptr[RCHILD] = Target->ptr[RCHILD];
+					Target->ptr[RCHILD]->ptr[PARENT] = parent;
+				}
+
+				// 해당 노드가 부모의 왼쪽 자식이었던 경우
+				if (parent->ptr[LCHILD] == Target)
+				{
+					parent->ptr[LCHILD] = Target->ptr[LCHILD];
+					Target->ptr[LCHILD]->ptr[PARENT] = parent;
+				}
+
+				delete Target;
+			}
+
+
+
+			// 왼쪽 자식만 있는 경우
+			if (Target->ptr[RCHILD] != nullptr)
+			{
+				BSTNode<T1, T2>* parent = Target->ptr[PARENT];
+
+				// 해당 노드가 부모의 오른쪽 자식이었던 경우
+				if (parent->ptr[RCHILD] == Target)
+				{
+					parent->ptr[RCHILD] = Target->ptr[LCHILD];
+					Target->ptr[LCHILD]->ptr[PARENT] = parent;
+				}
+
+				// 해당 노드가 부모의 왼쪽 자식이었던 경우
+				if (parent->ptr[LCHILD] == Target)
+				{
+					parent->ptr[LCHILD] = Target->ptr[LCHILD];
+					Target->ptr[LCHILD]->ptr[PARENT] = parent;
+				}
+
+				delete Target;
+			}
+
+		}
 
 	}
 

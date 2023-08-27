@@ -29,6 +29,17 @@ int main()
 	test.insert(make_Pair(160, 14));
 	test.insert(make_Pair(200, 15));
 
+
+	BST<int, int>::iterator iter = test.end();
+	--iter;
+
+
+	for (; iter != test.begin(); --iter)
+	{
+		cout << *iter << endl;
+	}
+
+
 	//test.preOrder(test.m_pRoot);
 
 	//test.inOrder(test.m_pRoot);
