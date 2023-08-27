@@ -163,16 +163,13 @@ public:
 		ttNode<T>* prevnode = tmpnode->pPrev;
 		ttNode<T>* nextnode = tmpnode->pNext;
 
-		it.pTarget = nextnode;
-		if (prevnode) {
-			prevnode->pNext = nextnode;
-		}
-		else {
-			pHead = nextnode;
-		}
-		if (nextnode) { nextnode->pPrev = prevnode; }
-		else { pTail = nullptr; }
+		if (prevnode) {	prevnode->pNext = nextnode;	}
+		else {		pHead = nextnode;	}
 
+		if (nextnode) { nextnode->pPrev = prevnode; }
+		else { pTail = prevnode; }
+
+		it.pTarget = nextnode;
 
 		delete tmpnode;
 		--iCount;

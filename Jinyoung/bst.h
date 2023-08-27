@@ -160,10 +160,11 @@ public:
 			++m_Count;
 		}
 		//데이터가 같은경우
-		else
+		//do nothing
+		/*else
 		{
 			pnode->data.second = _data.second;
-		}
+		}*/
 
 	}
 
