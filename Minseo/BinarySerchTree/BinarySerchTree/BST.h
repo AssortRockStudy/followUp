@@ -44,8 +44,19 @@ public:
 	void insert(Pair<t1, t2> pair);
 	void clear();
 
+
+
+
+
+private:
+	void nodeDelete(BSTNode<t1, t2>* target);
 public:
-	BST(){}
+	BST()
+		:m_RootNode(nullptr)
+		,m_Count(0)
+	{
+	
+	}
 	~BST()
 	{
 		clear();
@@ -98,6 +109,25 @@ inline void BST<t1, t2>::insert(Pair<t1, t2> pair)
 }
 
 template<typename t1, typename t2>
-inline void BST<t1, t2>::clear()
+void BST<t1, t2>::clear()
 {
+	// 반복문 버전
+
+	// 재귀 버전
+	nodeDelete(m_RootNode);
+	m_Count = 0;
+}
+
+template<typename t1, typename t2>
+inline void BST<t1, t2>::nodeDelete(BSTNode<t1, t2>* target)
+{
+	if (target->ptr[LCHILD] != nullptr)
+		nodeDelete(target->ptr[LCHILD]);
+
+	if (target->ptr[RCHILD] != nullptr)
+		nodeDelete(target->ptr[RCHILD]);
+	
+	delete target;
+
+	return;
 }
