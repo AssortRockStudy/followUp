@@ -182,6 +182,25 @@ public:
 			--(*this);
 			return iter;
 		}
+		bool operator ==(const iterator& _other)
+		{
+			if (this->m_pOwner == _other.m_pOwner && this->m_Target == _other.m_Target)
+				return true;
+			return false;
+
+		}
+		bool operator !=(const iterator& _other)
+		{
+			return !(*this == _other);
+		}
+		Pair<t1, t2>* operator ->()
+		{
+			return m_Target->data;
+		}		
+		Pair<t1, t2>& operator *()
+		{
+			return *(m_Target->data);
+		}
 	public:
 		iterator()
 		{
