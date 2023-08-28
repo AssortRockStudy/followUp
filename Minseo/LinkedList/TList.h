@@ -65,7 +65,7 @@ public:// 멤버 함수
 	T& back() { return m_pTail->m_Data; }
 	void pop_front();
 	void pop_back();
-
+	void deleteNode();
 public://iterator
 	class iterator
 	{
@@ -308,6 +308,18 @@ inline void TList<T>::pop_back()
 	--m_Count;
 }
 
+template<typename T>
+inline void TList<T>::deleteNode()
+{
+	TNode<T>* DNode = m_pHead;
+	for (int i = 0; i < m_Count; ++i)
+	{
+		TNode<T>* BNode = DNode->m_pNext;
+		delete DNode;
+		DNode = BNode;
+	}
+}
+
 
 template<typename T>
 inline TList<T>::TList(TList<T>&& other)
@@ -327,6 +339,8 @@ TList<T>& TList<T>::operator =(TList<T>&& other)
 
 	assert(!(other.m_Count < 1 || other.m_pHead == nullptr || other == this));
 	
+	deleteNode();
+
 	m_Count = other.m_Count;
 	m_pHead = other.m_pHead;
 	m_pTail = other.m_pTail;
@@ -339,12 +353,6 @@ TList<T>& TList<T>::operator =(TList<T>&& other)
 template<typename T>
 inline TList<T>::~TList()
 {
-	TNode<T>* DNode = m_pHead;
-	for (int i = 0; i < m_Count; ++i)
-	{
-		TNode<T>* BNode = DNode->m_pNext;
-		delete DNode;
-		DNode = BNode;
-	}
+	deleteNode();
 }
 
