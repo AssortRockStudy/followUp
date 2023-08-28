@@ -15,12 +15,22 @@ struct Pair
 	t1 first;
 	t2 second;
 
+	Pair<t1, t2> Create_Pair(const t1& _first, const t2& _second)
+	{
+		Pair<t1, t2> data;
+		data.first = _first;
+		data.second = _second;
+
+		return data;
+	}
+
 	Pair()
 	{}
 	~Pair()
 	{
 
 	}
+
 };
 
 template <typename t1, typename t2>
@@ -235,8 +245,8 @@ inline void BST<t1, t2>::insert(Pair<t1, t2> pair)
 				buf = buf->ptr[RCHILD];
 			else // 자신 자리 찾음
 			{
-				buf->ptr[RCHILD] = newNode;
 				newNode->ptr[PARENT] = buf->ptr[RCHILD];
+				buf->ptr[RCHILD] = newNode;
 				break;
 			}
 		}
@@ -246,8 +256,8 @@ inline void BST<t1, t2>::insert(Pair<t1, t2> pair)
 				buf = buf->ptr[LCHILD];
 			else // 자신 자리 찾음
 			{
-				buf->ptr[LCHILD] = newNode;
 				newNode->ptr[PARENT] = buf->ptr[LCHILD];
+				buf->ptr[LCHILD] = newNode;
 				break;
 			}
 		}

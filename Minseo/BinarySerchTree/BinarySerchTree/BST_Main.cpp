@@ -15,6 +15,16 @@ int main()
 	p.first = 30;
 	bst.insert(p);
 
+	bst.clear();
+
+	bst.insert(p.Create_Pair(100, 123.f));
+	bst.insert(p.Create_Pair(50, 123.f));
+	bst.insert(p.Create_Pair(150, 123.f));
+	bst.insert(p.Create_Pair(125, 123.f));
+	bst.insert(p.Create_Pair(175, 123.f));
+	bst.insert(p.Create_Pair(25, 123.f));
+	bst.insert(p.Create_Pair(75, 123.f));
+
 
 	return 0;
 }
