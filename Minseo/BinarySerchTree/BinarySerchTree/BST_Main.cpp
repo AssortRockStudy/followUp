@@ -1,4 +1,5 @@
 ﻿#include "BST.h"
+#include <iostream>
 
 int main()
 {
@@ -24,6 +25,14 @@ int main()
 	bst.insert(p.Create_Pair(175, 123.f));
 	bst.insert(p.Create_Pair(25, 123.f));
 	bst.insert(p.Create_Pair(75, 123.f));
+
+	BST<int, float>::iterator iter = bst.begin();
+
+	for (; iter != bst.end(); ++iter)
+	{
+		std::cout << iter->second << std::endl;
+	}
+
 
 
 	return 0;

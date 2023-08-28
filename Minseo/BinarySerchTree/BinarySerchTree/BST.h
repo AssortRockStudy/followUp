@@ -84,7 +84,7 @@ public:
 	private:
 		BST<t1, t2>* m_pOwner;
 		BSTNode<t1, t2>* m_Target;
-
+		friend class BST;
 
 
 	public: // 연산자 오버로딩
@@ -205,14 +205,20 @@ public:
 		}
 		Pair<t1, t2>* operator ->()
 		{
-			return m_Target->data;
+			return &m_Target->data;
 		}		
 		Pair<t1, t2>& operator *()
 		{
-			return *(m_Target->data);
+			return *m_Target->data;
 		}
 	public:
 		iterator()
+		{
+
+		}
+		iterator(BST<t1, t2>* ow, BSTNode<t1, t2>* ta)
+			:m_pOwner(ow)
+			,m_Target(ta)
 		{
 
 		}
@@ -221,6 +227,28 @@ public:
 
 		}
 	};
+
+public:
+	iterator begin() // 보유하고 있는 데이터 중 시작을 가리켜야 함
+	{
+		// m_Root가 nullptr이라면(데이터가 1개도 입력되지 않은 상황) end iterator를 돌려줌
+		if (nullptr == m_RootNode)
+			return end();
+
+		///////////////////////////
+		BSTNode<t1, t2>* pNode = m_RootNode;
+
+		while (nullptr != pNode->ptr[LCHILD])
+		{
+			pNode = pNode->ptr[LCHILD]; // 가장 왼 쪽 자식(중위 순회 기준 가장 첫 데이터)로 점점 이동
+		}
+		return iterator(this, pNode);
+
+	}
+	iterator end()// 가장 만만한건 nullptr래요.
+	{
+		return iterator(this, nullptr);
+	}
 
 };
 
