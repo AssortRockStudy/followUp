@@ -1,7 +1,10 @@
 ﻿#include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
+
+
 
 
 
@@ -12,13 +15,14 @@ protected:
     string name;
 
 public:
-    Vehicle() : wheels(0) {};
+    Vehicle() : wheels(0), name("") {};
     Vehicle(int _wheels, string _name = "차량") : wheels(_wheels), name(_name) {
         cout << "바퀴가 " << _wheels << "개인 " << name
             << "을(를) 만들었습니다." << endl;
     };
 
-    void Drive(int _speed) { cout << _speed << "km/h 속도로 " << name << "이(가) 출발합니다. " << endl; };
+public:
+    virtual void Drive() { cout << name << "이 출발합니다. " << endl; };
 };
 
 
@@ -31,6 +35,7 @@ public:
     Bicycle(int _wheels) :Vehicle(_wheels,"자전거")
     {
     };
+    void Drive() { cout << name << "를 페달로 밟습니다." << endl; };
 
 };
 
@@ -47,6 +52,7 @@ public:
     };
 
     void Honk() { cout << "빵빵아" << endl; };
+    void Drive() { cout << name << "의 악셀를 누릅니다." << endl; };
 
 };
 
@@ -56,13 +62,19 @@ public:
 
 
 int main() {
-    Vehicle vehic(8);
-    Bicycle cycle(2);
-    Car car(4);
 
-    cycle.Drive(10);
-    car.Honk();
-    car.Drive(30);
+    vector<Vehicle> vehicles;
+
+    Vehicle* vehic = new Vehicle(8);
+    Bicycle* cycle = new Bicycle(2);
+    Car* car = new Car(4);
+
+    vehicles.push_back(*vehic);
+    vehicles.push_back(*cycle);
+    vehicles.push_back(*car);
+    for (int i = 0; i < vehicles.size(); i++) {
+        vehicles[i].Drive();
+    }
 
     //vehic.Drive();
 
