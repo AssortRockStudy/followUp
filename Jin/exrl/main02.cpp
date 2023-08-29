@@ -14,10 +14,14 @@ int main()
 	List<int> l1;
 	for(int i = 0; i< 10; ++i)
 		l1.pushBack(i);
-	List<int> l2 = l1;
+	/*List<int> l2 = l1;
 	l2 = l1;
 	List<int> l3 = std::move(l1);
-	l3 = l1;
+	l3 = l1;*/
+	l1.popBack();
+	int a = l1.back();
+	a;
+
 	return 0;
 }
 
