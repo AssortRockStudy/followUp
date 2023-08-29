@@ -123,6 +123,7 @@ public:
 		mHead->next->prev = nullptr;
 		mHead = mHead->next;
 		delete dNode;
+		--mCount;
 	}
 
 	void popBack()
@@ -131,6 +132,7 @@ public:
 		mTail->prev->next = nullptr;
 		mTail = mTail->prev;
 		delete dNode;
+		--mCount;
 	}
 
 
