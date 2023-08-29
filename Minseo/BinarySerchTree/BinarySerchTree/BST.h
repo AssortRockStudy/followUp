@@ -60,6 +60,10 @@ public:
 
 	bool isLCHILD() { return ptr[PARENT]->ptr[LCHILD] == this; } //부모가 있다는 가정 하에 나는 왼 쪽 자식인가요
 	bool isRCHILD() { return ptr[PARENT]->ptr[RCHILD] == this; }
+
+	bool isFULL() { return ptr[LCHILD] && ptr[RCHILD]; } // 자식이 둘 다 있는 경우
+	bool isLEAF() { return !ptr[LCHILD] && !ptr[RCHILD]; } // 자식이 둘 다 없는 경우
+
 };
 
 template <typename t1, typename t2>
@@ -68,10 +72,13 @@ class BST
 private:
 	BSTNode<t1, t2>* m_RootNode;
 	int						m_Count;
-
+	BSTNode<t1, t2>* preordersuccesseor(BSTNode<t1, t2>* _Node);
 public:
 	void insert(Pair<t1, t2> pair);
 	void clear();
+	class iterator;
+	iterator find(const t1& _first);
+	iterator erase(iterator& _iter);
 	BST();
 	~BST() { clear(); }
 
@@ -94,49 +101,7 @@ public:
 
 			// 중위 순회 기준 다음으로 가야한다.
 			// => 중위 후속자를 찾아서 가리킨다.
-
-			BSTNode<t1, t2>* pSuccessor = nullptr;
-
-			// 만약 오른 쪽 자식이 있을 경우 부모를 확인 할 필요 없다. 
-			// 내 오른 쪽 자식에서 맨 왼 쪽 자식이 있을 때 까지 가면 중위 후속자이다.
-			if (m_Target->HasRCHILD()) // 오른 쪽 자식이 있네?
-			{
-				pSuccessor = m_Target->ptr[RCHILD];
-				while (nullptr != pSuccessor->ptr[LCHILD])
-				{
-					pSuccessor = pSuccessor->ptr[LCHILD];
-				}
-
-				m_Target = pSuccessor;
-
-				return *this;
-			}
-			else
-			{
-				pSuccessor = m_Target;
-				while (true)
-				{
-					if (pSuccessor->IsROOT()) // 만약 끝내 왼 쪽 자식이었던 경우가 없었고 결국 루트 노드에 도착했을 경우
-					{
-						pSuccessor = nullptr; // m_Target은 마지막 데이터였으니까 end iterator가 되어라
-						break; // 탈출
-					}
-					else if (pSuccessor->isLCHILD()) // 만약 계속 부모로 이동 중에 현재 왼 쪽 자식일 경우
-					{
-						pSuccessor = pSuccessor->ptr[PARENT]; // 부모가 내 중위 후속자 
-						break;// 탈출
-					}
-
-					// 나의 부모로 다시 테스트하기 위해서 부모 포인터를 가리키게 함
-					pSuccessor = pSuccessor->ptr[PARENT]; // 계속 부모로 이동
-				}
-				// 부모의 왼 쪽 자식인 경우, 그 부모가 중위 후속자이다.
-				// 부모의 오른 쪽 자식인 경우, 부모의 왼 쪽 자식이 될 때 까지 위로 올라간다.
-			}
-
-
-			m_Target = pSuccessor;
-
+			m_Target = m_pOwner->preordersuccesseor(m_Target);
 			return *this;
 		}
 		iterator operator ++(int)
@@ -253,6 +218,48 @@ public:
 };
 
 template<typename t1, typename t2>
+BSTNode<t1, t2>* BST<t1, t2>::preordersuccesseor(BSTNode<t1, t2>* _Node)
+{
+	BSTNode<t1, t2>* pSuccessor = nullptr;
+
+	// 만약 오른 쪽 자식이 있을 경우 부모를 확인 할 필요 없다. 
+	// 내 오른 쪽 자식에서 맨 왼 쪽 자식이 있을 때 까지 가면 중위 후속자이다.
+	if (_Node->HasRCHILD()) // 오른 쪽 자식이 있네?
+	{
+		pSuccessor = _Node->ptr[RCHILD];
+		while (nullptr != pSuccessor->ptr[LCHILD])
+		{
+			pSuccessor = pSuccessor->ptr[LCHILD];
+		}
+	}
+	else
+	{
+		pSuccessor = _Node;
+		while (true)
+		{
+			if (pSuccessor->IsROOT()) // 만약 끝내 왼 쪽 자식이었던 경우가 없었고 결국 루트 노드에 도착했을 경우
+			{
+				pSuccessor = nullptr; // m_Target은 마지막 데이터였으니까 end iterator가 되어라
+				break; // 탈출
+			}
+			else if (pSuccessor->isLCHILD()) // 만약 계속 부모로 이동 중에 현재 왼 쪽 자식일 경우
+			{
+				pSuccessor = pSuccessor->ptr[PARENT]; // 부모가 내 중위 후속자 
+				break;// 탈출
+			}
+
+			// 나의 부모로 다시 테스트하기 위해서 부모 포인터를 가리키게 함
+			pSuccessor = pSuccessor->ptr[PARENT]; // 계속 부모로 이동
+		}
+		// 부모의 왼 쪽 자식인 경우, 그 부모가 중위 후속자이다.
+		// 부모의 오른 쪽 자식인 경우, 부모의 왼 쪽 자식이 될 때 까지 위로 올라간다.
+	}
+
+
+	return pSuccessor;
+}
+
+template<typename t1, typename t2>
 inline void BST<t1, t2>::insert(Pair<t1, t2> pair)
 {
 	BSTNode<t1, t2>* newNode = new BSTNode<t1, t2>(pair);
@@ -307,6 +314,89 @@ void BST<t1, t2>::clear()
 	// 재귀 버전
 	nodeDelete(m_RootNode);
 	m_Count = 0;
+}
+
+template<typename t1, typename t2>
+typename BST<t1, t2>::iterator BST<t1, t2>::find(const t1& _first)
+{
+	BSTNode<t1, t2>* _Node(this, m_RootNode);
+	while (_Node)
+	{
+		if (_Node->data.first > _first) // 왼 쪽 노드로 이동
+		{
+			_Node = _Node->ptr[LCHILD];
+		}
+		else if (_Node->data.first < _first) // 오른 쪽 노드로 이동
+		{
+			_Node = _Node->ptr[RCHILD];
+		}
+		else // 데이터를 찾음
+		{
+			break;
+		}
+	}
+	return iterator(this, _Node);
+}
+
+template<typename t1, typename t2>
+typename BST<t1, t2>::iterator BST<t1, t2>::erase(iterator& _iter)
+{
+	BSTNode<t1, t2>* node = _iter.m_Target;
+	if (node->isLEAF())
+	{
+		if (node->IsROOT())
+		{
+			delete node;
+			m_RootNode = nullptr;
+			--m_Count;
+			return end();
+		}
+		else
+		{
+			BSTNode<t1, t2>* pSuccessor = preordersuccesseor(node);
+			if(node->isLCHILD())
+				node->ptr[PARENT]->ptr[LCHILD] = nullptr;
+			if (node->isRCHILD())
+				node->ptr[PARENT]->ptr[RCHILD] = nullptr;
+		}
+
+	}
+	else if (node->isFULL()) // 노드가 2개
+	{
+		BSTNode<t1, t2>* pDelete = preordersuccesseor(node); // 여기선 중위 후속자를 지워야했어
+		node->data = pDelete->data;
+		erase(iterator(this, pDelete)); // 안에서 데이터 지워지니까 따로 --를 하지 않고 바로 반환해줌.
+		return iterator(this, node);
+	}
+	else // 노드가 하나
+	{
+		BSTNode<t1, t2>* pSuccessor = preordersuccesseor(node);
+		BSTNode<t1, t2>* pChild = nullptr;
+		BSTNode<t1, t2>* pParent = node->ptr[PARENT];
+		if (node->HasLCHILD())
+			pChild = node->ptr[LCHILD];
+		else
+			pChild = node->ptr[RCHILD];
+		if (node->IsROOT)
+		{
+			pChild->ptr[PARENT] = nullptr;
+			m_RootNode = pChild;
+		}
+		else
+		{
+			if (node->isLCHILD())
+				pParent->ptr[LCHILD] = pChild;
+			else
+				pParent->ptr[RCHILD] = pChild;
+			pChild->ptr[PARENT] = pParent;
+		}
+	}
+
+
+	delete node;
+	--m_Count;
+	return iterator(this, pSuccessor);
+
 }
 
 template<typename t1, typename t2>
