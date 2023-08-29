@@ -13,8 +13,9 @@ protected:
 
 public:
     Vehicle() : wheels(0) {};
-    Vehicle(int _wheels) : wheels(_wheels) {
-        cout << "바퀴가 " << _wheels << "개인 차량을 만들었습니다." << endl;
+    Vehicle(int _wheels, string _name = "차량") : wheels(_wheels), name(_name) {
+        cout << "바퀴가 " << _wheels << "개인 " << name
+            << "을(를) 만들었습니다." << endl;
     };
 
     void Drive(int _speed) { cout << _speed << "km/h 속도로 " << name << "이(가) 출발합니다. " << endl; };
@@ -27,9 +28,8 @@ protected:
 public:
 
     Bicycle() {  };
-    Bicycle(int _wheels) :Vehicle(_wheels) 
+    Bicycle(int _wheels) :Vehicle(_wheels,"자전거")
     {
-        name = "자전거";
     };
 
 };
@@ -42,9 +42,8 @@ public:
     Car() 
     {
     };
-    Car(int _wheels) :Vehicle(_wheels) 
+    Car(int _wheels) :Vehicle(_wheels,"자동차")
     {
-        name = "자동차";
     };
 
     void Honk() { cout << "빵빵아" << endl; };
