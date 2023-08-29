@@ -10,6 +10,7 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(154);
 
+
 	List<int> l1;
 	for(int i = 0; i< 10; ++i)
 		l1.pushBack(i);
