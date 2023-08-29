@@ -7,8 +7,8 @@ template <typename T>
 struct Node
 {
 	T		data;
-	Node*	prev;
-	Node*	next;
+	Node<T>*	prev;
+	Node<T>*	next;
 
 	Node()
 		: data(0)
@@ -18,6 +18,7 @@ struct Node
 		: data(_data)
 		, prev(_prev)
 		, next(_next) {}
+	~Node() {};
 };
 
 template <typename T>
@@ -75,7 +76,8 @@ public:
 
 	void pushBack(T _data)
 	{
-		Node<T>* newNode = new Node<T>(_data);
+		Node<T>* newNode = new Node<T>();
+			newNode->data = _data;
 		if (mHead == nullptr)
 		{
 			mHead = mTail = newNode;
@@ -113,7 +115,7 @@ public:
 		Node<T>* targetNode = mHead;
 		if (nullptr != mHead)
 		{
-			for (int i = 0; i < _other.mCount; ++i)
+			for (int i = 0; i < this->mCount; ++i)
 			{
 				Node<T>* nextTargetNode = targetNode->next;
 				delete targetNode;
@@ -138,7 +140,7 @@ public:
 		Node<T>* targetNode = mHead;
 		if (nullptr != mHead)
 		{
-			for (int i = 0; i < _other.mCount; ++i)
+			for (int i = 0; i < this->mCount; ++i)
 			{
 				Node<T>* nextTargetNode = targetNode->next;
 				delete targetNode;
