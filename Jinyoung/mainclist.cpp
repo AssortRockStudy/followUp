@@ -4,6 +4,7 @@
 #include "TCList.h"
 #include "bst.h"
 #include <crtdbg.h>
+#include <map>
 
 
 
@@ -183,7 +184,35 @@ int main() {
 
 
 	cb1.clear_r();
+	//Map의 키 타입을 클래스로 지정한 경우,해당 클래스는 비교연산자들이 구현(오버로딩) 되어있어야 한다.
+//해당 타입 변수 끼리 비교헀을때 우열을 나누는 기준이 마련되어있어야함.
 
+	const char* pStr = "asdasd";
+	const wchar_t* pWStr = L"asdv";
+
+	map<const char*, int> mapStr;
+
+	mapStr.insert(make_pair("Player", 100));
+	mapStr.insert(make_pair("Monster", 200));
+	mapStr.insert(make_pair("BGM", 0));
+
+	map<const char*, int>::iterator mapiter = mapStr.find("Player");
+
+	//Find 실패
+	//저장되어 있는 키 값은 "Player"문자열의 주소값
+	//strTest 배열에서도 동일 문자열값이 들어있지만,배열의 이름(주소)로 검색을 하는 것 이기 때문에
+	//동일한 주소값을 나타내는 "Player"로 검색햇을때만 find 가능
+
+	map<string, int> mapString;
+	mapString.insert(make_pair("Player", 100));
+	mapString.insert(make_pair("Monster", 200));
+	mapString.insert(make_pair("BGM", 0));
+
+	char strTest[50] = "Player";
+
+	map<string, int>::iterator strIter;
+	strIter = mapString.find("Player");
+	strIter = mapString.find(strTest);
 
 
 	return 0;
