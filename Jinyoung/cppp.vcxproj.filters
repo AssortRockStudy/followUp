@@ -21,6 +21,12 @@
     <ClCompile Include="mainclist.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="mainclass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="raw.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CList.h">
