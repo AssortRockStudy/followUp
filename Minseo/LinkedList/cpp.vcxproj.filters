@@ -13,27 +13,23 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-</ItemGroup>
+    <Filter Include="TemplateList">
+      <UniqueIdentifier>{7e04cdf0-7e74-49ca-892a-24b6d864681a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main1.cpp">
-      <Filter>리소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CList.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main2.cpp">
-      <Filter>리소스 파일</Filter>
+    <ClInclude Include="TList.h">
+      <Filter>TemplateList</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TList_Main.cpp">
+      <Filter>TemplateList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CList.h">
-<Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplateCList.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="bst.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
+    <Text Include="TList_PseudoCode.txt">
+      <Filter>TemplateList</Filter>
+    </Text>
   </ItemGroup>
 </Project>

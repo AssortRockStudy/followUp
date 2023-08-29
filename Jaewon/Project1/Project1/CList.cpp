@@ -1,3 +1,6 @@
+// To Do List
+// 1. end() ì¡°ê±´ ìˆ˜ì •
+// 2. begin() ì¡°ê±´ ìˆ˜ì •
 #include "CList.h"
 
 void CList::pushFront(int d)
@@ -22,8 +25,8 @@ void CList::pushBack(int d)
 	++dCnt;
 }
 
-// begin ¼öÁ¤
-// ¾Æ¹«°Íµµ ¾øÀ» ¶§(end¿Í beginÀÌ °°À¸¸é)
+// begin ìˆ˜ì •
+// ì•„ë¬´ê²ƒë„ ì—†ì„ ë•Œ(endì™€ beginì´ ê°™ìœ¼ë©´)
 typename CList::iterator CList::begin()
 {
 	if (nullptr == head) {
@@ -32,9 +35,9 @@ typename CList::iterator CList::begin()
 	return iterator(this, head);
 }
 
-// end ¼öÁ¤
-// Á¶°Ç : nullptr
-// tailÀÇ next´Â nullptrÀÌ±â ¶§¹®
+// end ìˆ˜ì •
+// ì¡°ê±´ : nullptr
+// tailì˜ nextëŠ” nullptrì´ê¸° ë•Œë¬¸
 typename CList::iterator CList::end()
 {
 	return iterator(this, nullptr);
@@ -59,7 +62,7 @@ typename CList::iterator CList::erase(iterator& it)
 	delete it.target;
 	--dCnt;
 	return iterator(this, n);
-	
+
 }
 
 CList::~CList()

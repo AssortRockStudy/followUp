@@ -13,26 +13,44 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-</ItemGroup>
+  </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main1.cpp">
-      <Filter>리소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CList.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="main2.cpp">
-      <Filter>리소스 파일</Filter>
+    <ClCompile Include="mainclist.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="mainmini1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="newanything.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoad.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="checkuserinfo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="tarray.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CList.h">
-<Filter>헤더 파일</Filter>
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="TemplateCList.h">
+    <ClInclude Include="TCList.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="bst.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="tarray.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
