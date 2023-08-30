@@ -1,40 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="20230818">
+    <Filter Include="week 2">
+      <UniqueIdentifier>{fd754b19-20df-4607-ae17-0583a31c227e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="week 2\1">
+      <UniqueIdentifier>{908d8022-895a-4b7c-95c3-b0a28fc59c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="week 1">
+      <UniqueIdentifier>{43d51aa1-4f3d-4e95-92e6-a397d0d46100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="week 1\20230818">
       <UniqueIdentifier>{3f330696-b4cb-465b-b969-f604c701a05c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="20230821">
+    <Filter Include="week 1\20230821">
       <UniqueIdentifier>{bbf52ad6-ab3c-4b75-92ab-9c67e718314f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="20230822">
+    <Filter Include="week 1\20230822">
       <UniqueIdentifier>{8e0d1e2f-023d-41a5-a0c2-20cbc53dea3c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="20230825">
+    <Filter Include="week 1\20230825">
       <UniqueIdentifier>{35cc2401-71e2-4d91-8229-2f6b382617d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="myList.cpp">
-      <Filter>20230818</Filter>
+      <Filter>week 1\20230818</Filter>
     </ClCompile>
     <ClCompile Include="1.cpp">
-      <Filter>20230821</Filter>
+      <Filter>week 1\20230821</Filter>
     </ClCompile>
     <ClCompile Include="2-4.cpp">
-      <Filter>20230821</Filter>
+      <Filter>week 1\20230821</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_1.cpp">
+      <Filter>week 2\1</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="myList.h">
-      <Filter>20230818</Filter>
+      <Filter>week 1\20230818</Filter>
     </ClInclude>
     <ClInclude Include="CList.h">
-      <Filter>20230822</Filter>
+      <Filter>week 1\20230822</Filter>
     </ClInclude>
     <ClInclude Include="BST.h">
-      <Filter>20230825</Filter>
+      <Filter>week 1\20230825</Filter>
+    </ClInclude>
+    <ClInclude Include="Vehicle.h">
+      <Filter>week 2\1</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
