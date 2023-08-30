@@ -1,40 +1,37 @@
-﻿// 1단계 pseudo code
+﻿// 2단계 pseudo code
 // 부모 클래스 <- 주어짐
-// 멤버변수로 wheels를 가지고 있음(부모만 가져도 될 듯)
-// 자식 클래스에서 각자가 가진 바퀴 개수를 초기화하고 출력해야 함
-// 자식 클래스 -> Bicycle, Car
-// Bicycle의 바퀴 개수 2개
-// Car의 바퀴 개수 4개
-// Drive 함수는 자식 클래스에서 사용되었을 경우
-// 어떤 자식 클래스가 호출되었는지 출력해줘야 함
-// Honk 함수는 Car에서만 작동 가능
+// 부모 클래스 멤버변수 '바퀴 개수, name'
+// name에는 기본적으로 "차량" 문자열이 들어감
+// 대신 자식 클래스에서 호출할 경우 자식 클래스 차량의 문자열이 들어가야 함
+// Drive 인자에 속도가 추가됨
 
 #include <iostream>
+#include <string>
 
 using std::cout;
 using std::endl;
+using std::string;
 
 class Vehicle
 {
-protected:
+private:
 	int wheels;
+	string name;
 
-public:
-	void Drive()
+protected:
+	void Drive(int _speed)
 	{
-		cout << "출발합니다. " << endl;
+		cout << _speed << "km/h 속도로 " << name << "이(가) 출발합니다. " << endl;
 	}
 
 public:
-	Vehicle() : wheels(0)
+	Vehicle() : wheels(0), name("")
+	{};
+	
+	Vehicle(int _wheels, string _name = "차량") : wheels(_wheels), name(_name)
 	{
-
-	}
-
-	Vehicle(int _wheels) : wheels(_wheels)
-	{
-		cout << "바퀴가 " << _wheels << "개인 차량을 만들었습니다." << endl;
-	}
+		cout << "바퀴가 " << _wheels << "개인 " << name << "을(를) 만들었습니다." << endl;
+	};
 
 	~Vehicle()
 	{
@@ -45,11 +42,9 @@ public:
 class Bicycle : public Vehicle
 {
 public:
-	void Drive()
+	void Drive(int _speed)
 	{
-		cout << "자전거가 ";
-
-		Vehicle::Drive();
+		Vehicle::Drive(_speed);
 	}
 
 public:
@@ -58,7 +53,7 @@ public:
 	
 	}
 
-	Bicycle(int _wheels) : Vehicle(_wheels)
+	Bicycle(int _wheels, string _name = "자전거") : Vehicle(_wheels, _name)
 	{
 
 	}
@@ -72,11 +67,9 @@ public:
 class Car : public Vehicle
 {
 public:
-	void Drive()
+	void Drive(int _speed)
 	{
-		cout << "자동차가 ";
-
-		Vehicle::Drive();
+		Vehicle::Drive(_speed);
 	}
 
 	void Honk()
@@ -90,7 +83,7 @@ public:
 
 	}
 
-	Car(int _wheels) : Vehicle(_wheels)
+	Car(int _wheels, string _name = "자동차") : Vehicle(_wheels, _name)
 	{
 
 	}
@@ -105,14 +98,13 @@ int main()
 {
 	Vehicle vehic(8);
 	Bicycle cycle(2);
-	cycle.Drive();
-
 	Car car(4);
-	car.Honk();
-	car.Drive();
 
-	//cycle.Honk();
-	vehic.Drive();
+	cycle.Drive(10);
+	car.Honk();
+	car.Drive(30);
+
+	// vehic.Drive();
 
 	return 0;
 }
