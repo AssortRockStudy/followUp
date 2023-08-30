@@ -1,4 +1,4 @@
-#include <stdlib.h>
+ï»¿#include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
 #include "TCList.h"
@@ -14,31 +14,31 @@ using std::endl;
 
 
 /*
-ÇØ¾ßÇÒ°Í
-1.ÀÌÅÍ·¹ÀÌÅÍ ±¸ÇöÇÏ±â
-	begin end erase insert ±¸ÇöÇÏ±â
-2.push front push back ÇÔ¼ö ±¸ÇöÇÏ±â
-3.ÀüÀ§ÈÄÀ§ ++¿¬»êÀÚ ¿À¹ö·Îµù
-4.!= ¿¬»êÀÚ ¿À¹ö·Îµù
+í•´ì•¼í• ê²ƒ
+1.ì´í„°ë ˆì´í„° êµ¬í˜„í•˜ê¸°
+	begin end erase insert êµ¬í˜„í•˜ê¸°
+2.push front push back í•¨ìˆ˜ êµ¬í˜„í•˜ê¸°
+3.ì „ìœ„í›„ìœ„ ++ì—°ì‚°ìž ì˜¤ë²„ë¡œë”©
+4.!= ì—°ì‚°ìž ì˜¤ë²„ë¡œë”©
 
 */
-/*Çò°¥·Á¼­ºÃ´ø°Í
-1. ÀÎ¼ö Àü´Þ¾ÈÇØµµ ¾Ë¾Æ¼­ µðÆúÆ®·Î Ã¤¿öÁÖ´Â ÀÎÀÚÀü´ÞµÇ´Â°Í node¿¡ÀÖ´ø°ÇÁö clist¿¡ÀÖ´ø°ÇÁö
-2. tnode¶û clistÁß ¾îµð°¡ class¿³´ÂÁö. »ý¼ºÀÚ´Â ¾îµð¿¡ ±¸ÇöµÇ¾îÀÖ¾ù´ÂÁö(µÑ´Ù¿³´Ù)
-3. ÀÌÅÍ·¹ÀÌÅÍ ¸â¹öÈ®ÀÎ
-4. ++¿¬»êÀÚ ¿À¹ö·Îµù ÀÌÅÍ·¹ÀÌÅÍ¿¡ÇÏ´ÂÁö clist¿¡ÇÏ´ÂÁö
-5. cpp¿¡ ÇÔ¼ö±¸ÇöµÇ¾î ÀÖ´Â Á¾·ù ÆÄ¾Ç
-6. clist Å¬·¡½º¿¡ ¹ÝÈ¯Å¸ÀÔ iterator ÁÖ·Á´Ï »¡°£ÁÙ¶°¼­ Àü¹æ¼±¾ðµÐ°Í
-7. ÈÄÀ§¿¬»êÀÚ ¿¬»ê°úÁ¤& ¹ÝÈ¯Å¸ÀÔ
-8. erase insert ±¸ÇöÀ§Ä¡
+/*í—·ê°ˆë ¤ì„œë´¤ë˜ê²ƒ
+1. ì¸ìˆ˜ ì „ë‹¬ì•ˆí•´ë„ ì•Œì•„ì„œ ë””í´íŠ¸ë¡œ ì±„ì›Œì£¼ëŠ” ì¸ìžì „ë‹¬ë˜ëŠ”ê²ƒ nodeì—ìžˆë˜ê±´ì§€ clistì—ìžˆë˜ê±´ì§€
+2. tnodeëž‘ clistì¤‘ ì–´ë””ê°€ classì—¿ëŠ”ì§€. ìƒì„±ìžëŠ” ì–´ë””ì— êµ¬í˜„ë˜ì–´ìžˆì—‡ëŠ”ì§€(ë‘˜ë‹¤ì—¿ë‹¤)
+3. ì´í„°ë ˆì´í„° ë©¤ë²„í™•ì¸
+4. ++ì—°ì‚°ìž ì˜¤ë²„ë¡œë”© ì´í„°ë ˆì´í„°ì—í•˜ëŠ”ì§€ clistì—í•˜ëŠ”ì§€
+5. cppì— í•¨ìˆ˜êµ¬í˜„ë˜ì–´ ìžˆëŠ” ì¢…ë¥˜ íŒŒì•…
+6. clist í´ëž˜ìŠ¤ì— ë°˜í™˜íƒ€ìž… iterator ì£¼ë ¤ë‹ˆ ë¹¨ê°„ì¤„ë– ì„œ ì „ë°©ì„ ì–¸ë‘”ê²ƒ
+7. í›„ìœ„ì—°ì‚°ìž ì—°ì‚°ê³¼ì •& ë°˜í™˜íƒ€ìž…
+8. erase insert êµ¬í˜„ìœ„ì¹˜
 */
 
 
 /*
-¾ÆÁ÷ÀÇ¹®ÀÎ°Í
-1. ¹ÝÈ¯Å¸ÀÔÀ» ·¹ÆÛ·±½º·Î ³²¹ßÇÏ¸é ¾ÈµÇ´Â°¡? (¿¹¸¦µé¸é eraseÇÔ¼öÀÇ ¹ÝÈ¯Å¸ÀÔÀ» ·¹ÆÛ·±½º·Î ÁÖ¸é¾ÈµÇ´Â°¡?)
-2. ¾îµð±îÁö ÀÎ¶óÀÎ ÇÔ¼ö·Î ÇÒ ¼ö ÀÖ´ÂÁö ±âÁØÀÌ ¸ðÈ£ÇÏ´Ù°í »ý°¢ÇÔ (ÀÏ´Ü ÀÎ¶óÀÎÀÌ ÆíÇØ¼­ ´Ù±×·¸°Ô ÀÛ¼ºÇÏ´ÂÁß)
-2. operator == ¿À¹ö·ÎµùÁß ÀÎÀÚ¸¦ const ·Î °¡Á®¿À´Â ÀÌÀ¯(±î¸ÔÀ½¤¾¤¾)
+ì•„ì§ì˜ë¬¸ì¸ê²ƒ
+1. ë°˜í™˜íƒ€ìž…ì„ ë ˆí¼ëŸ°ìŠ¤ë¡œ ë‚¨ë°œí•˜ë©´ ì•ˆë˜ëŠ”ê°€? (ì˜ˆë¥¼ë“¤ë©´ eraseí•¨ìˆ˜ì˜ ë°˜í™˜íƒ€ìž…ì„ ë ˆí¼ëŸ°ìŠ¤ë¡œ ì£¼ë©´ì•ˆë˜ëŠ”ê°€?)
+2. ì–´ë””ê¹Œì§€ ì¸ë¼ì¸ í•¨ìˆ˜ë¡œ í•  ìˆ˜ ìžˆëŠ”ì§€ ê¸°ì¤€ì´ ëª¨í˜¸í•˜ë‹¤ê³  ìƒê°í•¨ (ì¼ë‹¨ ì¸ë¼ì¸ì´ íŽ¸í•´ì„œ ë‹¤ê·¸ë ‡ê²Œ ìž‘ì„±í•˜ëŠ”ì¤‘)
+2. operator == ì˜¤ë²„ë¡œë”©ì¤‘ ì¸ìžë¥¼ const ë¡œ ê°€ì ¸ì˜¤ëŠ” ì´ìœ (ê¹Œë¨¹ìŒã…Žã…Ž)
 */
 
 
@@ -65,7 +65,7 @@ int main() {
 	
 
 	
-	//////////////////////230821 0417¼öÁ¤///////////////////////////
+	//////////////////////230821 0417ìˆ˜ì •///////////////////////////
 
 	for (it = tcl.begin(); tcl.end() != it;)
 	{
@@ -76,10 +76,10 @@ int main() {
 	{
 		cout << *it << endl;
 	}
-	//////////////////////230821 0417¼öÁ¤///////////////////////////
+	//////////////////////230821 0417ìˆ˜ì •///////////////////////////
 
 
-	//deepcopy Å×½ºÆ®
+	//deepcopy í…ŒìŠ¤íŠ¸
 	TCList<int> c1;
 	for (int i = 0; i < 3; ++i)
 	{
@@ -90,17 +90,17 @@ int main() {
 	TCList<int> c2;
 	c2.CopyDeep(c1);
 
-	//º¹»ç»ý¼ºÀÚ Å×½ºÆ®
+	//ë³µì‚¬ìƒì„±ìž í…ŒìŠ¤íŠ¸
 	TCList<int> c3 = c1;
 
-	//ÀÌµ¿»ý¼ºÀÚ Å×½ºÆ®
+	//ì´ë™ìƒì„±ìž í…ŒìŠ¤íŠ¸
 	TCList<int> c4 = std::move(c1);
 
-	//´ëÀÔ¿¬»êÀÚ Å×½ºÆ®
+	//ëŒ€ìž…ì—°ì‚°ìž í…ŒìŠ¤íŠ¸
 	TCList<int> c5;
 	c5 = c2;
 
-	//ÀÌµ¿ ´ëÀÔ ¿¬»êÀÚ Å×½ºÆ®
+	//ì´ë™ ëŒ€ìž… ì—°ì‚°ìž í…ŒìŠ¤íŠ¸
 	TCList<int> c6;
 	c6 = std::move(c3);
 
@@ -110,7 +110,7 @@ int main() {
 		c8.pushback(i + 1);
 	}
 
-	//swap Å×½ºÆ®
+	//swap í…ŒìŠ¤íŠ¸
 	TCList<int> c7;
 	for (int i = 0; i < 3; ++i)
 	{
@@ -155,7 +155,7 @@ int main() {
 
 
 	iter = cb1.begin();
-	//µ¥ÀÌÅÍ °Ë»ö
+	//ë°ì´í„° ê²€ìƒ‰
 	while (iter != cb1.end())
 	{
 		if (400 == iter->first)
@@ -167,7 +167,7 @@ int main() {
 
 	iter;
 
-	//ÀüÀ§¿ì¼± Å½»ö;
+	//ì „ìœ„ìš°ì„  íƒìƒ‰;
 	iter = cb1.root();
 
 	for (; iter != cb1.end(); iter.prepp())
@@ -177,15 +177,15 @@ int main() {
 
 	cout << cb1.depth();
 
-	//ÀÌÁø Å½»ö Æ®¸®´Â »ç½Ç Red-Black Tree ÀÌ´Ù. °°Àº°³³äÀ¸·Î´Â AVL Æ®¸®°¡ÀÖ´Ù.
-	//ÀÚ°¡ ±ÕÇü ÀÌÁøÅ½»ö Æ®¸®
+	//ì´ì§„ íƒìƒ‰ íŠ¸ë¦¬ëŠ” ì‚¬ì‹¤ Red-Black Tree ì´ë‹¤. ê°™ì€ê°œë…ìœ¼ë¡œëŠ” AVL íŠ¸ë¦¬ê°€ìžˆë‹¤.
+	//ìžê°€ ê· í˜• ì´ì§„íƒìƒ‰ íŠ¸ë¦¬
 
 	
 
 
 	cb1.clear_r();
-	//MapÀÇ Å° Å¸ÀÔÀ» Å¬·¡½º·Î ÁöÁ¤ÇÑ °æ¿ì,ÇØ´ç Å¬·¡½º´Â ºñ±³¿¬»êÀÚµéÀÌ ±¸Çö(¿À¹ö·Îµù) µÇ¾îÀÖ¾î¾ß ÇÑ´Ù.
-//ÇØ´ç Å¸ÀÔ º¯¼ö ³¢¸® ºñ±³Á™À»¶§ ¿ì¿­À» ³ª´©´Â ±âÁØÀÌ ¸¶·ÃµÇ¾îÀÖ¾î¾ßÇÔ.
+	//Mapì˜ í‚¤ íƒ€ìž…ì„ í´ëž˜ìŠ¤ë¡œ ì§€ì •í•œ ê²½ìš°,í•´ë‹¹ í´ëž˜ìŠ¤ëŠ” ë¹„êµì—°ì‚°ìžë“¤ì´ êµ¬í˜„(ì˜¤ë²„ë¡œë”©) ë˜ì–´ìžˆì–´ì•¼ í•œë‹¤.
+//í•´ë‹¹ íƒ€ìž… ë³€ìˆ˜ ë¼ë¦¬ ë¹„êµí—€ì„ë•Œ ìš°ì—´ì„ ë‚˜ëˆ„ëŠ” ê¸°ì¤€ì´ ë§ˆë ¨ë˜ì–´ìžˆì–´ì•¼í•¨.
 
 	const char* pStr = "asdasd";
 	const wchar_t* pWStr = L"asdv";
@@ -198,10 +198,10 @@ int main() {
 
 	map<const char*, int>::iterator mapiter = mapStr.find("Player");
 
-	//Find ½ÇÆÐ
-	//ÀúÀåµÇ¾î ÀÖ´Â Å° °ªÀº "Player"¹®ÀÚ¿­ÀÇ ÁÖ¼Ò°ª
-	//strTest ¹è¿­¿¡¼­µµ µ¿ÀÏ ¹®ÀÚ¿­°ªÀÌ µé¾îÀÖÁö¸¸,¹è¿­ÀÇ ÀÌ¸§(ÁÖ¼Ò)·Î °Ë»öÀ» ÇÏ´Â °Í ÀÌ±â ¶§¹®¿¡
-	//µ¿ÀÏÇÑ ÁÖ¼Ò°ªÀ» ³ªÅ¸³»´Â "Player"·Î °Ë»öÇÞÀ»¶§¸¸ find °¡´É
+	//Find ì‹¤íŒ¨
+	//ì €ìž¥ë˜ì–´ ìžˆëŠ” í‚¤ ê°’ì€ "Player"ë¬¸ìžì—´ì˜ ì£¼ì†Œê°’
+	//strTest ë°°ì—´ì—ì„œë„ ë™ì¼ ë¬¸ìžì—´ê°’ì´ ë“¤ì–´ìžˆì§€ë§Œ,ë°°ì—´ì˜ ì´ë¦„(ì£¼ì†Œ)ë¡œ ê²€ìƒ‰ì„ í•˜ëŠ” ê²ƒ ì´ê¸° ë•Œë¬¸ì—
+	//ë™ì¼í•œ ì£¼ì†Œê°’ì„ ë‚˜íƒ€ë‚´ëŠ” "Player"ë¡œ ê²€ìƒ‰í–‡ì„ë•Œë§Œ find ê°€ëŠ¥
 
 	map<string, int> mapString;
 	mapString.insert(make_pair("Player", 100));

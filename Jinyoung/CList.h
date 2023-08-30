@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <assert.h>
 #include <iostream>;
 
@@ -38,14 +38,14 @@ public:
 
 
 
-	//¾èÀº º¹»ç
+	//ì–•ì€ ë³µì‚¬
 	void CopyShallow(CList& _other) {
 		pHead = _other.pHead;
 		pTail = _other.pTail;
 		iCount = _other.iCount;
 	}
 
-	//±íÀºº¹»ç
+	//ê¹Šì€ë³µì‚¬
 	void CopyDeep(CList& _other) {
 		pHead = nullptr;
 		pTail = nullptr;
@@ -61,7 +61,7 @@ public:
 
 	/*
 
-	//º¹»ç»ý¼ºÀÚ
+	//ë³µì‚¬ìƒì„±ìž
 	CList(CList& _other)
 		:pHead(nullptr), pTail(nullptr), iCount(0) {
 		
@@ -72,11 +72,11 @@ public:
 			this->pushback(*it);
 		}
 
-		cout << "º¹»ç»ý¼ºÀÚ È£Ãâ" << endl;
+		cout << "ë³µì‚¬ìƒì„±ìž í˜¸ì¶œ" << endl;
 	}
 	*/
 
-	//ÀÌµ¿»ý¼ºÀÚ
+	//ì´ë™ìƒì„±ìž
 	CList(CList&& _other)
 		:pHead(_other.pHead), pTail(_other.pTail), iCount(_other.iCount) {
 				
@@ -85,10 +85,10 @@ public:
 		_other.pHead = nullptr;
 		_other.pTail = nullptr;
 
-		cout << "ÀÌµ¿»ý¼ºÀÚ È£Ãâ" << endl;
+		cout << "ì´ë™ìƒì„±ìž í˜¸ì¶œ" << endl;
 	}
 
-	//´ëÀÔ ¿¬»êÀÚ
+	//ëŒ€ìž… ì—°ì‚°ìž
 	CList& operator = (CList& _other) {
 		pHead = nullptr;
 		pTail = nullptr;
@@ -100,12 +100,12 @@ public:
 		{
 			this->pushback(*it);
 		}
-		cout << "´ëÀÔ ¿¬»êÀÚ È£Ãâ" << endl;
+		cout << "ëŒ€ìž… ì—°ì‚°ìž í˜¸ì¶œ" << endl;
 		return *this;
 	}
 
 
-	//ÀÌµ¿ ´ëÀÔ¿¬»êÀÚ
+	//ì´ë™ ëŒ€ìž…ì—°ì‚°ìž
 	CList& operator = (CList&& _other) {
 		pHead = _other.pHead;
 		pTail = _other.pTail;
@@ -115,23 +115,23 @@ public:
 		_other.pHead=nullptr;
 		_other.pTail= nullptr;
 		_other.iCount= 0;
-		cout << "ÀÌµ¿ ´ëÀÔ¿¬»êÀÚ È£Ãâ" << endl;
+		cout << "ì´ë™ ëŒ€ìž…ì—°ì‚°ìž í˜¸ì¶œ" << endl;
 
 		return *this;
 	}
 
 
-	//swap ±¸Çö
+	//swap êµ¬í˜„
 	void swap(CList&& _other) {
 		CList tmpcl = std::move(*this);
 		*this = _other;
 		_other = std::move(tmpcl);
-		cout << "swap È£Ãâ" << endl;
+		cout << "swap í˜¸ì¶œ" << endl;
 	}
 
 
 
-	//////////////////////230821 0417¼öÁ¤///////////////////////////
+	//////////////////////230821 0417ìˆ˜ì •///////////////////////////
 	iterator erase(iterator& it) {
 		tNode* tmpnode = it.pTarget;
 		tNode* prevnode = tmpnode->pPrev;
@@ -151,7 +151,7 @@ public:
 		--iCount;
 		return it;
 	}
-	//////////////////////230821 0417¼öÁ¤///////////////////////////
+	//////////////////////230821 0417ìˆ˜ì •///////////////////////////
 
 	CList()
 		:pHead(nullptr), pTail(nullptr), iCount(0)	{}
@@ -182,7 +182,7 @@ public:
 			else { return true; }
 		}
 
-		//¿øº»°ª ¼öÁ¤µµ °¡´ÉÇØ¾ßÇÑ´Ù.
+		//ì›ë³¸ê°’ ìˆ˜ì •ë„ ê°€ëŠ¥í•´ì•¼í•œë‹¤.
 		int& operator *() { return pTarget->iData; }
 
 

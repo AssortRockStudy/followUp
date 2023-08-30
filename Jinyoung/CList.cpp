@@ -1,4 +1,4 @@
-#include "CList.h"
+ï»¿#include "CList.h"
 
 
 
@@ -9,7 +9,7 @@ void CList::pushfront(int _data)
 
 	if (0 == iCount)
 	{
-		//µ¥ÀÌÅÍ°¡ ÇÏ³ªµµ ¾øÀ»°æ¿ì
+		//ë°ì´í„°ê°€ í•˜ë‚˜ë„ ì—†ì„ê²½ìš°
 		pHead = pTail = newnode;
 	}
 	else
@@ -30,7 +30,7 @@ void CList::pushback(int _data)
 	
 	if (0 == iCount)
 	{
-		//µ¥ÀÌÅÍ°¡ ÇÏ³ªµµ ¾øÀ»°æ¿ì
+		//ë°ì´í„°ê°€ í•˜ë‚˜ë„ ì—†ì„ê²½ìš°
 		pHead = pTail = newnode;
 	}
 	else
