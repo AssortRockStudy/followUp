@@ -1,13 +1,13 @@
-// 1´Ü°è pseudo code
-// ºÎ¸ð Å¬·¡½º <- ÁÖ¾îÁü
-// ¸â¹öº¯¼ö·Î wheels¸¦ °¡Áö°í ÀÖÀ½(ºÎ¸ð¸¸ °¡Á®µµ µÉ µí)
-// ÀÚ½Ä Å¬·¡½º¿¡¼­ °¢ÀÚ°¡ °¡Áø ¹ÙÄû °³¼ö¸¦ ÃÊ±âÈ­ÇÏ°í Ãâ·ÂÇØ¾ß ÇÔ
-// ÀÚ½Ä Å¬·¡½º -> Bicycle, Car
-// BicycleÀÇ ¹ÙÄû °³¼ö 2°³
-// CarÀÇ ¹ÙÄû °³¼ö 4°³
-// Drive ÇÔ¼ö´Â ÀÚ½Ä Å¬·¡½º¿¡¼­ »ç¿ëµÇ¾úÀ» °æ¿ì
-// ¾î¶² ÀÚ½Ä Å¬·¡½º°¡ È£ÃâµÇ¾ú´ÂÁö Ãâ·ÂÇØÁà¾ß ÇÔ
-// Honk ÇÔ¼ö´Â Car¿¡¼­¸¸ ÀÛµ¿ °¡´É
+ï»¿// 1ë‹¨ê³„ pseudo code
+// ë¶€ëª¨ í´ëž˜ìŠ¤ <- ì£¼ì–´ì§
+// ë©¤ë²„ë³€ìˆ˜ë¡œ wheelsë¥¼ ê°€ì§€ê³  ìžˆìŒ(ë¶€ëª¨ë§Œ ê°€ì ¸ë„ ë  ë“¯)
+// ìžì‹ í´ëž˜ìŠ¤ì—ì„œ ê°ìžê°€ ê°€ì§„ ë°”í€´ ê°œìˆ˜ë¥¼ ì´ˆê¸°í™”í•˜ê³  ì¶œë ¥í•´ì•¼ í•¨
+// ìžì‹ í´ëž˜ìŠ¤ -> Bicycle, Car
+// Bicycleì˜ ë°”í€´ ê°œìˆ˜ 2ê°œ
+// Carì˜ ë°”í€´ ê°œìˆ˜ 4ê°œ
+// Drive í•¨ìˆ˜ëŠ” ìžì‹ í´ëž˜ìŠ¤ì—ì„œ ì‚¬ìš©ë˜ì—ˆì„ ê²½ìš°
+// ì–´ë–¤ ìžì‹ í´ëž˜ìŠ¤ê°€ í˜¸ì¶œë˜ì—ˆëŠ”ì§€ ì¶œë ¥í•´ì¤˜ì•¼ í•¨
+// Honk í•¨ìˆ˜ëŠ” Carì—ì„œë§Œ ìž‘ë™ ê°€ëŠ¥
 
 #include <iostream>
 
@@ -22,7 +22,7 @@ protected:
 public:
 	void Drive()
 	{
-		cout << "Ãâ¹ßÇÕ´Ï´Ù. " << endl;
+		cout << "ì¶œë°œí•©ë‹ˆë‹¤. " << endl;
 	}
 
 public:
@@ -33,7 +33,7 @@ public:
 
 	Vehicle(int _wheels) : wheels(_wheels)
 	{
-		cout << "¹ÙÄû°¡ " << _wheels << "°³ÀÎ Â÷·®À» ¸¸µé¾ú½À´Ï´Ù." << endl;
+		cout << "ë°”í€´ê°€ " << _wheels << "ê°œì¸ ì°¨ëŸ‰ì„ ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤." << endl;
 	}
 
 	~Vehicle()
@@ -47,7 +47,7 @@ class Bicycle : public Vehicle
 public:
 	void Drive()
 	{
-		cout << "ÀÚÀü°Å°¡ ";
+		cout << "ìžì „ê±°ê°€ ";
 
 		Vehicle::Drive();
 	}
@@ -74,14 +74,14 @@ class Car : public Vehicle
 public:
 	void Drive()
 	{
-		cout << "ÀÚµ¿Â÷°¡ ";
+		cout << "ìžë™ì°¨ê°€ ";
 
 		Vehicle::Drive();
 	}
 
 	void Honk()
 	{
-		cout << "»§»§ " << endl;
+		cout << "ë¹µë¹µ " << endl;
 	}
 
 public:
