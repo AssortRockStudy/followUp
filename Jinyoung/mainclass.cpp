@@ -1,7 +1,9 @@
 #include <iostream>
+#include <vector>
 
 using std::cout;
 using std::endl;
+using std::vector;
 
 class AAA
 {
@@ -44,7 +46,6 @@ public:
 	// 오버 라이딩 <-> 오버 로딩
 	void Move()
 	{
-		AAA::Move();
 
 		cout << "BBB Move" << endl;
 	}
@@ -69,6 +70,35 @@ public:
 	}
 };
 
+class CCC : public BBB
+{
+private:
+	int		m_C;
+
+public:
+	// 오버 라이딩 <-> 오버 로딩
+	void Move()
+	{
+
+		cout << "BBB Move" << endl;
+	}
+
+public:
+	// 자식클래스의 생성자에서는 부모 클래스의 기본생성자를 호출한다.(수동으로 하지 않아도 컴파일러의해 호출됨)
+	CCC()
+		: m_C(0)
+	{
+		m_A = 10;
+	}
+
+	CCC(int _A, int _B)
+	{
+	}
+
+	~CCC()
+	{
+	}
+};
 
 
 
@@ -92,6 +122,44 @@ int main()
 	a.Move();
 	b.Move();
 	b.AAA::Move();
+
+	//상속+포인터
+	//다형성
+	//부모 포인터 타입 주소값에 입력되는 객체의 주소 타입은 해당(부모)클래스를 상속받아 파생된 클래스들중
+	//누구든지 저장할수있다.
+	{
+
+		cout << "1231231"<<endl;
+		AAA a;
+		BBB b;
+
+
+		AAA* pA = nullptr;
+		BBB* pB = nullptr;
+
+		pA = &a;
+		pB = &b;
+
+		//상속관계에 있는 클래스의 경우
+		//부모 클래스 포인터 타입으로, 자식클래스의 객체 주소를 받을 수 있다.(가리킬 수 있다.)
+		pA = &b;
+		//pB = &a;
+
+		vector<AAA*> vecData;
+
+		vecData.push_back(new AAA);
+		vecData.push_back(new BBB);
+		vecData.push_back(new CCC);
+
+		a.Move();
+		b.Move();
+
+		for (int i = 0; i < vecData.size(); ++i) 
+		{
+			vecData[i]->Move();
+		}
+
+	}
 
 	return 0;
 }
