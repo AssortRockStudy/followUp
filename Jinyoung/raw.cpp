@@ -65,6 +65,7 @@ int main() {
 
     vector<Vehicle*> vehicles;
 
+
     Vehicle* vehic = new Vehicle(8);
     Bicycle* cycle = new Bicycle(2);
     Car* car = new Car(4);
