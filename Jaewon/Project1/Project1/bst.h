@@ -22,6 +22,15 @@ struct TNode{
 	Pair<T1, T2> data;
 	TNode<T1, T2>* othPtr[3];
 
+public: 
+	bool hasLChild() { return ptr[LCHD]; }
+	bool hasRChild() { return ptr[RCHD]; }
+	bool isRChild() { return ptr[PARENT]->ptr[RCHD] == this; }
+	bool isLChild() { return ptr[PARENT]->ptr[LCHD] == this; }
+	bool isRoot() { return !ptr[PARENT]; }
+	bool isLeaf() { return !ptr[LCHD] && !ptr[RCHD]; }
+	bool chdFull() { return ptr[LCHD] && ptr[RCHD]; }
+	
 
 public:
 	TNode() :data(), othPtr{} {}
@@ -77,6 +86,8 @@ public:
 		return iterator(this, nullptr);
 	}
 
+
+
 	// 입력
 	// 기본적으로 현재 위치해있는 데이터 값보다 작으면 left
 	// 나머지는 right
@@ -109,6 +120,97 @@ public:
 		++cnt;
 	}
 	
+	// 다음 노드 탐색(++에서 기능 빼온 것)
+	TNode<T1, T2>* nextNode(TNode<T1, T2>* node) {
+		TNode<T1, T2>* successor = nullptr;
+		if (node->hasRChild()) {
+			successor = node->othPtr[RCHD];
+			while (nullptr != successor->othPtr[LCHD])
+				successor = successor->othPtr[LCHD];
+		}
+		else {
+			successor = node;
+			while (true) {
+				if (successor->isRoot()) {
+					successor = nullptr;
+					break;
+				}
+				else if (successor->isLChild()) {
+					successor = successor->othPtr[PARENT];
+					break;
+				}
+				successor = successor->othPtr[PARENT];
+			}
+		}
+		return successor;
+	}
+
+	// 노드 삭제
+	// 1. 리프 노드일 경우
+	// 해당 노드 바로 삭제
+	// 2. 1개 있을 경우
+	// 1개 노드 바로 그자리로 올리기
+	// 3. 2개 있을 경우
+	// 중위 순회 기준 다음 노드 데이터 가져온 후 해당 노드 삭제 및 나 자신 리턴
+	// 이후 다음 node를 리턴
+
+	iterator erase(const iterator& iter) {
+		// host가 같지 않을 경우
+		// target이 nullptr일 경우
+		assert(this == iter.host);
+		assert(iter.target);
+
+		TNode<T1, T2>* successor = nullptr;
+
+		// 리프 노드일 경우
+		if (iter.target->isLeaf()) {
+			// root일 경우(노드 1개 상태)
+			if (iter.target->isRoot())
+				root = nullptr;
+			else {
+				successor = nextNode(iter.target);
+
+				if (iter.target->isLChild())
+					iter.target->othPtr[PARENT]->othPtr[LCHD] = nullptr;
+				else
+					iter.target->othPtr[PARENT]->othPtr[RCHD] = nullptr;
+			}
+		}
+		// 2개 있을 경우
+		else if (iter.target->chdFull()) {
+			TNode<T1, T2>* next = nextNode(iter.target);
+			iter.target->data = next->data;
+			erase(iterator(this, next));
+			return iterator(this, iter.target);
+		}
+		// 1개일 경우
+		else {
+			successor = nextNode(iter.target);
+			TNode<T1, T2>* child = nullptr;
+			if (iter.target->hasLChild())
+				child = iter.target->othPtr[LCHD];
+			else
+				child = iter.target->othPtr[RCHD];
+			// 삭제 노드가 루트일 경우
+			// root변경 추가 작업
+			if (iter.target->isRoot()) {
+				child->othPtr[PARENT] = nullptr;
+				root = child;
+			}
+			else {
+				if (iter.target->isLChild()) 
+					iter.target->othPtr[PARENT]->othPtr[LCHD] = child;
+				else
+					iter.target->othPtr[PARENT]->othPtr[RCHD] = child;
+			}
+			child->othPtr[PARENT] = iter.target->othPtr[PARENT];
+		}
+		delete iter.target;
+		--cnt;
+		return iterator(this, successor);
+
+	}
+
 
 	// 전위 순회
 	// 먼저 node의 데이터 값을 출력한 뒤
@@ -258,27 +360,7 @@ public:
 		//    > 아니라면 왼쪽 자식이 될 때까지 위로 올라가기
 		iterator& operator ++() {
 			assert(target);
-			TNode<T1, T2>* successor = nullptr;
-			if (target->othPtr[RCHD] != nullptr) {
-				successor = target->othPtr[RCHD];
-				while (nullptr != successor->othPtr[LCHD])
-					successor = successor->othPtr[LCHD];
-			}
-			else {
-				successor = target;
-				while (true) {
-					if (nullptr == successor->othPtr[PARENT]) {
-						successor = nullptr;
-						break;
-					}
-					else if (successor->othPtr[PARENT]->othPtr[LCHD] == successor) {
-						successor = successor->othPtr[PARENT];
-						break;
-					}
-					successor = successor->othPtr[PARENT];
-				}
-			}
-			target = successor;
+			target = host->nextNode(target);
 			return *this;
 		}
 		iterator operator ++(int) {
