@@ -177,6 +177,7 @@ public:
 			}
 		}
 		// 2개 있을 경우
+		// erase 재귀 이용해서 다음 노드 삭제
 		else if (iter.target->chdFull()) {
 			TNode<T1, T2>* next = nextNode(iter.target);
 			iter.target->data = next->data;
