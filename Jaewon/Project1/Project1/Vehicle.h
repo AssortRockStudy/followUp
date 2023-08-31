@@ -7,7 +7,7 @@ using std::endl;
 using std::string;
 
 class Vehicle {
-private:
+protected:
     int wheels;
     string name;
 
@@ -18,15 +18,15 @@ public:
             << "을(를) 만들었습니다." << endl;
     };
 
-protected:
-    void Drive(int _speed) { cout << _speed << "km/h 속도로 " << name << "이(가) 출발합니다. " << endl; };
+public:
+    virtual void Drive() { cout << name << "이 출발합니다. " << endl; };
 };
 
 class Bicycle : public Vehicle {
 
 public:
-    void Drive(int speed) {
-        Vehicle::Drive(speed);
+    virtual void Drive() override{
+        cout << name << "를 페달로 밟습니다. " << endl;
     }
 
 public:
@@ -38,8 +38,8 @@ public:
 
 class Car : public Vehicle {
 public:
-    void Drive(int speed) {
-        Vehicle::Drive(speed);
+    virtual void Drive() override {
+        cout << name << "의 악셀을 누릅니다. " << endl;
     }
     void Honk() { cout << "빵빵" << endl; }
 public:
