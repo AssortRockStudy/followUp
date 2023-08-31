@@ -16,4 +16,9 @@
       <UniqueIdentifier>{3811a0ca-0fca-47dc-8425-0a1e978e9a0a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TempleteLinkedList.h">
+      <Filter>FollowUp</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
