@@ -1,46 +1,49 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
+#include <string>
 
 using std::cout;
 using std::endl;
+using std::string;
 
 class Vehicle {
-protected:
+private:
     int wheels;
+    string name;
 
 public:
-    Vehicle() : wheels(0) {};
-    Vehicle(int _wheels) : wheels(_wheels) {
-        cout << "¹ÙÄû°¡ " << _wheels << "°³ÀÎ Â÷·®À» ¸¸µé¾ú½À´Ï´Ù." << endl;
+    Vehicle() : wheels(0), name("") {};
+    Vehicle(int _wheels, string _name = "ì°¨ëŸ‰") : wheels(_wheels), name(_name) {
+        cout << "ë°”í€´ê°€ " << _wheels << "ê°œì¸ " << name
+            << "ì„(ë¥¼) ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤." << endl;
     };
 
-    void Drive() { cout << "Ãâ¹ßÇÕ´Ï´Ù. " << endl; };
+protected:
+    void Drive(int _speed) { cout << _speed << "km/h ì†ë„ë¡œ " << name << "ì´(ê°€) ì¶œë°œí•©ë‹ˆë‹¤. " << endl; };
 };
 
 class Bicycle : public Vehicle {
 
 public:
-    void Drive() {
-        cout << "ÀÚÀü°Å°¡ ";
-        Vehicle::Drive();
+    void Drive(int speed) {
+        Vehicle::Drive(speed);
     }
 
 public:
     Bicycle() :Vehicle() {}
-    Bicycle(int wheelNum):Vehicle(wheelNum) {  }
+    Bicycle(int wheelNum, string name = "ìžì „ê±°") :Vehicle(wheelNum, name) {  }
     ~Bicycle(){}
 
 };
 
 class Car : public Vehicle {
 public:
-    void Drive() {
-        cout << "ÀÚµ¿Â÷°¡ ";
-        Vehicle::Drive();
+    void Drive(int speed) {
+        Vehicle::Drive(speed);
     }
-    void Honk() { cout << "»§»§" << endl; }
+    void Honk() { cout << "ë¹µë¹µ" << endl; }
 public:
     Car():Vehicle() {  }
-    Car(int wheelNum):Vehicle(wheelNum) {}
+    Car(int wheelNum, string name = "ìžë™ì°¨"):Vehicle(wheelNum, name) {}
     ~Car(){}
 };

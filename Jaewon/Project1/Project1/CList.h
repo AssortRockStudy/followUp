@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 // To Do List
-// 1. - - ¿¬»êÀÚ(ÀüÀ§, ÈÄÀ§) ±¸Çö
-// 2. º¹»ç, ÀÌµ¿ ¿¬»êÀÚ ±¸Çö
-// 3. º¹»ç, ÀÌµ¿ »ı¼ºÀÚ ±¸
+// 1. - - ì—°ì‚°ì(ì „ìœ„, í›„ìœ„) êµ¬í˜„
+// 2. ë³µì‚¬, ì´ë™ ì—°ì‚°ì êµ¬í˜„
+// 3. ë³µì‚¬, ì´ë™ ìƒì„±ì êµ¬
 
 #pragma once
 #include <assert.h>
@@ -34,12 +34,12 @@ public:
 	int size() { return dCnt; }
 
 
-	// º¹»ç ¿¬»êÀÚ
-	// 1. ¿ø·¡ µ¥ÀÌÅÍ°¡ ÀÖÀ» °æ¿ì ÇØÁ¦
-	// 2. count ÇÒ´ç ÈÄ
-	// 3. ¿øº»µ¥ÀÌÅÍ °ø°£ ÇÒ´ç ÈÄ µ¥ÀÌÅÍ º¹»ç ¹İº¹
+	// ë³µì‚¬ ì—°ì‚°ì
+	// 1. ì›ë˜ ë°ì´í„°ê°€ ìˆì„ ê²½ìš° í•´ì œ
+	// 2. count í• ë‹¹ í›„
+	// 3. ì›ë³¸ë°ì´í„° ê³µê°„ í• ë‹¹ í›„ ë°ì´í„° ë³µì‚¬ ë°˜ë³µ
 	CList& operator =(const CList& oth) {
-		cout << "º¹»ç¿¬" << endl;
+		cout << "ë³µì‚¬ì—°" << endl;
 		if (nullptr == head) {
 			Node* iter = head;
 			for (int i = 0; i < dCnt; i++) {
@@ -67,13 +67,13 @@ public:
 		}
 		return *this;
 	}
-	// ÀÌµ¿ ¿¬»êÀÚ
-	// 1. ¿ø·¡ µ¥ÀÌÅÍ°¡ ÀÖÀ» °æ¿ì ÇØÁ¦
-	// 2. count ÇÒ´ç ÈÄ
-	// 3. head, tail ÁÖ¼Ò°ª ¿Å°ÜÁØ ÈÄ
-	// 4. ¿øº» count = 0, head, tail = nullptr
+	// ì´ë™ ì—°ì‚°ì
+	// 1. ì›ë˜ ë°ì´í„°ê°€ ìˆì„ ê²½ìš° í•´ì œ
+	// 2. count í• ë‹¹ í›„
+	// 3. head, tail ì£¼ì†Œê°’ ì˜®ê²¨ì¤€ í›„
+	// 4. ì›ë³¸ count = 0, head, tail = nullptr
 	CList& operator =(CList&& oth) {
-		cout << "ÀÌµ¿¿¬" << endl;
+		cout << "ì´ë™ì—°" << endl;
 		if (nullptr == head) {
 			Node* iter = head;
 			for (int i = 0; i < dCnt; i++) {
@@ -99,12 +99,12 @@ public:
 
 public:
 	CList() :dCnt(0), head(nullptr), tail(nullptr) {}
-	// º¹»ç »ı¼ºÀÚ
-	// 1. count À¯Áö
-	// 2. »õ·Î¿î µ¥ÀÌÅÍ ¸¸Å­ ÇÒ´çÇÏ¸é¼­
-	//    µ¥ÀÌÅÍ ¿Å°Ü¿À±â
+	// ë³µì‚¬ ìƒì„±ì
+	// 1. count ìœ ì§€
+	// 2. ìƒˆë¡œìš´ ë°ì´í„° ë§Œí¼ í• ë‹¹í•˜ë©´ì„œ
+	//    ë°ì´í„° ì˜®ê²¨ì˜¤ê¸°
 	CList(const CList& oth) :dCnt(oth.dCnt), head(nullptr), tail(nullptr) {
-		cout << "º¹»ç»ı" << endl;
+		cout << "ë³µì‚¬ìƒ" << endl;
 		if (oth.head != nullptr) {
 			Node* hNode = new Node();
 			Node* iter = oth.head->next;
@@ -120,14 +120,14 @@ public:
 			}
 		}
 	}
-	// ÀÌµ¿ »ı¼ºÀÚ
-	// 1. ¿øº»°ª¿¡¼­ µ¥ÀÌÅÍ °¡Á®¿À±â
-	//   - count, maxcount, pData ÁÖ¼Ò
-	// 2. ¿øº» µ¥ÀÌÅÍ °ª Á¦°Å
-	//   - count, maxcount 0À¸·Î
-	//   - pData ÁÖ¼Ò nullptr·Î
+	// ì´ë™ ìƒì„±ì
+	// 1. ì›ë³¸ê°’ì—ì„œ ë°ì´í„° ê°€ì ¸ì˜¤ê¸°
+	//   - count, maxcount, pData ì£¼ì†Œ
+	// 2. ì›ë³¸ ë°ì´í„° ê°’ ì œê±°
+	//   - count, maxcount 0ìœ¼ë¡œ
+	//   - pData ì£¼ì†Œ nullptrë¡œ
 	CList(CList&& oth) :dCnt(oth.dCnt), head(nullptr), tail(nullptr) {
-		cout << "ÀÌµ¿»ı" << endl;
+		cout << "ì´ë™ìƒ" << endl;
 		if (oth.head != nullptr) {
 			head = oth.head;
 			tail = oth.tail;

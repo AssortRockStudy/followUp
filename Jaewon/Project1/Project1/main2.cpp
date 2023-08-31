@@ -1,4 +1,4 @@
-#include "bst.h"
+﻿#include "bst.h"
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -39,7 +39,7 @@ int main() {
 	insert.second = 50;
 	cout << myTree.search(insert) << endl;
 
-	// �׽�Ʈ
+	// 테스트
 
 	BST<int, int>::iterator treeIter = myTree.begin();
 	++treeIter;

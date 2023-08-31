@@ -1,18 +1,16 @@
-#include "Vehicle.h"
+Ôªø#include "Vehicle.h"
 
 
 int main() {
     Vehicle vehic(8);
     Bicycle cycle(2);
-    cycle.Drive();
-
     Car car(4);
+
+    cycle.Drive(10);
     car.Honk();
-    car.Drive();
+    car.Drive(30);
 
-    //cycle.Honk();  // ¡÷ºÆ ¡¶∞≈Ω√ ª°∞£ ¡Ÿ∑Œ ø¿∑˘
-    vehic.Drive();
-
+    // vehic.Drive(); // Ï£ºÏÑù Ï†úÍ±∞Ïãú Îπ®Í∞Ñ Ï§ÑÎ°ú Ïò§Î•ò
 
     return 0;
 }

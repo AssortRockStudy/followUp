@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 #include <assert.h>
 #include <iostream>
 using std::cout;
 using std::endl;
-// CList ÅÆÇÃ¸´È­
+// CList íƒ¬í”Œë¦¿í™”
 
 
-// Node »ı¼º
-// 1. ³Ö¾î¾ß ÇÏ´Â µ¥ÀÌÅÍ
-// 2. ÀÌÀü ³ëµåÀÇ ÁÖ¼Ò
-// 3. ´ÙÀ½ ³ëµåÀÇ ÁÖ¼Ò
+// Node ìƒì„±
+// 1. ë„£ì–´ì•¼ í•˜ëŠ” ë°ì´í„°
+// 2. ì´ì „ ë…¸ë“œì˜ ì£¼ì†Œ
+// 3. ë‹¤ìŒ ë…¸ë“œì˜ ì£¼ì†Œ
 template <typename T>
 struct Node {
 	T data;
@@ -20,20 +20,20 @@ struct Node {
 };
 
 
-// ÅÛÇÃ¸´ ¸µÅ©µå ¸®½ºÆ® To Do List
-// 1. ¸â¹ö º¯¼ö
-//    - ¸®½ºÆ®ÀÇ Ã¹¹øÂ°, ¸¶Áö¸·ÀÇ ÁÖ¼Ò
+// í…œí”Œë¦¿ ë§í¬ë“œ ë¦¬ìŠ¤íŠ¸ To Do List
+// 1. ë©¤ë²„ ë³€ìˆ˜
+//    - ë¦¬ìŠ¤íŠ¸ì˜ ì²«ë²ˆì§¸, ë§ˆì§€ë§‰ì˜ ì£¼ì†Œ
 //      head, tail
-//    - ¸®½ºÆ® ¿ø¼Ò °³¼ö
+//    - ë¦¬ìŠ¤íŠ¸ ì›ì†Œ ê°œìˆ˜
 //      dCnt
-// 2. ¸â¹ö ÇÔ¼ö
+// 2. ë©¤ë²„ í•¨ìˆ˜
 //    - pushBack
 //    - pushFront
 //    - size
 //    - erase
-// 3. »ı¼ºÀÚ, ¼Ò¸êÀÚ
-// 4. iterator Å¬·¡½º
-//  - ¿¬»êÀÚ ¿À¹ö·Îµù
+// 3. ìƒì„±ì, ì†Œë©¸ì
+// 4. iterator í´ë˜ìŠ¤
+//  - ì—°ì‚°ì ì˜¤ë²„ë¡œë”©
 //     ++, !=, ==, --, *
 template <typename T>
 class TemplateCList{
@@ -43,10 +43,10 @@ class TemplateCList{
 
 public:
 	TemplateCList() {}
-	// º¹»ç »ı¼ºÀÚ
-	// count À¯Áö
-	// »õ·Î¿î µ¥ÀÌÅÍ¸¦ º¹»çÇÒ ¸®½ºÆ®ÀÇ cnt¸¸Å­ ÇÒ´ç ÈÄ
-	// °ª ±×´ë·Î º¹»ç
+	// ë³µì‚¬ ìƒì„±ì
+	// count ìœ ì§€
+	// ìƒˆë¡œìš´ ë°ì´í„°ë¥¼ ë³µì‚¬í•  ë¦¬ìŠ¤íŠ¸ì˜ cntë§Œí¼ í• ë‹¹ í›„
+	// ê°’ ê·¸ëŒ€ë¡œ ë³µì‚¬
 	TemplateCList(const TemplateCList<T>& oth):dCnt(oth.dCnt), head(nullptr), tail(nullptr) {
 		if (oth.head != nullptr) {
 			Node<T>* hNode = new Node<T>();
@@ -63,9 +63,9 @@ public:
 			tail = prevIter;
 		}
 	}
-	// ÀÌµ¿ »ı¼ºÀÚ
-	// ¿øº»°ª¿¡¼­ ´Ù °¡Á®¿Â ÈÄ
-	// ¿øº» µ¥ÀÌÅÍ °ª Á¦°Å
+	// ì´ë™ ìƒì„±ì
+	// ì›ë³¸ê°’ì—ì„œ ë‹¤ ê°€ì ¸ì˜¨ í›„
+	// ì›ë³¸ ë°ì´í„° ê°’ ì œê±°
 	TemplateCList(TemplateCList<T>&& oth):dCnt(oth.dCnt), head(oth.head), tail(oth.tail) {
 		oth.head = nullptr;
 		oth.tail = nullptr;
@@ -74,9 +74,9 @@ public:
 	~TemplateCList(){}
 
 public:
-	// Ã¹ ÀÔ·ÂÀÌ¸é head·Î ¼³Á¤
-	// ¾Æ´Ï¸é tailÀÇ next¿¡ ¼³Á¤ ÈÄ
-	// tail¿¡ ¿¬°á
+	// ì²« ì…ë ¥ì´ë©´ headë¡œ ì„¤ì •
+	// ì•„ë‹ˆë©´ tailì˜ nextì— ì„¤ì • í›„
+	// tailì— ì—°ê²°
 	void pushBack(const T& data) {
 		Node<T>* newNode = new Node<T>(data, tail, nullptr);
 		if (nullptr == head)
@@ -86,9 +86,9 @@ public:
 		tail = newNode;
 		++dCnt;
 	}
-	// Ã¹ ÀÔ·ÂÀÌ¸é tail·Î ¼³Á¤
-	// ¾Æ´Ï¸é headÀÇ prev¿¡ ¼³Á¤ ÈÄ
-	// head¿¡ ¿¬°á
+	// ì²« ì…ë ¥ì´ë©´ tailë¡œ ì„¤ì •
+	// ì•„ë‹ˆë©´ headì˜ prevì— ì„¤ì • í›„
+	// headì— ì—°ê²°
 	void pushFront(const T& data) {
 		Node<T>* newNode = new Node<T>(data, nullptr, head);
 		if (nullptr == tail)
@@ -113,10 +113,10 @@ public:
 
 
 
-	// ´ëÀÔ ¿¬»êÀÚ
-	// ¿ø·¡ µ¥ÀÌÅÍ°¡ ÀÖ¾úÀ¸¸é ÇÒ´ç ÇØÁ¦ ÈÄ
-	// º¹»çÇÏ·Á´Â count ¸¸Å­ µ¥ÀÌÅÍ ÇÒ´ç ½ÃÅ°°í
-	// ¿øº»µ¥ÀÌÅÍ °ø°£ ÇÒ´çÇÏ¿© µ¥ÀÌÅÍ º¹»ç ¹İº¹
+	// ëŒ€ì… ì—°ì‚°ì
+	// ì›ë˜ ë°ì´í„°ê°€ ìˆì—ˆìœ¼ë©´ í• ë‹¹ í•´ì œ í›„
+	// ë³µì‚¬í•˜ë ¤ëŠ” count ë§Œí¼ ë°ì´í„° í• ë‹¹ ì‹œí‚¤ê³ 
+	// ì›ë³¸ë°ì´í„° ê³µê°„ í• ë‹¹í•˜ì—¬ ë°ì´í„° ë³µì‚¬ ë°˜ë³µ
 	TemplateCList& operator =(const TemplateCList<T>& oth) {
 		if (nullptr == head) {
 			Node<T>* iter = head;
@@ -144,10 +144,10 @@ public:
 		return *this;
 	}
 
-	// ÀÌµ¿ ´ëÀÔ ¿¬»êÀÚ
-	// ¿ø·¡ µ¥ÀÌÅÍ°¡ ÀÖ¾úÀ¸¸é ÇÒ´ç ÇØÁ¦ ÈÄ 
-	// ÁÖ¼Ò°ª ¿Å°ÜÁØ ÈÄ
-	// ¿øº» µ¥ÀÌÅÍ Á¦°Å
+	// ì´ë™ ëŒ€ì… ì—°ì‚°ì
+	// ì›ë˜ ë°ì´í„°ê°€ ìˆì—ˆìœ¼ë©´ í• ë‹¹ í•´ì œ í›„ 
+	// ì£¼ì†Œê°’ ì˜®ê²¨ì¤€ í›„
+	// ì›ë³¸ ë°ì´í„° ì œê±°
 	TemplateCList& operator =(TemplateCList<T>&& oth) {
 		if (nullptr == head) {
 			Node<T>* iter = head;
@@ -177,14 +177,14 @@ public:
 		return iterator(this, nullptr);
 	}
 
-	// 1. »èÁ¦ÇÒ ³ëµå°¡ Ã¹¹øÂ° ³ëµå¸é 
-	// head¸¦ targetÀÇ next·Î ¼³Á¤
-	// ¾Æ´Ï¸é targetÀÇ prevÀÇ next¸¦ next·Î ¼³Á¤
-	// 2. »èÁ¦ÇÒ ³ëµå°¡ ¸¶Áö¸· ³ëµå¸é
-	// tailÀ» targetÀÇ tail·Î ¼³Á¤
-	// ¾Æ´Ï¸é targetÀÇ nextÀÇ prev¸¦ targetÀÇ prev·Î ¼³Á¤
-	// 3. delete ÈÄ Ä«¿îÆ® down
-	// 4. targetÀÇ next¸¦ °¡Áø iterator return
+	// 1. ì‚­ì œí•  ë…¸ë“œê°€ ì²«ë²ˆì§¸ ë…¸ë“œë©´ 
+	// headë¥¼ targetì˜ nextë¡œ ì„¤ì •
+	// ì•„ë‹ˆë©´ targetì˜ prevì˜ nextë¥¼ nextë¡œ ì„¤ì •
+	// 2. ì‚­ì œí•  ë…¸ë“œê°€ ë§ˆì§€ë§‰ ë…¸ë“œë©´
+	// tailì„ targetì˜ tailë¡œ ì„¤ì •
+	// ì•„ë‹ˆë©´ targetì˜ nextì˜ prevë¥¼ targetì˜ prevë¡œ ì„¤ì •
+	// 3. delete í›„ ì¹´ìš´íŠ¸ down
+	// 4. targetì˜ nextë¥¼ ê°€ì§„ iterator return
 	iterator erase(const iterator& it)
 	{
 		Node<T>* p = it.target->prev;
@@ -210,16 +210,16 @@ public:
 		Node<T>* target;
 	
 	public:
-		// host¿Í targetÀÌ °°À¸¸é true
+		// hostì™€ targetì´ ê°™ìœ¼ë©´ true
 		bool operator ==(const iterator& oth){
 			if (host == oth.host && target == oth.target)
 				return true;
 			return false;
 		}
-		// ==¿Í ¹İ´ë°á°ú ¸®ÅÏ
+		// ==ì™€ ë°˜ëŒ€ê²°ê³¼ ë¦¬í„´
 		bool operator !=(const iterator& oth){ return !(*this == oth);}
-		// end() »óÅÂ¸é ¿¡·¯
-		// ¾Æ´Ï¸é next·Î
+		// end() ìƒíƒœë©´ ì—ëŸ¬
+		// ì•„ë‹ˆë©´ nextë¡œ
 		iterator& operator ++(){
 			if (nullptr == target)
 				assert(nullptr);
@@ -233,8 +233,8 @@ public:
 			++(*this);
 			return copyiter;
 		}
-		// prev°¡ nullptr »óÅÂ¸é ¿¡·¯
-		// ¾Æ´Ï¸é prev·Î
+		// prevê°€ nullptr ìƒíƒœë©´ ì—ëŸ¬
+		// ì•„ë‹ˆë©´ prevë¡œ
 		iterator& operator --(){
 			if (nullptr == target)
 				assert(nullptr);
@@ -248,8 +248,8 @@ public:
 			--(*this);
 			return copyiter;
 		}
-		// targetÀÌ nullptr¸é ¿¡·¯
-		// ¾Æ´Ï¸é °¡Áö°í ÀÖ´Â °ª ¸®ÅÏ
+		// targetì´ nullptrë©´ ì—ëŸ¬
+		// ì•„ë‹ˆë©´ ê°€ì§€ê³  ìˆëŠ” ê°’ ë¦¬í„´
 		T& operator*(){
 			if (nullptr == target)
 				assert(nullptr);
