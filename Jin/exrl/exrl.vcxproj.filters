@@ -16,6 +16,9 @@
     <Filter Include="Tlinkedlist">
       <UniqueIdentifier>{c6f36167-4aee-4276-9da8-0884609e4aee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="inheritation">
+      <UniqueIdentifier>{0ae3bd2d-7759-4118-9894-2a56518eee70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +29,12 @@
     </ClCompile>
     <ClCompile Include="main02.cpp">
       <Filter>Tlinkedlist</Filter>
+    </ClCompile>
+    <ClCompile Include="Vehicle.h">
+      <Filter>inheritation</Filter>
+    </ClCompile>
+    <ClCompile Include="main_inheritation.cpp">
+      <Filter>inheritation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
