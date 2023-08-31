@@ -5,6 +5,11 @@ using std::cout;
 using std::endl;
 using std::vector;
 
+
+//추상 클래스 (순수가상함수를 보유하고 있는경우)
+//
+//
+
 class AAA
 {
 	// 외부공개 X, 상속 받는 자식 클래스(파생 클래스) 들에게는 공개
@@ -17,6 +22,10 @@ public:
 	{
 		cout << "AAA Move" << endl;
 	}
+
+	
+	//순수가상함수
+	virtual void PureVirtualFunc() = 0;
 
 public:
 	AAA()
@@ -44,10 +53,15 @@ private:
 
 public:
 	// 오버 라이딩 <-> 오버 로딩
-	void Move()
+	virtual void Move() override
 	{
 
 		cout << "BBB 움직임" << endl;
+	}
+
+	virtual void PureVirtualFunc() override
+	{
+
 	}
 
 public:
@@ -77,7 +91,7 @@ private:
 
 public:
 	// 오버 라이딩 <-> 오버 로딩
-	void Move()
+	virtual void Move() override
 	{
 
 		cout << "BBB 움직임" << endl;
@@ -116,7 +130,7 @@ int main()
 	i = sizeof(AAA);
 	i = sizeof(BBB);
 
-	AAA a;
+	//AAA a;
 	BBB b(10, 20);
 
 	a.Move();
@@ -130,7 +144,7 @@ int main()
 	{
 
 		cout << "1231231"<<endl;
-		AAA a;
+		//AAA a;
 		BBB b;
 
 
@@ -162,13 +176,15 @@ int main()
 	}
 
 	// 가상함수 (virtual function) 동작원리.
-	//클래스에 가상함수(virtual) 1개이상 존재하면,가상함수 테이블 포인터 멤ㅁ버가 가장앞에 추가된다.
-	//가상함수가 존재하는 클래스는 클래스 타입정보가 만들어진다. 여기에 가상함수 테이블도 생성이된다.
+	// 클래스에 가상함수(virtual) 1개이상 존재하면,가상함수 테이블 포인터 멤ㅁ버가 가장앞에 추가된다.
+	// 가상함수가 존재하는 클래스는 클래스 타입정보가 만들어진다. 여기에 가상함수 테이블도 생성이된다.
 	// 각 클래스별로 만들어진 가상함수 테이블에는ㄴ 해당 클래스의 가상함수 목록(함수 주소)이 저장된다.
 	// 만약 부모의 가상함수를 오버라이딩 하지 않았다면, 부모의 함수주소가 해당 클래스의 테이블에 저장 된다.
 	// 클래스로 객체를 만들때 ,이제 객체의 가상함수 테이블 포인터는 자신의 테이블의 주소를 테이블 포인터에 할당한다.
 	// 따라서 부모포인터로 가상함수를 호출하면,가상함수 테이블에 접근해서 등록된 함수를 호출하므로
 	// 결과적으로 자식클래스에 오버라이딩한 가상함수가 호출되는 결과가 나온다.
+
+	// 추상화
 
 
 	return 0;
