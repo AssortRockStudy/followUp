@@ -1,27 +1,30 @@
-﻿// 2단계 pseudo code
+﻿// 3단계 pseudo code
 // 부모 클래스 <- 주어짐
 // 부모 클래스 멤버변수 '바퀴 개수, name'
 // name에는 기본적으로 "차량" 문자열이 들어감
 // 대신 자식 클래스에서 호출할 경우 자식 클래스 차량의 문자열이 들어가야 함
-// Drive 인자에 속도가 추가됨
+// Drive 함수가 가상함수로 변경됨
+// Drive함수를 상속받는 자식 클래스는 virtual Drive() override를 붙여줘야 함
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 using std::cout;
 using std::endl;
 using std::string;
+using std::vector;
 
 class Vehicle
 {
-private:
+protected:
 	int wheels;
 	string name;
 
-protected:
-	void Drive(int _speed)
+public:
+	virtual void Drive()
 	{
-		cout << _speed << "km/h 속도로 " << name << "이(가) 출발합니다. " << endl;
+		cout << name << "이 출발합니다. " << endl;
 	}
 
 public:
@@ -42,9 +45,9 @@ public:
 class Bicycle : public Vehicle
 {
 public:
-	void Drive(int _speed)
+	virtual void Drive() override
 	{
-		Vehicle::Drive(_speed);
+		cout << name << "를 페달로 밟습니다" << endl;
 	}
 
 public:
@@ -67,14 +70,9 @@ public:
 class Car : public Vehicle
 {
 public:
-	void Drive(int _speed)
+	virtual void Drive() override
 	{
-		Vehicle::Drive(_speed);
-	}
-
-	void Honk()
-	{
-		cout << "빵빵 " << endl;
+		cout << name << "의 악셀을 누릅니다" << endl;
 	}
 
 public:
@@ -96,15 +94,20 @@ public:
 
 int main()
 {
-	Vehicle vehic(8);
-	Bicycle cycle(2);
-	Car car(4);
+	Vehicle* vehic = new Vehicle(8);
+	Bicycle* cycle = new Bicycle(2);
+	Car* car = new Car(4);
+	
+	vector<Vehicle*> vehicles;
 
-	cycle.Drive(10);
-	car.Honk();
-	car.Drive(30);
+	vehicles.push_back(vehic);
+	vehicles.push_back(cycle);
+	vehicles.push_back(car);
 
-	// vehic.Drive();
+	for (int i = 0; i < vehicles.size(); ++i)
+	{
+		vehicles[i]->Drive();
+	}
 
 	return 0;
 }
