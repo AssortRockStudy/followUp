@@ -17,7 +17,7 @@ struct Pair
 
 	Pair<t1, t2> Create_Pair(const t1& _first, const t2& _second)
 	{
-		Pair<t1, t2> data;
+		Pair<t1, t2> data; 
 		data.first = _first;
 		data.second = _second;
 
