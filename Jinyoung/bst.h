@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
-//µ¥ÀÌÅÍ »ðÀÔ
-//ÀüÀ§,ÁßÀ§,ÈÄÀ§ Å½»öÃâ·Â, ±íÀÌ Ãâ·Â
-//µ¥ÀÌÅÍ °Ë»ö
-//µ¥ÀÌÅÍ »èÁ¦
-//make_pairÇÔ¼ö ±¸Çö?
+//ë°ì´í„° ì‚½ìž…
+//ì „ìœ„,ì¤‘ìœ„,í›„ìœ„ íƒìƒ‰ì¶œë ¥, ê¹Šì´ ì¶œë ¥
+//ë°ì´í„° ê²€ìƒ‰
+//ë°ì´í„° ì‚­ì œ
+//make_pairí•¨ìˆ˜ êµ¬í˜„?
 
 enum NODE_TYPE
 {
@@ -49,13 +49,13 @@ public:
 
 	bool IsLChild() 
 	{
-		//rootÀÏ°æ¿ì Ptr[PARENT]->Ptr[LCHILD] ¿¬»êÇÏ¸é¾ÈµÊ.
+		//rootì¼ê²½ìš° Ptr[PARENT]->Ptr[LCHILD] ì—°ì‚°í•˜ë©´ì•ˆë¨.
 		if (this->IsRoot()) return false;
 		return this == Ptr[PARENT]->Ptr[LCHILD] ; 
 	}
 	bool IsRChild() 
 	{
-		//rootÀÏ°æ¿ì Ptr[PARENT]->Ptr[LCHILD] ¿¬»êÇÏ¸é¾ÈµÊ.
+		//rootì¼ê²½ìš° Ptr[PARENT]->Ptr[LCHILD] ì—°ì‚°í•˜ë©´ì•ˆë¨.
 		if (this->IsRoot()) return false;
 		return this == Ptr[PARENT]->Ptr[RCHILD] ; 
 	}
@@ -84,7 +84,7 @@ public:
 
 	iterator begin()
 	{
-		//m_Root °¡ nullptr ÀÌ¸é (µ¥ÀÌÅÍ°¡ 1°³µµ ÀÔ·ÂÀÌ ¾ÈµÈ »óÈ²) end iterator ¸¦ÁØ´Ù.
+		//m_Root ê°€ nullptr ì´ë©´ (ë°ì´í„°ê°€ 1ê°œë„ ìž…ë ¥ì´ ì•ˆëœ ìƒí™©) end iterator ë¥¼ì¤€ë‹¤.
 		if (!m_Root) { return end(); }
 
 		BSTNode<T1, T2>* node = m_Root;
@@ -97,7 +97,7 @@ public:
 
 	iterator root()
 	{
-		//m_Root °¡ nullptr ÀÌ¸é (µ¥ÀÌÅÍ°¡ 1°³µµ ÀÔ·ÂÀÌ ¾ÈµÈ »óÈ²) end iterator ¸¦ÁØ´Ù.
+		//m_Root ê°€ nullptr ì´ë©´ (ë°ì´í„°ê°€ 1ê°œë„ ìž…ë ¥ì´ ì•ˆëœ ìƒí™©) end iterator ë¥¼ì¤€ë‹¤.
 		if (!m_Root) { return end(); }
 
 		return iterator(this, m_Root);
@@ -162,7 +162,7 @@ public:
 	{
 		BSTNode<T1, T2>* newnode = new BSTNode< T1, T2 >(_data);
 
-		//µ¥ÀÌÅÍ°¡ ¾øÀ»¶§.
+		//ë°ì´í„°ê°€ ì—†ì„ë•Œ.
 		if (0 == m_Count)
 		{
 			m_Root = newnode;
@@ -170,26 +170,26 @@ public:
 			return;
 		}
 
-		//µ¥ÀÌÅÍ°¡ ÇÏ³ªÀÌ»óÀÖÀ»¶§.
-		//1.root³ëµåºÎÅÍ ½ÃÀÛ.
-		//2.ÇöÀç³ëµåÀÇ first°ªÀ»ºñ±³ÇØ¼­
-		//   2-1ÀÛÀ¸¸é left Å©¸é right ·Î ÀÌµ¿ÇÑ´Ù
-		//		Ã³¸®)curnodeÀÇ first°ª°ú _dataÀÇ first°ªÀ» ºñ±³ÇÑ´Ù. 
-		//			 pnode¿¡ curnode¸¦ ÀúÀå,
-		//			 ÀÛÀ¸¸é curnode¿¡ curnodeÀÇ LCHILD ´ëÀÔ
-		//			 Å©¸é cudenode¿¡ curnodeÀÇ RCHILD ´ëÀÔ
-		//			 °°À¸¸é cudenode¿¡ nullptr´ëÀÔ ,first_eqÆ®¸®°Å ture
-		//3.¹Ýº¹¹®ÀÇ ¹Ýº¹Á¶°ÇÀº curnode°¡ nullptr°¡ ¾Æ´Ñ°æ¿ì ±îÁö
+		//ë°ì´í„°ê°€ í•˜ë‚˜ì´ìƒìžˆì„ë•Œ.
+		//1.rootë…¸ë“œë¶€í„° ì‹œìž‘.
+		//2.í˜„ìž¬ë…¸ë“œì˜ firstê°’ì„ë¹„êµí•´ì„œ
+		//   2-1ìž‘ìœ¼ë©´ left í¬ë©´ right ë¡œ ì´ë™í•œë‹¤
+		//		ì²˜ë¦¬)curnodeì˜ firstê°’ê³¼ _dataì˜ firstê°’ì„ ë¹„êµí•œë‹¤. 
+		//			 pnodeì— curnodeë¥¼ ì €ìž¥,
+		//			 ìž‘ìœ¼ë©´ curnodeì— curnodeì˜ LCHILD ëŒ€ìž…
+		//			 í¬ë©´ cudenodeì— curnodeì˜ RCHILD ëŒ€ìž…
+		//			 ê°™ìœ¼ë©´ cudenodeì— nullptrëŒ€ìž… ,first_eqíŠ¸ë¦¬ê±° ture
+		//3.ë°˜ë³µë¬¸ì˜ ë°˜ë³µì¡°ê±´ì€ curnodeê°€ nullptrê°€ ì•„ë‹Œê²½ìš° ê¹Œì§€
 		// 
-		//4. ¹Ýº¹¹®³¡³­ÈÄÃ³¸®  
-		//   4-1)pnode.ptr[target]¿¡ newnode ´ëÀÔ
-		//	 4-2)newnode.ptr[PARENT]¿¡ pnode ´ëÀÔ
+		//4. ë°˜ë³µë¬¸ëë‚œí›„ì²˜ë¦¬  
+		//   4-1)pnode.ptr[target]ì— newnode ëŒ€ìž…
+		//	 4-2)newnode.ptr[PARENT]ì— pnode ëŒ€ìž…
 		//	
-		//   °°À¸¸é second °ªÀ» µ¤¾î¾²°íÁ¾·á.
+		//   ê°™ìœ¼ë©´ second ê°’ì„ ë®ì–´ì“°ê³ ì¢…ë£Œ.
 
 		BSTNode<T1, T2>* pnode = m_Root;
 		BSTNode<T1, T2>* curnode = m_Root;
-		//ÀÌ¹Ì °°Àº first°ªÀÌ µé¾îÀÖÀ» °æ¿ì.
+		//ì´ë¯¸ ê°™ì€ firstê°’ì´ ë“¤ì–´ìžˆì„ ê²½ìš°.
 		bool first_eq = false;
 
 		NODE_TYPE targetrl;
@@ -197,25 +197,25 @@ public:
 		do {
 			pnode = curnode;
 
-			//µ¥ÀÌÅÍ°¡ ÇöÀç³ëµåº¸´Ù Å©¸é
+			//ë°ì´í„°ê°€ í˜„ìž¬ë…¸ë“œë³´ë‹¤ í¬ë©´
 			if (_data.first > curnode->data.first) { targetrl = RCHILD; }
-			//ÀÛÀ¸¸é
+			//ìž‘ìœ¼ë©´
 			else if (_data.first < curnode->data.first) { targetrl = LCHILD; }
-			//°°À¸¸é
+			//ê°™ìœ¼ë©´
 			else if (_data.first == curnode->data.first) { curnode = nullptr; first_eq = true; break; }
 
 			curnode = curnode->Ptr[targetrl];
 
 		} while (curnode);
 
-		//µ¥ÀÌÅÍ°¡ °°Áö ¾ÊÀº°æ¿ì
+		//ë°ì´í„°ê°€ ê°™ì§€ ì•Šì€ê²½ìš°
 		if (!first_eq)
 		{
 			pnode->Ptr[targetrl] = newnode;
 			newnode->Ptr[PARENT] = pnode;
 			++m_Count;
 		}
-		//µ¥ÀÌÅÍ°¡ °°Àº°æ¿ì
+		//ë°ì´í„°ê°€ ê°™ì€ê²½ìš°
 		//do nothing
 		/*else
 		{
@@ -275,23 +275,23 @@ public:
 		iterator& prepp()
 		{
 			assert(m_Target);
-			//ÀüÀ§ ÈÄ¼ÓÀÚ¸¦ Ã£¾Æ¼­ °¡¸®Å²´Ù.
+			//ì „ìœ„ í›„ì†ìžë¥¼ ì°¾ì•„ì„œ ê°€ë¦¬í‚¨ë‹¤.
 			BSTNode<T1, T2>* curnode = m_Target;
 
 
-			//±ÔÄ¢1. 
-			//¿ÞÂÊ ÀÚ½ÄÀÌ ÀÖ´Ù¸é, ¿ÞÂÊÀÚ½ÄÀ» °¡¸®Å²´Ù.
+			//ê·œì¹™1. 
+			//ì™¼ìª½ ìžì‹ì´ ìžˆë‹¤ë©´, ì™¼ìª½ìžì‹ì„ ê°€ë¦¬í‚¨ë‹¤.
 			if (curnode->HasLChild())
 			{
 				curnode = curnode->Ptr[LCHILD];
 			}
-			//¿ÞÂÊÀÚ½ÄÀÌ ¾ø°í,¿À¸¥ÂÊÀÚ½ÄÀÌ ÀÖ´Ù¸é,¿À¸¥ÂÊÀÚ½ÄÀ» °¡¸®Å²´Ù.
+			//ì™¼ìª½ìžì‹ì´ ì—†ê³ ,ì˜¤ë¥¸ìª½ìžì‹ì´ ìžˆë‹¤ë©´,ì˜¤ë¥¸ìª½ìžì‹ì„ ê°€ë¦¬í‚¨ë‹¤.
 			else if (curnode->HasRChild())
 			{
 				curnode = curnode->Ptr[RCHILD];
 			}
-			//±ÔÄ¢2.
-			//¿À¸¥ÂÊ ÀÚ½ÄÀÌ ¾ø´Ù¸é,³»°¡ ºÎ¸ðÀÇ ¿ÞÂÊ ÀÚ½ÄÀÏ¶§±îÁö ¿Ã¶ó°£´Ù.
+			//ê·œì¹™2.
+			//ì˜¤ë¥¸ìª½ ìžì‹ì´ ì—†ë‹¤ë©´,ë‚´ê°€ ë¶€ëª¨ì˜ ì™¼ìª½ ìžì‹ì¼ë•Œê¹Œì§€ ì˜¬ë¼ê°„ë‹¤.
 			//
 			else
 			{
@@ -318,12 +318,12 @@ public:
 		{
 			assert(m_Target);
 
-			//ÁßÀ§ ÈÄ¼ÓÀÚ¸¦ Ã£¾Æ¼­ °¡¸®Å²´Ù.
+			//ì¤‘ìœ„ í›„ì†ìžë¥¼ ì°¾ì•„ì„œ ê°€ë¦¬í‚¨ë‹¤.
 			// 
-			// ±ÔÄ¢
-			// 1. ¿À¸¥ÂÊÀÚ½ÄÀÌ ÀÖ´Ù¸é, ¿À¸¥ÂÊÀ¸·Î°¡¼­ ¿ÞÂÊÀÚ½ÄÀÌ ¾øÀ»¶§ ±îÁö ¿ÞÂÊÀ¸·Î ³»·Á°£´Ù
+			// ê·œì¹™
+			// 1. ì˜¤ë¥¸ìª½ìžì‹ì´ ìžˆë‹¤ë©´, ì˜¤ë¥¸ìª½ìœ¼ë¡œê°€ì„œ ì™¼ìª½ìžì‹ì´ ì—†ì„ë•Œ ê¹Œì§€ ì™¼ìª½ìœ¼ë¡œ ë‚´ë ¤ê°„ë‹¤
 			// 
-			// 2. ¿À¸¥ÂÊ ÀÚ½ÄÀÌ ¾ø´Ù¸é , ³»°¡ ºÎ¸ðÀÇ ¿ÞÂÊÀÚ½ÄÀÏ¶§±îÁö ¿Ã¶ó°£´Ù.
+			// 2. ì˜¤ë¥¸ìª½ ìžì‹ì´ ì—†ë‹¤ë©´ , ë‚´ê°€ ë¶€ëª¨ì˜ ì™¼ìª½ìžì‹ì¼ë•Œê¹Œì§€ ì˜¬ë¼ê°„ë‹¤.
 			//
 
 
@@ -372,7 +372,7 @@ public:
 		iterator& last()
 		{
 			BSTNode<T1, T2>* curnode = m_Root;
-			//RÂ÷ÀÏµåÈ¤Àº ¾øÀ»°æ¿ì ÁßÁö.
+			//Rì°¨ì¼ë“œí˜¹ì€ ì—†ì„ê²½ìš° ì¤‘ì§€.
 			while (curnode->HasRChild)
 			{
 				curnode = curnode[RCHILD];
@@ -385,18 +385,18 @@ public:
 		{
 			assert(m_pOwner);
 			assert(m_pOwner->m_Root);
-			//null == target ¿¡¼­ È£ÃâÇÑ°æ¿ì ¸¶Áö¸· ÀÎÀÚ¸¦ Ã£¾ÆÁÖ´Â ÇÔ¼ö.
+			//null == target ì—ì„œ í˜¸ì¶œí•œê²½ìš° ë§ˆì§€ë§‰ ì¸ìžë¥¼ ì°¾ì•„ì£¼ëŠ” í•¨ìˆ˜.
 			if (!m_Target)
 			{
 				return last();
 			}
 
-			//ÁßÀ§ ¼±ÇàÀÚ¸¦ Ã£¾Æ¼­ °¡¸®Å²´Ù.
+			//ì¤‘ìœ„ ì„ í–‰ìžë¥¼ ì°¾ì•„ì„œ ê°€ë¦¬í‚¨ë‹¤.
 			// 
-			// ±ÔÄ¢
-			// 1. ¿ÞÂÊÀÚ½ÄÀÌ ÀÖ´Ù¸é, ¿ÞÂÊÀ¸·Î°¡¼­ ¿À¸¥ÂÊÀÚ½ÄÀÌ ¾øÀ»¶§ ±îÁö ¿À¸¥ÂÊÀ¸·Î ³»·Á°£´Ù
+			// ê·œì¹™
+			// 1. ì™¼ìª½ìžì‹ì´ ìžˆë‹¤ë©´, ì™¼ìª½ìœ¼ë¡œê°€ì„œ ì˜¤ë¥¸ìª½ìžì‹ì´ ì—†ì„ë•Œ ê¹Œì§€ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ë‚´ë ¤ê°„ë‹¤
 			// 
-			// 2. ¿ÞÂÊ ÀÚ½ÄÀÌ ¾ø´Ù¸é , ³»°¡ ºÎ¸ðÀÇ ¿À¸¥ÂÊÀÚ½ÄÀÏ¶§±îÁö ¿Ã¶ó°£´Ù.
+			// 2. ì™¼ìª½ ìžì‹ì´ ì—†ë‹¤ë©´ , ë‚´ê°€ ë¶€ëª¨ì˜ ì˜¤ë¥¸ìª½ìžì‹ì¼ë•Œê¹Œì§€ ì˜¬ë¼ê°„ë‹¤.
 
 			BSTNode<T1, T2>* curnode = m_Target;
 
@@ -438,12 +438,12 @@ public:
 template <typename T1, typename T2>
 void CBST<T1, T2>::clear()
 {
-	//Àç±ÍÇÔ¼ö ¹öÀü
+	//ìž¬ê·€í•¨ìˆ˜ ë²„ì „
 	//DeletNode(m_Root);
 	//m_Count =0;
 
-	//¹Ýº¹¹®¹öÀü
-	//¸ðµç ³ëµå¸¦
+	//ë°˜ë³µë¬¸ë²„ì „
+	//ëª¨ë“  ë…¸ë“œë¥¼
 	TCList<BSTNode<T1, T2>* > temp;
 
 	if (m_Root) {
@@ -477,7 +477,7 @@ void CBST<T1, T2>::clear()
 template <typename T1, typename T2>
 void CBST<T1, T2>::clear_r() 
 {
-	//Àç±ÍÇÔ¼ö ¹öÀü
+	//ìž¬ê·€í•¨ìˆ˜ ë²„ì „
 	DeletNode(m_Root);
 	m_Count =0;
 	m_Root = nullptr;

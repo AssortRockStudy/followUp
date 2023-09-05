@@ -21,19 +21,10 @@
     <ClCompile Include="mainclist.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="mainmini1.cpp">
+    <ClCompile Include="mainclass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="newanything.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SaveLoad.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="checkuserinfo.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="tarray.cpp">
+    <ClCompile Include="raw.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -45,12 +36,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="bst.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="struct.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="tarray.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

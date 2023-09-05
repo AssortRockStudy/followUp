@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 
 #pragma once
@@ -18,7 +18,7 @@ public:
 	ttNode<T>()
 		:iData(nullptr), pNext(nullptr), pPrev(nullptr) {}
 
-	//pushbackÀ» const T&·ÎÇÏ¸é ÀÌÂÊµµ const T&·Î ¸ÂÃç¾ßÇÑ´Ù.
+	//pushbackì„ const T&ë¡œí•˜ë©´ ì´ìª½ë„ const T&ë¡œ ë§ì¶°ì•¼í•œë‹¤.
 	ttNode<T>(const T& _data, ttNode<T>* _pNext = nullptr, ttNode<T>* _pPrev = nullptr)
 		:iData(_data),		pNext(_pNext),		pPrev(_pPrev) {}
 };
@@ -43,14 +43,14 @@ public:
 
 
 
-	//¾èÀº º¹»ç~
+	//ì–•ì€ ë³µì‚¬~
 	void CopyShallow(const TCList& _other) {
 		pHead = _other.pHead;
 		pTail = _other.pTail;
 		iCount = _other.iCount;
 	}
 
-	//±íÀºº¹»ç
+	//ê¹Šì€ë³µì‚¬
 	void CopyDeep(TCList& _other) {
 		pHead = nullptr;
 		pTail = nullptr;
@@ -64,7 +64,7 @@ public:
 		}
 	}
 
-	//º¹»ç»ı¼ºÀÚ
+	//ë³µì‚¬ìƒì„±ì
 	TCList(const TCList& _other)
 		:pHead(nullptr), pTail(nullptr), iCount(0) {
 
@@ -76,10 +76,10 @@ public:
 			curnode = curnode->pNext;
 		}
 
-		cout << "º¹»ç»ı¼ºÀÚ È£Ãâ" << endl;
+		cout << "ë³µì‚¬ìƒì„±ì í˜¸ì¶œ" << endl;
 	}
 
-	//ÀÌµ¿»ı¼ºÀÚ
+	//ì´ë™ìƒì„±ì
 	TCList(TCList&& _other)
 		:pHead(_other.pHead), pTail(_other.pTail), iCount(_other.iCount) {
 
@@ -88,10 +88,10 @@ public:
 		_other.pHead = nullptr;
 		_other.pTail = nullptr;
 
-		cout << "ÀÌµ¿»ı¼ºÀÚ È£Ãâ" << endl;
+		cout << "ì´ë™ìƒì„±ì í˜¸ì¶œ" << endl;
 	}
 
-	//´ëÀÔ ¿¬»êÀÚ
+	//ëŒ€ì… ì—°ì‚°ì
 	TCList& operator = (const TCList& _other) {
 		pHead = nullptr;
 		pTail = nullptr;
@@ -104,12 +104,12 @@ public:
 			this->pushback(curnode->iData);
 			curnode=curnode->pNext;
 		}
-		cout << "´ëÀÔ ¿¬»êÀÚ È£Ãâ" << endl;
+		cout << "ëŒ€ì… ì—°ì‚°ì í˜¸ì¶œ" << endl;
 		return *this;
 	}
 
 
-	//ÀÌµ¿ ´ëÀÔ¿¬»êÀÚ
+	//ì´ë™ ëŒ€ì…ì—°ì‚°ì
 	TCList& operator = (TCList&& _other) {
 		pHead = _other.pHead;
 		pTail = _other.pTail;
@@ -119,18 +119,18 @@ public:
 		_other.pHead = nullptr;
 		_other.pTail = nullptr;
 		_other.iCount = 0;
-		cout << "ÀÌµ¿ ´ëÀÔ¿¬»êÀÚ È£Ãâ" << endl;
+		cout << "ì´ë™ ëŒ€ì…ì—°ì‚°ì í˜¸ì¶œ" << endl;
 
 		return *this;
 	}
 
 
-	//swap ±¸Çö
+	//swap êµ¬í˜„
 	void swap(TCList&& _other) {
 		TCList tmpcl = std::move(*this);
 		*this = std::move(_other);
 		_other = std::move(tmpcl);
-		cout << "swap È£Ãâ" << endl;
+		cout << "swap í˜¸ì¶œ" << endl;
 	}
 
 	T& front() { return pHead->iData; };
@@ -157,7 +157,7 @@ public:
 		--iCount;
 	}
 
-	//////////////////////230821 0417¼öÁ¤///////////////////////////
+	//////////////////////230821 0417ìˆ˜ì •///////////////////////////
 	iterator erase(iterator& it) {
 		ttNode<T>* tmpnode = it.pTarget;
 		ttNode<T>* prevnode = tmpnode->pPrev;
@@ -175,7 +175,7 @@ public:
 		--iCount;
 		return it;
 	}
-	//////////////////////230821 0417¼öÁ¤///////////////////////////
+	//////////////////////230821 0417ìˆ˜ì •///////////////////////////
 
 	TCList()
 		:pHead(nullptr), pTail(nullptr), iCount(0) {}
@@ -205,7 +205,7 @@ public:
 			else { return true; }
 		}
 
-		//¿øº»°ª ¼öÁ¤µµ °¡´ÉÇØ¾ßÇÑ´Ù.
+		//ì›ë³¸ê°’ ìˆ˜ì •ë„ ê°€ëŠ¥í•´ì•¼í•œë‹¤.
 		T& operator *() { return pTarget->iData; }
 
 
@@ -263,7 +263,7 @@ void TCList<T>::pushfront(const T& _data)
 
 	if (0 == iCount)
 	{
-		//µ¥ÀÌÅÍ°¡ ÇÏ³ªµµ ¾øÀ»°æ¿ì
+		//ë°ì´í„°ê°€ í•˜ë‚˜ë„ ì—†ì„ê²½ìš°
 		pHead = pTail = newnode;
 	}
 	else
@@ -284,7 +284,7 @@ void TCList<T>::pushback(const T& _data)
 
 	if (0 == iCount)
 	{
-		//µ¥ÀÌÅÍ°¡ ÇÏ³ªµµ ¾øÀ»°æ¿ì
+		//ë°ì´í„°ê°€ í•˜ë‚˜ë„ ì—†ì„ê²½ìš°
 		pHead = pTail = newnode;
 	}
 	else
