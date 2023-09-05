@@ -10,6 +10,9 @@
     <Filter Include="BST">
       <UniqueIdentifier>{e6b6b610-35c4-4e60-952f-56dfb313d18f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inherit">
+      <UniqueIdentifier>{024b28e7-4718-4c8a-8bc2-ad490bebeb12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_templateList.cpp">
@@ -24,6 +27,12 @@
     <ClCompile Include="main_BST.cpp">
       <Filter>BST</Filter>
     </ClCompile>
+    <ClCompile Include="main_Inherit.cpp">
+      <Filter>Inherit</Filter>
+    </ClCompile>
+    <ClCompile Include="Vehicle.cpp">
+      <Filter>Inherit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="templateList.h">
@@ -34,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="bst.h">
       <Filter>BST</Filter>
+    </ClInclude>
+    <ClInclude Include="Vehicle.h">
+      <Filter>Inherit</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
