@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "TemplateCList.h"
 
 
@@ -22,6 +22,15 @@ struct TNode{
 	Pair<T1, T2> data;
 	TNode<T1, T2>* othPtr[3];
 
+public: 
+	bool hasLChild() { return ptr[LCHD]; }
+	bool hasRChild() { return ptr[RCHD]; }
+	bool isRChild() { return ptr[PARENT]->ptr[RCHD] == this; }
+	bool isLChild() { return ptr[PARENT]->ptr[LCHD] == this; }
+	bool isRoot() { return !ptr[PARENT]; }
+	bool isLeaf() { return !ptr[LCHD] && !ptr[RCHD]; }
+	bool chdFull() { return ptr[LCHD] && ptr[RCHD]; }
+	
 
 public:
 	TNode() :data(), othPtr{} {}
@@ -31,16 +40,16 @@ public:
 
 template<typename T1, typename T2>
 class BST {
-	// ¸â¹ö º¯¼ö
-	// root ³ëµå
-	// cnt - µ¥ÀÌÅÍÀÇ °³¼ö
+	// ë©¤ë²„ ë³€ìˆ˜
+	// root ë…¸ë“œ
+	// cnt - ë°ì´í„°ì˜ ê°œìˆ˜
 	TNode<T1, T2>* root;
 	int cnt;
 
 
 private:
-	// ºñ¿ì±â
-	// Àç±Í ÀÌ¿ëÇÏ¿© ¿ŞÂÊ ³¡ > ¿À¸¥ÂÊ ³¡ ¼ø¼­·Î ³ëµå »èÁ¦
+	// ë¹„ìš°ê¸°
+	// ì¬ê·€ ì´ìš©í•˜ì—¬ ì™¼ìª½ ë > ì˜¤ë¥¸ìª½ ë ìˆœì„œë¡œ ë…¸ë“œ ì‚­ì œ
 	void clear(TNode<T1, T2>* n) {
 		if (n->othPtr[LCHD] != nullptr) {
 			clear(n->othPtr[LCHD]);
@@ -60,9 +69,9 @@ public:
 public:
 	class iterator;
 
-	// head°¡ nullptrÀÏ °æ¿ì(¾Æ¹«°Íµµ ¾Èµé¾î ÀÖÀ» °æ¿ì)
-	// end()¸¦ °¡¸®Å°µµ·Ï
-	// ¾Æ´Ï¶ó¸é Á¦ÀÏ ¿ŞÂÊ ³ëµå¸¦ °¡¸®Å°µµ·Ï ÇÑ´Ù.
+	// headê°€ nullptrì¼ ê²½ìš°(ì•„ë¬´ê²ƒë„ ì•ˆë“¤ì–´ ìˆì„ ê²½ìš°)
+	// end()ë¥¼ ê°€ë¦¬í‚¤ë„ë¡
+	// ì•„ë‹ˆë¼ë©´ ì œì¼ ì™¼ìª½ ë…¸ë“œë¥¼ ê°€ë¦¬í‚¤ë„ë¡ í•œë‹¤.
 	iterator begin() {
 		if (nullptr == root)
 			return end();
@@ -77,11 +86,13 @@ public:
 		return iterator(this, nullptr);
 	}
 
-	// ÀÔ·Â
-	// ±âº»ÀûÀ¸·Î ÇöÀç À§Ä¡ÇØÀÖ´Â µ¥ÀÌÅÍ °ªº¸´Ù ÀÛÀ¸¸é left
-	// ³ª¸ÓÁö´Â right
-	// root°¡ headÀÏ °æ¿ì root¿¡ ¹Ù·Î ÀÔ·Â
-	// ÀÌÈÄ ++cnt
+
+
+	// ì…ë ¥
+	// ê¸°ë³¸ì ìœ¼ë¡œ í˜„ì¬ ìœ„ì¹˜í•´ìˆëŠ” ë°ì´í„° ê°’ë³´ë‹¤ ì‘ìœ¼ë©´ left
+	// ë‚˜ë¨¸ì§€ëŠ” right
+	// rootê°€ headì¼ ê²½ìš° rootì— ë°”ë¡œ ì…ë ¥
+	// ì´í›„ ++cnt
 	void push(const Pair<T1, T2>& d) {
 		TNode<T1, T2>* newNode = new TNode<T1, T2>(d);
 		if (nullptr == root) {
@@ -109,11 +120,103 @@ public:
 		++cnt;
 	}
 	
+	// ë‹¤ìŒ ë…¸ë“œ íƒìƒ‰(++ì—ì„œ ê¸°ëŠ¥ ë¹¼ì˜¨ ê²ƒ)
+	TNode<T1, T2>* nextNode(TNode<T1, T2>* node) {
+		TNode<T1, T2>* successor = nullptr;
+		if (node->hasRChild()) {
+			successor = node->othPtr[RCHD];
+			while (nullptr != successor->othPtr[LCHD])
+				successor = successor->othPtr[LCHD];
+		}
+		else {
+			successor = node;
+			while (true) {
+				if (successor->isRoot()) {
+					successor = nullptr;
+					break;
+				}
+				else if (successor->isLChild()) {
+					successor = successor->othPtr[PARENT];
+					break;
+				}
+				successor = successor->othPtr[PARENT];
+			}
+		}
+		return successor;
+	}
 
-	// ÀüÀ§ ¼øÈ¸
-	// ¸ÕÀú nodeÀÇ µ¥ÀÌÅÍ °ªÀ» Ãâ·ÂÇÑ µÚ
-	// ¿ŞÂÊ³ëµå, ¿À¸¥ÂÊ ³ëµå ¼ø¼­·Î Àç±Í ÁøÇà
-	// °á°úÀûÀ¸·Î ºÎ - ÁÂ - ¿ì ¼ø¼­·Î Ãâ·ÂµÉ °ÍÀÌ´Ù.
+	// ë…¸ë“œ ì‚­ì œ
+	// 1. ë¦¬í”„ ë…¸ë“œì¼ ê²½ìš°
+	// í•´ë‹¹ ë…¸ë“œ ë°”ë¡œ ì‚­ì œ
+	// 2. 1ê°œ ìˆì„ ê²½ìš°
+	// 1ê°œ ë…¸ë“œ ë°”ë¡œ ê·¸ìë¦¬ë¡œ ì˜¬ë¦¬ê¸°
+	// 3. 2ê°œ ìˆì„ ê²½ìš°
+	// ì¤‘ìœ„ ìˆœíšŒ ê¸°ì¤€ ë‹¤ìŒ ë…¸ë“œ ë°ì´í„° ê°€ì ¸ì˜¨ í›„ í•´ë‹¹ ë…¸ë“œ ì‚­ì œ ë° ë‚˜ ìì‹  ë¦¬í„´
+	// ì´í›„ ë‹¤ìŒ nodeë¥¼ ë¦¬í„´
+
+	iterator erase(const iterator& iter) {
+		// hostê°€ ê°™ì§€ ì•Šì„ ê²½ìš°
+		// targetì´ nullptrì¼ ê²½ìš°
+		assert(this == iter.host);
+		assert(iter.target);
+
+		TNode<T1, T2>* successor = nullptr;
+
+		// ë¦¬í”„ ë…¸ë“œì¼ ê²½ìš°
+		if (iter.target->isLeaf()) {
+			// rootì¼ ê²½ìš°(ë…¸ë“œ 1ê°œ ìƒíƒœ)
+			if (iter.target->isRoot())
+				root = nullptr;
+			else {
+				successor = nextNode(iter.target);
+
+				if (iter.target->isLChild())
+					iter.target->othPtr[PARENT]->othPtr[LCHD] = nullptr;
+				else
+					iter.target->othPtr[PARENT]->othPtr[RCHD] = nullptr;
+			}
+		}
+		// 2ê°œ ìˆì„ ê²½ìš°
+		// erase ì¬ê·€ ì´ìš©í•´ì„œ ë‹¤ìŒ ë…¸ë“œ ì‚­ì œ
+		else if (iter.target->chdFull()) {
+			TNode<T1, T2>* next = nextNode(iter.target);
+			iter.target->data = next->data;
+			erase(iterator(this, next));
+			return iterator(this, iter.target);
+		}
+		// 1ê°œì¼ ê²½ìš°
+		else {
+			successor = nextNode(iter.target);
+			TNode<T1, T2>* child = nullptr;
+			if (iter.target->hasLChild())
+				child = iter.target->othPtr[LCHD];
+			else
+				child = iter.target->othPtr[RCHD];
+			// ì‚­ì œ ë…¸ë“œê°€ ë£¨íŠ¸ì¼ ê²½ìš°
+			// rootë³€ê²½ ì¶”ê°€ ì‘ì—…
+			if (iter.target->isRoot()) {
+				child->othPtr[PARENT] = nullptr;
+				root = child;
+			}
+			else {
+				if (iter.target->isLChild()) 
+					iter.target->othPtr[PARENT]->othPtr[LCHD] = child;
+				else
+					iter.target->othPtr[PARENT]->othPtr[RCHD] = child;
+			}
+			child->othPtr[PARENT] = iter.target->othPtr[PARENT];
+		}
+		delete iter.target;
+		--cnt;
+		return iterator(this, successor);
+
+	}
+
+
+	// ì „ìœ„ ìˆœíšŒ
+	// ë¨¼ì € nodeì˜ ë°ì´í„° ê°’ì„ ì¶œë ¥í•œ ë’¤
+	// ì™¼ìª½ë…¸ë“œ, ì˜¤ë¥¸ìª½ ë…¸ë“œ ìˆœì„œë¡œ ì¬ê·€ ì§„í–‰
+	// ê²°ê³¼ì ìœ¼ë¡œ ë¶€ - ì¢Œ - ìš° ìˆœì„œë¡œ ì¶œë ¥ë  ê²ƒì´ë‹¤.
 	void PrintFrontTree(const TNode<T1, T2>* n) {
 		cout << n->data.second << endl;
 		if (n->othPtr[LCHD] != nullptr) {
@@ -124,11 +227,11 @@ public:
 		}
 	}
 
-	// ÁßÀ§ ¼øÈ¸
-	// ¸ÕÀú ¿ŞÂÊ ³ëµå·Î Àç±Í ÁøÇà ÈÄ 
-	// nodeÀÇ µ¥ÀÌÅÍ °ªÀ» Ãâ·Â ÈÄ
-	// ¿À¸¥ÂÊ ³ëµå·Î Àç±Í ÁøÇà
-	// °á°úÀûÀ¸·Î ÁÂ - ºÎ - ¿ì ¼ø¼­·Î Ãâ·ÂµÉ °ÍÀÌ´Ù.
+	// ì¤‘ìœ„ ìˆœíšŒ
+	// ë¨¼ì € ì™¼ìª½ ë…¸ë“œë¡œ ì¬ê·€ ì§„í–‰ í›„ 
+	// nodeì˜ ë°ì´í„° ê°’ì„ ì¶œë ¥ í›„
+	// ì˜¤ë¥¸ìª½ ë…¸ë“œë¡œ ì¬ê·€ ì§„í–‰
+	// ê²°ê³¼ì ìœ¼ë¡œ ì¢Œ - ë¶€ - ìš° ìˆœì„œë¡œ ì¶œë ¥ë  ê²ƒì´ë‹¤.
 	void PrintMiddleTree(const TNode<T1, T2>* n) {
 		if (n->othPtr[LCHD] != nullptr) {
 			PrintMiddleTree(n->othPtr[LCHD]);
@@ -139,11 +242,11 @@ public:
 		}
 	}
 
-	// ÈÄÀ§ ¼øÈ¸
-	// ¸ÕÀú ¿ŞÂÊ ³ëµå·Î Àç±Í ÁøÇà ÈÄ
-	// ¿À¸¥ÂÊ ³ëµå·Î Àç±Í ÁøÇà ÈÄ 
-	// ÇöÀç µ¥ÀÌÅÍ °ª Ãâ·Â
-	// °á°úÀûÀ¸·Î ÁÂ - ¿ì - Áß ¼ø¼­·Î Ãâ·ÂµÉ °ÍÀÌ´Ù.
+	// í›„ìœ„ ìˆœíšŒ
+	// ë¨¼ì € ì™¼ìª½ ë…¸ë“œë¡œ ì¬ê·€ ì§„í–‰ í›„
+	// ì˜¤ë¥¸ìª½ ë…¸ë“œë¡œ ì¬ê·€ ì§„í–‰ í›„ 
+	// í˜„ì¬ ë°ì´í„° ê°’ ì¶œë ¥
+	// ê²°ê³¼ì ìœ¼ë¡œ ì¢Œ - ìš° - ì¤‘ ìˆœì„œë¡œ ì¶œë ¥ë  ê²ƒì´ë‹¤.
 	void PrintRearTree(const TNode<T1, T2>* n) {
 		if (n->othPtr[LCHD] != nullptr) {
 			PrintRearTree(n->othPtr[LCHD]);
@@ -154,12 +257,12 @@ public:
 		cout << n->data.second << endl;
 	}
 
-	// Ãşº° ¼øÈ¸
-	// dfs¿ø¸® ÀÌ¿ëÇØ¼­
-	// ³ëµåµéÀÌ µé¾îÀÖ´Â queue¿¡¼­ ÆËÇÑ ÈÄ
-	// Ãâ·ÂÇÏ°í
-	// ´ÙÀ½¹æÇâ(left, right) ¹æÇâÀ¸·ÎÀÇ ³ëµå¸¦ 
-	// queue¿¡ ´Ù½Ã Áı¾î³Ö´Â ½ÄÀ¸·Î ÇÏ¿© queue°¡ ºô¶§±îÁö ¹İº¹
+	// ì¸µë³„ ìˆœíšŒ
+	// dfsì›ë¦¬ ì´ìš©í•´ì„œ
+	// ë…¸ë“œë“¤ì´ ë“¤ì–´ìˆëŠ” queueì—ì„œ íŒí•œ í›„
+	// ì¶œë ¥í•˜ê³ 
+	// ë‹¤ìŒë°©í–¥(left, right) ë°©í–¥ìœ¼ë¡œì˜ ë…¸ë“œë¥¼ 
+	// queueì— ë‹¤ì‹œ ì§‘ì–´ë„£ëŠ” ì‹ìœ¼ë¡œ í•˜ì—¬ queueê°€ ë¹Œë•Œê¹Œì§€ ë°˜ë³µ
 	void PrintLevelTree() {
 		if (nullptr != root) {
 			TemplateCList<TNode<T1, T2>*> temp;
@@ -182,25 +285,25 @@ public:
 	
 	
 	
-	// ¸â¹ö º¯¼ö¸¦ ¿ÜºÎ¿¡¼­ Á¢±ÙÇÒ ¼ö ¾øÀ¸¹Ç·Î
-	// int °ªÀ» ÁÖ¾î ¼øÈ¸¸¦ Ãâ·ÂÇÏµµ·Ï ÇÔ
+	// ë©¤ë²„ ë³€ìˆ˜ë¥¼ ì™¸ë¶€ì—ì„œ ì ‘ê·¼í•  ìˆ˜ ì—†ìœ¼ë¯€ë¡œ
+	// int ê°’ì„ ì£¼ì–´ ìˆœíšŒë¥¼ ì¶œë ¥í•˜ë„ë¡ í•¨
 	void PrintTree(int num) {
 		switch (num)
 		{
 		case 1:
-			cout << "ÀüÀ§ ¼øÈ¸" << endl;
+			cout << "ì „ìœ„ ìˆœíšŒ" << endl;
 			PrintFrontTree(root);
 			break;
 		case 2:
-			cout << "ÁßÀ§ ¼øÈ¸" << endl;
+			cout << "ì¤‘ìœ„ ìˆœíšŒ" << endl;
 			PrintMiddleTree(root);
 			break;
 		case 3:
-			cout << "ÈÄÀ§ ¼øÈ¸" << endl;
+			cout << "í›„ìœ„ ìˆœíšŒ" << endl;
 			PrintRearTree(root);
 			break;
 		case 4:
-			cout << "Ãşº° ¼øÈ¸" << endl;
+			cout << "ì¸µë³„ ìˆœíšŒ" << endl;
 			PrintLevelTree();
 			break;
 		default:
@@ -208,8 +311,8 @@ public:
 		}
 	}
 
-	// °Ë»ö
-	// ¼øÈ¸ ÈÄ ³ª¿À¸é °ª Ãâ·Â / ¾È ³ª¿À¸é -1 Ãâ·Â
+	// ê²€ìƒ‰
+	// ìˆœíšŒ í›„ ë‚˜ì˜¤ë©´ ê°’ ì¶œë ¥ / ì•ˆ ë‚˜ì˜¤ë©´ -1 ì¶œë ¥
 	T2 search(const Pair<T1, T2>& d) {
 		TNode<T1, T2>* iter = root;
 		TNode<T1, T2>* prev = nullptr;
@@ -250,35 +353,15 @@ public:
 		}
 
 
-		// ÁßÀ§ ÈÄ¼ÓÀÚ Ã£±â
-		// ÇöÀç ³ëµå°¡ nullptrÀÌ¸é °æ°í
-		// 1. ¿À¸¥ÂÊ ÀÚ½ÄÀÌ ÀÖ´ÂÁö È®ÀÎ
-		//    > ÀÖÀ¸¸é ¿À¸¥ÂÊ ÀÚ½ÄÀ¸·Î ³»·Á°£ ÈÄ ¿ŞÂÊ ÀÚ½ÄÂÊÀ¸·Î Âß ³»·Á°¡±â
-		// 2. ÀÚ½ÅÀÌ ¿ŞÂÊ ÀÚ½Ä ³ëµåÀÎÁö¸¦ È®ÀÎ
-		//    > ¾Æ´Ï¶ó¸é ¿ŞÂÊ ÀÚ½ÄÀÌ µÉ ¶§±îÁö À§·Î ¿Ã¶ó°¡±â
+		// ì¤‘ìœ„ í›„ì†ì ì°¾ê¸°
+		// í˜„ì¬ ë…¸ë“œê°€ nullptrì´ë©´ ê²½ê³ 
+		// 1. ì˜¤ë¥¸ìª½ ìì‹ì´ ìˆëŠ”ì§€ í™•ì¸
+		//    > ìˆìœ¼ë©´ ì˜¤ë¥¸ìª½ ìì‹ìœ¼ë¡œ ë‚´ë ¤ê°„ í›„ ì™¼ìª½ ìì‹ìª½ìœ¼ë¡œ ì­‰ ë‚´ë ¤ê°€ê¸°
+		// 2. ìì‹ ì´ ì™¼ìª½ ìì‹ ë…¸ë“œì¸ì§€ë¥¼ í™•ì¸
+		//    > ì•„ë‹ˆë¼ë©´ ì™¼ìª½ ìì‹ì´ ë  ë•Œê¹Œì§€ ìœ„ë¡œ ì˜¬ë¼ê°€ê¸°
 		iterator& operator ++() {
 			assert(target);
-			TNode<T1, T2>* successor = nullptr;
-			if (target->othPtr[RCHD] != nullptr) {
-				successor = target->othPtr[RCHD];
-				while (nullptr != successor->othPtr[LCHD])
-					successor = successor->othPtr[LCHD];
-			}
-			else {
-				successor = target;
-				while (true) {
-					if (nullptr == successor->othPtr[PARENT]) {
-						successor = nullptr;
-						break;
-					}
-					else if (successor->othPtr[PARENT]->othPtr[LCHD] == successor) {
-						successor = successor->othPtr[PARENT];
-						break;
-					}
-					successor = successor->othPtr[PARENT];
-				}
-			}
-			target = successor;
+			target = host->nextNode(target);
 			return *this;
 		}
 		iterator operator ++(int) {
@@ -286,12 +369,12 @@ public:
 			++(*this);
 			return copyiter;
 		}
-		// ++¿Í ¹İ´ë·Î »ı°¢
-		// ÇöÀç ³ëµå°¡ nullptrÀÌ¸é °æ°í
-		// 1. ¿ŞÂÊ ÀÚ½ÄÀÌ ÀÖ´ÂÁö È®ÀÎ
-		//    > ÀÖÀ¸¸é ¿ŞÂÊ ÀÚ½ÄÀ¸·Î ³»·Á°£ ÈÄ ¿À¸¥ÂÊ ÀÚ½ÄÂÊÀ¸·Î Âß ³»·Á°¡±â
-		// 2. ÀÚ½ÅÀÌ ¿À¸¥ÂÊ ÀÚ½Ä ³ëµåÀÎÁö¸¦ È®ÀÎ
-		//    > ¾Æ´Ï¶ó¸é ¿À¸¥ÂÊ ÀÚ½ÄÀÌ µÉ ¶§±îÁö À§·Î ¿Ã¶ó°¡±â
+		// ++ì™€ ë°˜ëŒ€ë¡œ ìƒê°
+		// í˜„ì¬ ë…¸ë“œê°€ nullptrì´ë©´ ê²½ê³ 
+		// 1. ì™¼ìª½ ìì‹ì´ ìˆëŠ”ì§€ í™•ì¸
+		//    > ìˆìœ¼ë©´ ì™¼ìª½ ìì‹ìœ¼ë¡œ ë‚´ë ¤ê°„ í›„ ì˜¤ë¥¸ìª½ ìì‹ìª½ìœ¼ë¡œ ì­‰ ë‚´ë ¤ê°€ê¸°
+		// 2. ìì‹ ì´ ì˜¤ë¥¸ìª½ ìì‹ ë…¸ë“œì¸ì§€ë¥¼ í™•ì¸
+		//    > ì•„ë‹ˆë¼ë©´ ì˜¤ë¥¸ìª½ ìì‹ì´ ë  ë•Œê¹Œì§€ ìœ„ë¡œ ì˜¬ë¼ê°€ê¸°
 		iterator& operator --() {
 			assert(target);
 			TNode<T1, T2>* predecessor = nullptr;

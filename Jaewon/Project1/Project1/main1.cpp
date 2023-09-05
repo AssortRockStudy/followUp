@@ -1,9 +1,9 @@
-// To Do List
-// 1. R-Value swap ±¸Çö
-// 2. ÀÌµ¿ ¿¬»êÀÚ, »ı¼ºÀÚ / º¹»ç ¿¬»êÀÚ, »ı¼ºÀÚ È£Ãâ È®ÀÎÇØº¸±â
-// 3. CopyShallow¿Í CopyDeepÀ» À§ÇÑ °£´ÜÇÑ °´Ã¼ »ı¼º
-// 4. º¹»ç, ÀÌµ¿ »ı¼ºÀÚ ±¸Çö
-// 5. º¹»ç, ÀÌµ¿ ¿¬»êÀÚ ±¸Çö
+ï»¿// To Do List
+// 1. R-Value swap êµ¬í˜„
+// 2. ì´ë™ ì—°ì‚°ì, ìƒì„±ì / ë³µì‚¬ ì—°ì‚°ì, ìƒì„±ì í˜¸ì¶œ í™•ì¸í•´ë³´ê¸°
+// 3. CopyShallowì™€ CopyDeepì„ ìœ„í•œ ê°„ë‹¨í•œ ê°ì²´ ìƒì„±
+// 4. ë³µì‚¬, ì´ë™ ìƒì„±ì êµ¬í˜„
+// 5. ë³µì‚¬, ì´ë™ ì—°ì‚°ì êµ¬í˜„
 #include <stdlib.h>
 #include <stdio.h>
 #include "TemplateCList.h"
@@ -21,9 +21,9 @@ public:
 	arr(int t) :dCnt(0), mCnt(t), pData(nullptr) {
 		pData = new int[mCnt];
 	}
-	// º¹»ç »ı¼ºÀÚ
+	// ë³µì‚¬ ìƒì„±ì
 	arr(const arr& oth) {
-		cout << "º¹»ç »ı¼ºÀÚ È£Ãâ" << endl;
+		cout << "ë³µì‚¬ ìƒì„±ì í˜¸ì¶œ" << endl;
 		if (nullptr != pData) {
 			delete[] pData;
 		}
@@ -34,9 +34,9 @@ public:
 			pData[i] = oth.pData[i];
 		}
 	}
-	// ÀÌµ¿ »ı¼ºÀÚ
+	// ì´ë™ ìƒì„±ì
 	arr(arr&& oth) {
-		cout << "ÀÌµ¿ »ı¼ºÀÚ È£Ãâ" << endl;
+		cout << "ì´ë™ ìƒì„±ì í˜¸ì¶œ" << endl;
 		if (nullptr != pData) {
 			delete[] pData;
 		}
@@ -47,9 +47,9 @@ public:
 		oth.mCnt = 0;
 		oth.pData = nullptr;
 	}
-	// ´ëÀÔ(º¹»ç) ¿¬»êÀÚ
+	// ëŒ€ì…(ë³µì‚¬) ì—°ì‚°ì
 	arr& operator =(const arr& oth) {
-		cout << "´ëÀÔ ¿¬»êÀÚ È£Ãâ" << endl;
+		cout << "ëŒ€ì… ì—°ì‚°ì í˜¸ì¶œ" << endl;
 		if (nullptr != pData) {
 			delete[] pData;
 		}
@@ -62,7 +62,7 @@ public:
 		return *this;
 	}
 	arr& operator =(arr&& oth) {
-		cout << "ÀÌµ¿ ´ëÀÔ ¿¬»êÀÚ È£Ãâ" << endl;
+		cout << "ì´ë™ ëŒ€ì… ì—°ì‚°ì í˜¸ì¶œ" << endl;
 		if (nullptr != pData) {
 			delete[] pData;
 		}
@@ -105,10 +105,10 @@ int main() {
 	iter++;
 	iter++;
 	--iter;
-	cout << "°¨¼Ò ¿¬»êÀÚ" << endl;
+	cout << "ê°ì†Œ ì—°ì‚°ì" << endl;
 	cout << *iter-- << endl; // 9
-	cout << *iter << endl; // 40 >> È®ÀÎ
-	cout << *(--iter) << endl; // 30 >> È®ÀÎ
+	cout << *iter << endl; // 40 >> í™•ì¸
+	cout << *(--iter) << endl; // 30 >> í™•ì¸
 
 	TemplateCList<int> b;
 	b.pushFront(100);
@@ -120,16 +120,16 @@ int main() {
 	for (iter = b.begin(); iter != b.end(); ++iter) {
 		cout << *iter << endl;
 	}
-	TemplateCList<int> c = a; // ±íÀº º¹»ç Ãâ·Â(º¹»ç »ı¼ºÀÚ)
-	c = b; // ±íÀº º¹»ç Ãâ·Â(º¹»ç ¿¬»êÀÚ)
+	TemplateCList<int> c = a; // ê¹Šì€ ë³µì‚¬ ì¶œë ¥(ë³µì‚¬ ìƒì„±ì)
+	c = b; // ê¹Šì€ ë³µì‚¬ ì¶œë ¥(ë³µì‚¬ ì—°ì‚°ì)
 
 	arr i(5);
 	arr q(10);
-	arr w = i; // º¹»ç »ı¼ºÀÚ
-	arr p = std::move(w); // ÀÌµ¿ »ı¼ºÀÚ
-	w = q; // ´ëÀÔ(º¹»ç) ¿¬»êÀÚ
+	arr w = i; // ë³µì‚¬ ìƒì„±ì
+	arr p = std::move(w); // ì´ë™ ìƒì„±ì
+	w = q; // ëŒ€ì…(ë³µì‚¬) ì—°ì‚°ì
 	arr m(100);
-	CopyDeep(m, q); // ´ëÀÔ(º¹»ç) ¿¬»êÀÚ È£Ãâ
-	CopyShallow(i, q); // ÀÌµ¿ ´ëÀÔ ¿¬»êÀÚ È£Ãâ
+	CopyDeep(m, q); // ëŒ€ì…(ë³µì‚¬) ì—°ì‚°ì í˜¸ì¶œ
+	CopyShallow(i, q); // ì´ë™ ëŒ€ì… ì—°ì‚°ì í˜¸ì¶œ
 	return 0;
 }

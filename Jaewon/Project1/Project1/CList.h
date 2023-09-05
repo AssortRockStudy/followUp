@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 // To Do List
 // 1. - - 연산자(전위, 후위) 구현
 // 2. 복사, 이동 연산자 구현
@@ -33,7 +33,7 @@ public:
 	void pushBack(int d);
 	int size() { return dCnt; }
 
-  
+
 	// 복사 연산자
 	// 1. 원래 데이터가 있을 경우 해제
 	// 2. count 할당 후
@@ -98,7 +98,7 @@ public:
 	iterator erase(iterator& it);
 
 public:
-CList() :dCnt(0), head(nullptr), tail(nullptr) {}
+ CList() :dCnt(0), head(nullptr), tail(nullptr) {}
 	// 복사 생성자
 	// 1. count 유지
 	// 2. 새로운 데이터 만큼 할당하면서
