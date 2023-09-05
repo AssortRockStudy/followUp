@@ -107,6 +107,37 @@ public:
 		++mCount;
 	}
 
+	T front()
+	{
+		return mHead->data;
+	}
+
+	T back()
+	{
+		return mTail->data;
+	}
+
+	void popFront()
+	{
+		Node<T>* dNode = mHead;
+		mHead->next->prev = nullptr;
+		mHead = mHead->next;
+		delete dNode;
+		--mCount;
+	}
+
+	void popBack()
+	{
+		Node<T>* dNode = mTail;
+		mTail->prev->next = nullptr;
+		mTail = mTail->prev;
+		delete dNode;
+		--mCount;
+	}
+
+
+
+
 	List<T>& operator =(const List<T>& _other) // 대입 복사
 	{
 		// 지금 가리키고 있는 것 지우기
