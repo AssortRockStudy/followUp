@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="TemplateList">
+      <UniqueIdentifier>{2c8266eb-0fac-4a7b-bbe7-59cb410cad23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ClassList">
+      <UniqueIdentifier>{added84d-2573-45c6-96ff-23fecb6afc66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BST">
+      <UniqueIdentifier>{e6b6b610-35c4-4e60-952f-56dfb313d18f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inherit">
+      <UniqueIdentifier>{024b28e7-4718-4c8a-8bc2-ad490bebeb12}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main_templateList.cpp">
+      <Filter>TemplateList</Filter>
+    </ClCompile>
+    <ClCompile Include="main_list.cpp">
+      <Filter>ClassList</Filter>
+    </ClCompile>
+    <ClCompile Include="myList.cpp">
+      <Filter>ClassList</Filter>
+    </ClCompile>
+    <ClCompile Include="main_BST.cpp">
+      <Filter>BST</Filter>
+    </ClCompile>
+    <ClCompile Include="main_Inherit.cpp">
+      <Filter>Inherit</Filter>
+    </ClCompile>
+    <ClCompile Include="Vehicle.cpp">
+      <Filter>Inherit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="templateList.h">
+      <Filter>TemplateList</Filter>
+    </ClInclude>
+    <ClInclude Include="myList.h">
+      <Filter>ClassList</Filter>
+    </ClInclude>
+    <ClInclude Include="bst.h">
+      <Filter>BST</Filter>
+    </ClInclude>
+    <ClInclude Include="Vehicle.h">
+      <Filter>Inherit</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

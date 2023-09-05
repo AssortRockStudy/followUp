@@ -4,7 +4,6 @@
 // 2. 복사, 이동 연산자 구현
 // 3. 복사, 이동 생성자 구
 
-#pragma once
 #include <assert.h>
 #include <iostream>
 
@@ -15,6 +14,7 @@ struct Node {
 	int data;
 	Node* next;
 	Node* prev;
+
 
 	Node() :data(0), next(nullptr), prev(nullptr) {}
 	Node(int d, Node* n = nullptr, Node* p = nullptr) :data(d), next(n), prev(p) {}
@@ -27,7 +27,7 @@ private:
 	int dCnt;
 	Node* head;
 	Node* tail;
-
+  
 public:
 	void pushFront(int d);
 	void pushBack(int d);
@@ -98,7 +98,7 @@ public:
 	iterator erase(iterator& it);
 
 public:
-	CList() :dCnt(0), head(nullptr), tail(nullptr) {}
+ CList() :dCnt(0), head(nullptr), tail(nullptr) {}
 	// 복사 생성자
 	// 1. count 유지
 	// 2. 새로운 데이터 만큼 할당하면서
@@ -194,7 +194,6 @@ public:
 		int& operator *() {
 			return target->data;
 		}
-
 	public:
 		iterator() :host(nullptr), target(nullptr) {}
 		iterator(CList* c, Node* n = nullptr) :host(c), target(n) {}
@@ -203,3 +202,4 @@ public:
 		friend class CList;
 	};
 };
+

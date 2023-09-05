@@ -1,4 +1,4 @@
-﻿// To Do List
+// To Do List
 // 1. end() 조건 수정
 // 2. begin() 조건 수정
 #include "CList.h"

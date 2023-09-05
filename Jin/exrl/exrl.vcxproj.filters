@@ -13,33 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-</ItemGroup>
+    <Filter Include="Tlinkedlist">
+      <UniqueIdentifier>{c6f36167-4aee-4276-9da8-0884609e4aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inheritation">
+      <UniqueIdentifier>{0ae3bd2d-7759-4118-9894-2a56518eee70}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main1.cpp">
-      <Filter>리소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CList.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="main2.cpp">
-      <Filter>리소스 파일</Filter>
+    <ClCompile Include="CArray.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="main3.cpp">
-      <Filter>리소스 파일</Filter>
+    <ClCompile Include="main02.cpp">
+      <Filter>Tlinkedlist</Filter>
+    </ClCompile>
+    <ClCompile Include="Vehicle.h">
+      <Filter>inheritation</Filter>
+    </ClCompile>
+    <ClCompile Include="main_inheritation.cpp">
+      <Filter>inheritation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CList.h">
-<Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplateCList.h">
+    <ClInclude Include="CArray.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="bst.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Vehicle.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="linkedListT.h">
+      <Filter>Tlinkedlist</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
