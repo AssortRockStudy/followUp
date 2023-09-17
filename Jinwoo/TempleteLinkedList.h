@@ -23,6 +23,7 @@
 // 생성자, 소멸자, 복사 생성자 필요
 
 #include <assert.h>
+#include <iostream>
 
 template <typename T>
 struct TNode
@@ -55,6 +56,44 @@ private:
 
 public:
 	void push_back(const T& _data);
+	void push_front(const T& _data);
+
+	// 제일 처음 노드 삭제
+	void pop_front()
+	{
+		if (nullptr == m_pHead)
+		{
+			assert(nullptr);
+		}
+
+		TNode<T>* pNext = m_pHead->pNext;
+		delete m_pHead;
+		m_pHead = pNext;
+		--m_Count;
+
+		if (nullptr != m_pHead)
+		{
+			m_pHead->pPrev = nullptr;
+		}
+	}
+
+	void pop_back()
+	{
+		if (nullptr == m_pTail)
+		{
+			assert(nullptr);
+		}
+
+		TNode<T>* pPrev = m_pTail->pPrev;
+		delete m_pTail;
+		m_pTail = pPrev;
+		--m_Count;
+
+		if (nullptr != m_pTail)
+		{
+			m_pTail->pNext = nullptr;
+		}
+	}
 
 	class iterator;
 	iterator begin()
@@ -65,6 +104,35 @@ public:
 	iterator end()
 	{
 		return iterator(this, nullptr);
+	}
+
+	iterator erase(const iterator& _iter)
+	{
+		if (_iter.m_Target != m_pTail)
+		{
+			_iter.m_Target->pNext->pPrev = _iter.m_Target->pPrev;
+		}
+		else
+		{
+			m_pTail = iter.m_Target->pPrev;
+		}
+
+		if (_iter.m_Target != m_pHead)
+		{
+			_iter.m_Target->pPrev->pNext = _iter.m_Target->pNext;
+		}
+		else
+		{
+			m_pHead = _iter.m_Target->pNext;
+		}
+
+		iterator nextiter(this, _iter.m_Target->pNext);
+
+		delete _iter.m_Target;
+
+		--m_Count;
+
+		return nextiter;
 	}
 
 public:
@@ -141,7 +209,10 @@ public:
 		// *는 원본에 접근하는 것이므로 데이터를 리턴해야한다
 		T& operator *()
 		{
-			assert(m_Target);
+			if (nullptr == m_Target)
+			{
+				assert(nullptr);
+			}
 
 			return m_Target->data;
 		}
@@ -186,4 +257,23 @@ void TList<T>::push_back(const T& _data)
 	}
 
 	++m_Count; 
+}
+
+template<typename T>
+void TList<T>::push_front(const T& _data)
+{
+	TNode<T>* NewNode = new TNode<T>(_data, m_pHead, nullptr);
+
+	if (nullptr != m_pHead)
+	{
+		m_pHead->pPrev = NewNode;
+	}
+	else
+	{
+		m_pTail = NewNode;
+	}
+
+	m_pHead = NewNode;
+
+	++m_Count;
 }
