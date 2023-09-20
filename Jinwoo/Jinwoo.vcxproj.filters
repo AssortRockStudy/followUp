@@ -8,6 +8,9 @@
       <Filter>Etc..</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="DynamicArray.cpp">
+      <Filter>FollowUp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FollowUp">
